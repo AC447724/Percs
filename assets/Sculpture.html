@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinity Sculpture</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;500&display=swap');
+        body { margin: 0; background-color: #000; overflow: hidden; font-family: 'Inter', sans-serif; }
+        canvas { display: block; }
+        
+        #ui {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            color: white;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        h1 { 
+            margin: 0; 
+            font-size: 14px; 
+            font-weight: 500; 
+            letter-spacing: 8px; 
+            text-transform: uppercase;
+            color: var(--theme-primary);
+        }
+
+        .stats {
+            margin-top: 15px;
+            font-size: 9px;
+            line-height: 1.8;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+        }
+
+        .seed { font-family: monospace; color: rgba(255, 255, 255, 0.15); }
+    </style>
+</head>
+<body>
+
+    <div id="ui">
+        <h1 id="theme-label">Initializing...</h1>
+        <div class="stats">
+            Status: Procedural Render<br>
+            Mode: High-Fidelity Gamer<br>
+            Seed: <span class="seed" id="seed-val"></span>
+        </div>
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // --- 1. THE INFINITY ENGINE ---
+        const randomHex = () => Math.floor(Math.random() * 16777215);
+        const randomChoice = (arr) => arr[Math.floor(Math.random() * arr.length)];
+        
+        const seed = Math.random().toString(36).substring(7).toUpperCase();
+        document.getElementById('seed-val').innerText = seed;
+
+        // Generate dynamic theme
+        const colorA = new THREE.Color(randomHex());
+        const colorB = new THREE.Color(randomHex());
+        const bgColor = new THREE.Color().copy(colorA).multiplyScalar(0.05); // Dark version of primary
+        
+        document.documentElement.style.setProperty('--theme-primary', colorA.getStyle());
+        document.getElementById('theme-label').innerText = `Session_${seed}`;
+
+        const scene = new THREE.Scene();
+        scene.background = bgColor;
+        scene.fog = new THREE.FogExp2(bgColor, 0.02);
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(20, 15, 25);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.body.appendChild(renderer.domElement);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = (Math.random() - 0.5) * 2;
+
+        // --- 2. SHAPE LIBRARY ---
+        const geometries = [
+            new THREE.TorusKnotGeometry(0.5, 0.2, 100, 16),
+            new THREE.CapsuleGeometry(0.4, 0.8, 4, 16),
+            new THREE.IcosahedronGeometry(0.7, 0),
+            new THREE.OctahedronGeometry(0.8, 0),
+            new THREE.TorusGeometry(0.6, 0.15, 16, 100),
+            new THREE.BoxGeometry(0.8, 0.8, 0.8),
+            new THREE.ConeGeometry(0.6, 1, 32)
+        ];
+
+        const objects = [];
+        const count = 40 + Math.floor(Math.random() * 100);
+
+        for (let i = 0; i < count; i++) {
+            const geo = randomChoice(geometries);
+            const material = new THREE.MeshPhysicalMaterial({
+                color: i % 2 === 0 ? colorA : colorB,
+                metalness: 0.2,
+                roughness: 0.1,
+                transparent: true,
+                opacity: 0.6,
+                transmission: 0.4,
+                thickness: 1
+            });
+
+            const mesh = new THREE.Mesh(geo, material);
+            
+            // Random distribution in a spherical cloud
+            const r = 10 + Math.random() * 10;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.random() * Math.PI;
+
+            mesh.position.set(
+                r * Math.sin(phi) * Math.cos(theta),
+                r * Math.sin(phi) * Math.sin(theta),
+                r * Math.cos(phi)
+            );
+            
+            mesh.rotation.set(Math.random() * 2, Math.random() * 2, Math.random() * 2);
+            
+            scene.add(mesh);
+            objects.push({
+                mesh,
+                orbitSpeed: 0.001 + Math.random() * 0.01,
+                rotSpeed: (Math.random() - 0.5) * 0.02,
+                phase: Math.random() * Math.PI * 2
+            });
+        }
+
+        // --- 3. DYNAMIC LIGHTING ---
+        const lightA = new THREE.PointLight(colorA, 150, 50);
+        lightA.position.set(15, 15, 15);
+        scene.add(lightA);
+
+        const lightB = new THREE.PointLight(colorB, 150, 50);
+        lightB.position.set(-15, -15, -15);
+        scene.add(lightB);
+
+        scene.add(new THREE.AmbientLight(0xffffff, 0.2));
+
+        function animate(time) {
+            const t = time * 0.001;
+            
+            objects.forEach((obj) => {
+                // Subtle organic drift
+                obj.mesh.position.y += Math.sin(t * obj.orbitSpeed + obj.phase) * 0.02;
+                obj.mesh.rotation.x += obj.rotSpeed;
+                obj.mesh.rotation.y += obj.rotSpeed;
+            });
+
+            controls.update();
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate(0);
+    </script>
+</body>
+</html>
