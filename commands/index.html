@@ -3,275 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PERCS | Commands</title>
+    <title>PERCS | Commands Library</title>
     
-    <meta name="title" content="PERCS | Commands Overview">
-    <meta name="description" content="Full command index for PERCS. Search through our library of utility and security Commands">
-    <meta name="theme-color" content="#030303">
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://percs.fun/commands">
-    <meta property="og:title" content="PERCS | Commands Overview">
-    <meta property="og:description" content="Search through the PERCS command library.">
-    <meta property="og:image" content="https://raw.githubusercontent.com/AC447724/Percs-Commands/main/assets/banner.png">
-
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://percs.fun/commands">
-    <meta property="twitter:title" content="PERCS | Commands Overview">
-    <meta property="twitter:description" content="Search through the PERCS command library.">
-    <meta property="twitter:image" content="https://raw.githubusercontent.com/AC447724/Percs-Commands/main/assets/banner.png">
-
-    <link rel="icon" type="image/png" href="pf.png?v=2">
+    <meta name="description" content="Search through the PERCS command library.">
+    <meta name="theme-color" content="#050505">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@700&family=JetBrains+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=Inter:wght@300;400;500;600&display=swap');
 
         :root {
-            --bg: #020202;
-            --card-bg: rgba(10, 10, 10, 0.4);
-            --card-hover: rgba(18, 18, 18, 0.7);
+            --bg: #050505;
+            --surface: #0f0f0f;
             --text-primary: #ffffff;
-            --text-secondary: #71717a;
-            --border: rgba(255, 255, 255, 0.05);
+            --text-dim: #888888;
+            --border: rgba(255, 255, 255, 0.08);
             --accent: #ffffff;
-            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --font-display: 'Instrument Sans', sans-serif;
+            --font-body: 'Inter', sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         
         body {
             background-color: var(--bg);
             color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
+            font-family: var(--font-body);
             min-height: 100vh;
-            overflow-x: hidden;
-            padding-bottom: 120px;
-        }
-
-        /* --- VISUAL EFFECTS --- */
-        .vfx-layer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 1;
-        }
-
-        .scanline {
-            width: 100%; height: 100px;
-            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.01), transparent);
-            position: absolute; animation: scan 8s linear infinite;
-        }
-        @keyframes scan { from { top: -100px; } to { top: 100vh; } }
-
-        .cursor-glow {
-            position: fixed; width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
-            border-radius: 50%; transform: translate(-50%, -50%);
-            z-index: 0; transition: width 0.3s, height 0.3s;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* --- NAVIGATION --- */
-        .top-nav {
-            display: flex; justify-content: center;
-            padding-top: 40px; position: sticky; top: 0; z-index: 1000;
+        nav {
+            padding: 25px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0; width: 100%;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
         }
-        .nav-pill {
-            display: flex; align-items: center;
-            background: rgba(10, 10, 10, 0.6);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid var(--border);
-            padding: 6px; border-radius: 100px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+
+        .brand { 
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-display); 
+            font-weight: 600; 
+            font-size: 18px;
+            text-decoration: none;
+            color: white;
         }
-        .nav-pill a {
-            color: var(--text-secondary); text-decoration: none; font-size: 13px;
-            font-weight: 500; padding: 10px 22px; border-radius: 100px; 
-            transition: all 0.4s var(--ease-out);
+        .brand img { width: 30px; height: 30px; border-radius: 50%; }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.2s;
         }
-        .nav-pill a:hover { color: #fff; }
-        .nav-pill a.active { color: #fff; background: rgba(255,255,255,0.08); box-shadow: inset 0 0 10px rgba(255,255,255,0.05); }
+        .nav-links a:hover { color: var(--text-primary); }
 
         /* --- HERO --- */
-        .hero { position: relative; z-index: 2; text-align: center; margin: 100px 0 60px 0; }
-        .hero h1 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: clamp(40px, 10vw, 90px);
-            letter-spacing: -5px; line-height: 0.85; margin-bottom: 40px;
-            filter: drop-shadow(0 0 30px rgba(255,255,255,0.1));
+        .hero { 
+            padding: 160px 20px 60px 20px;
+            text-align: center;
+            background: radial-gradient(circle at center, #111 0%, #050505 100%);
         }
-        .hero h1 span { color: #222; font-weight: 400; }
 
-        .search-wrapper { max-width: 600px; margin: 0 auto 40px auto; padding: 0 20px; position: relative; }
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 600;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .search-wrapper { max-width: 600px; margin: 0 auto 40px auto; position: relative; }
         .search-bar {
             width: 100%;
-            background: rgba(255, 255, 255, 0.02);
+            background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 24px 32px;
-            color: #fff; font-size: 16px; outline: none;
-            transition: 0.5s var(--ease-out);
+            border-radius: 100px;
+            padding: 18px 30px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
             text-align: center;
-            backdrop-filter: blur(10px);
         }
-        .search-bar:focus { 
-            border-color: rgba(255,255,255,0.15); 
-            background: rgba(255,255,255,0.05);
-            box-shadow: 0 0 50px rgba(255,255,255,0.02);
-        }
+        .search-bar:focus { border-color: rgba(255,255,255,0.3); }
 
-        /* --- UPDATED CATEGORY TABS --- */
+        /* --- CATEGORIES --- */
         .categories-container {
             max-width: 1000px;
             margin: 0 auto 60px auto;
-            padding: 0 20px;
             display: flex;
             justify-content: center;
-        }
-
-        .categories {
-            display: flex;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
-            padding: 4px;
-            border-radius: 100px;
-            gap: 4px;
             flex-wrap: wrap;
-            justify-content: center;
-            backdrop-filter: blur(10px);
+            gap: 10px;
         }
 
         .cat-pill {
             background: transparent;
-            border: none;
-            padding: 10px 24px;
+            border: 1px solid var(--border);
+            padding: 8px 20px;
             border-radius: 100px;
-            font-size: 11px;
-            color: var(--text-secondary);
+            font-size: 13px;
+            color: var(--text-dim);
             cursor: pointer;
-            transition: all 0.4s var(--ease-out);
-            font-family: 'JetBrains Mono', monospace;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            transition: 0.3s;
             display: flex;
             align-items: center;
             gap: 8px;
-            position: relative;
         }
 
-        .cat-pill span {
-            font-size: 9px;
-            background: rgba(255,255,255,0.05);
-            padding: 2px 6px;
-            border-radius: 4px;
-            transition: 0.3s;
-        }
-
-        .cat-pill:hover { color: #fff; }
-        .cat-pill:hover span { background: rgba(255,255,255,0.1); }
-
-        .cat-pill.active {
-            background: #fff;
-            color: #000;
-            transform: scale(1.02);
-            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
-        }
-
-        .cat-pill.active span {
-            background: rgba(0,0,0,0.1);
-            color: #000;
-        }
+        .cat-pill span { opacity: 0.5; font-size: 11px; }
+        .cat-pill:hover { border-color: var(--text-dim); color: #fff; }
+        .cat-pill.active { background: #fff; color: #000; border-color: #fff; }
 
         /* --- GRID --- */
         .grid {
-            position: relative; z-index: 2;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 20px; max-width: 1300px;
-            margin: 0 auto; padding: 0 30px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5% 100px 5%;
         }
 
         .card {
-            background: var(--card-bg);
+            background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 28px;
-            padding: 40px;
-            display: flex; flex-direction: column;
-            transition: all 0.6s var(--ease-out);
-            backdrop-filter: blur(12px);
-            opacity: 0; transform: translateY(30px);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            transition: 0.3s ease;
         }
-        .card.visible { opacity: 1; transform: translateY(0); }
-        .card:hover { 
-            background: var(--card-hover); 
-            transform: translateY(-8px) scale(1.01); 
-            border-color: rgba(255,255,255,0.2);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-        }
+
+        .card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-4px); }
 
         .cmd-header {
-            display: flex; justify-content: space-between;
-            align-items: center; margin-bottom: 20px;
-        }
-        .cmd-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 24px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
-        
-        .admin-badge {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 9px; text-transform: uppercase; letter-spacing: 2px;
-            background: rgba(255, 255, 255, 0.03);
-            color: #555;
-            padding: 6px 12px; border-radius: 8px;
-            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
 
-        .cmd-desc { color: var(--text-secondary); font-size: 15px; line-height: 1.7; margin-bottom: 30px; flex-grow: 1; }
+        .cmd-name { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: #fff; }
+        
+        .type-badge {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: rgba(255,255,255,0.05);
+            padding: 4px 10px;
+            border-radius: 6px;
+            color: var(--text-dim);
+        }
+
+        .cmd-desc { color: var(--text-dim); font-size: 14px; line-height: 1.6; margin-bottom: 25px; flex-grow: 1; }
 
         .usage-container {
             margin-top: auto;
-            background: rgba(0,0,0,0.3);
+            background: rgba(255,255,255,0.03);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 16px 20px;
-            display: flex; justify-content: space-between;
-            align-items: center; transition: 0.3s;
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.2s;
         }
-        .usage-container:hover { border-color: rgba(255,255,255,0.3); background: #000; }
-        .usage-text { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #fff; }
+        .usage-container:hover { background: rgba(255,255,255,0.08); }
+        .usage-text { font-family: monospace; font-size: 13px; color: #fff; opacity: 0.8; }
 
-        /* --- TOAST --- */
         #toast {
             position: fixed; bottom: 40px; left: 50%;
             transform: translateX(-50%);
             background: #fff; color: #000;
-            padding: 14px 28px; border-radius: 100px;
+            padding: 12px 24px; border-radius: 100px;
             font-size: 13px; font-weight: 600;
-            opacity: 0; transition: 0.5s var(--ease-out);
+            opacity: 0; transition: 0.3s;
             pointer-events: none; z-index: 2000;
         }
     </style>
 </head>
 <body>
 
-    <div class="vfx-layer">
-        <div class="scanline"></div>
-        <div class="cursor-glow" id="glow"></div>
-    </div>
-
-    <nav class="top-nav">
-        <div class="nav-pill">
+    <nav>
+        <a href="https://percs.fun" class="brand">
+            <img src="https://www.percs.fun/assets/percs.webp" alt="Logo">
+            PERCS
+        </a>
+        <div class="nav-links">
             <a href="https://percs.fun">Home</a>
-            <a href="#" class="active">Commands</a>
+            <a href="#commands" style="color: white;">Commands</a>
             <a href="https://percs.fun/faq">FAQ</a>
             <a href="https://percs.fun/legal">Legal</a>
         </div>
     </nav>
 
-    <div class="hero">
-        <h1>Percs <span>Library</span></h1>
+    <div class="hero" id="commands">
+        <h1>Command Library</h1>
         <div class="search-wrapper">
-            <input type="text" id="searchInput" class="search-bar" placeholder="Search commands..." onkeyup="processFilter()">
+            <input type="text" id="searchInput" class="search-bar" placeholder="Find a command..." onkeyup="processFilter()">
         </div>
-        <div class="categories-container">
-            <div class="categories" id="catBox"></div>
-        </div>
+        <div class="categories-container" id="catBox"></div>
     </div>
 
     <div class="grid" id="cmdGrid"></div>
@@ -281,21 +227,16 @@
     <script>
         let cmdData = [];
         let currentCat = 'All';
-        const glow = document.getElementById('glow');
-
-        window.addEventListener('mousemove', (e) => {
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
-        });
 
         async function init() {
             try {
-                const res = await fetch('commands.json');
+                // Fetching from your provided GitHub link
+                const res = await fetch('https://raw.githubusercontent.com/AC447724/Percs-Commands/refs/heads/main/commands/commands.json');
                 cmdData = await res.json();
                 renderCategories();
                 renderCards(cmdData);
             } catch (e) {
-                document.getElementById('cmdGrid').innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#333;">[Uh, Oh] COMMANDS NOT FOUND</p>`;
+                document.getElementById('cmdGrid').innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--text-dim);">Unable to load commands.</p>`;
             }
         }
 
@@ -332,7 +273,7 @@
 
         function renderCards(data) {
             const grid = document.getElementById('cmdGrid');
-            grid.innerHTML = data.map((cmd, index) => {
+            grid.innerHTML = data.map((cmd) => {
                 let usageStr = cmd.usage;
                 if (!usageStr) {
                     const prefix = cmd.type === 'prefix' ? '.' : '/';
@@ -340,19 +281,16 @@
                     usageStr = `${prefix}${cmd.name}${args}`;
                 }
 
-                const isAdmin = (cmd.permissions && cmd.permissions.includes('Administrator')) || cmd.category === 'Admin';
-                const adminBadge = isAdmin ? `<span class="admin-badge">Secure</span>` : '';
-
                 return `
-                <div class="card visible" style="transition-delay: ${index * 0.03}s">
+                <div class="card">
                     <div class="cmd-header">
                         <span class="cmd-name">${cmd.name}</span>
-                        ${adminBadge}
+                        <span class="type-badge">${cmd.type}</span>
                     </div>
                     <p class="cmd-desc">${cmd.description}</p>
                     <div class="usage-container" onclick="copyText('${usageStr}')">
                         <span class="usage-text">${usageStr}</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </div>
                 </div>`;
             }).join('');
