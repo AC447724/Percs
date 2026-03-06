@@ -4,161 +4,207 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PERCS | Legal</title>
-    <meta name="description" content="Official Terms of Service and Privacy Policy for PERCS. Learn about our AES-256-GCM encryption standards and AI moderation protocols.">
-    <meta name="theme-color" content="#000000">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@700&family=JetBrains+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=Inter:wght@300;400;500&display=swap');
         
         :root {
-            --bg: #000000;
-            --card-bg: rgba(12, 12, 12, 0.7);
-            --text-primary: #ffffff;
-            --text-secondary: #888888;
+            --bg: #050505;
+            --surface: #0f0f0f;
+            --text: #ffffff;
+            --text-dim: #888888;
             --border: rgba(255, 255, 255, 0.08);
-            --font-main: 'Inter', sans-serif;
-            --font-heading: 'Plus Jakarta Sans', sans-serif;
-            --accent: #4ade80;
+            --font-display: 'Instrument Sans', sans-serif;
+            --font-body: 'Inter', sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
-        html { scroll-behavior: smooth; background: #000; }
-        body { background-color: var(--bg); color: var(--text-primary); font-family: var(--font-main); overflow-x: hidden; min-height: 100vh; line-height: 1.6; }
-
-        /* --- AMBIENT VFX --- */
-        .ambient-glow {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.03) 0%, transparent 40%);
-            pointer-events: none; z-index: 1;
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: var(--font-body); 
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* --- CLEAN NAV --- */
-        .top-nav { display: flex; justify-content: center; padding-top: 40px; position: sticky; top: 20px; z-index: 1000; }
-        .nav-pill {
-            display: flex; align-items: center;
-            background: rgba(13, 13, 13, 0.85);
-            backdrop-filter: blur(25px);
+        nav {
+            padding: 25px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            position: fixed; top: 0; width: 100%;
+            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(10px);
+            z-index: 1000; border-bottom: 1px solid var(--border);
+        }
+
+        .brand { 
+            display: flex; align-items: center; gap: 12px;
+            font-family: var(--font-display); font-weight: 600; font-size: 18px;
+            text-decoration: none; color: #fff;
+        }
+        .brand img { width: 32px; height: 32px; border-radius: 50%; }
+
+        .nav-links a {
+            color: var(--text-dim); text-decoration: none;
+            margin-left: 25px; font-size: 14px; font-weight: 500; transition: 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+
+        .hero {
+            height: 50vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 0 20px;
+            background: radial-gradient(circle at center, #111 0%, #050505 100%);
+        }
+
+        .hero h1 {
+            font-family: var(--font-display); font-size: clamp(40px, 8vw, 90px);
+            font-weight: 600; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: clamp(16px, 1.2vw, 19px); color: var(--text-dim);
+            max-width: 550px; font-weight: 300;
+        }
+
+        section { max-width: 900px; margin: 0 auto; padding: 60px 5%; }
+
+        .legal-card {
+            background: var(--surface);
             border: 1px solid var(--border);
-            padding: 8px 12px; border-radius: 100px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-        }
-        .nav-pill a {
-            color: var(--text-secondary); text-decoration: none; font-size: 13px;
-            font-weight: 500; padding: 8px 22px; border-radius: 100px; transition: 0.3s;
-        }
-        .nav-pill a:hover { color: #fff; }
-        .nav-pill a.active { color: #fff; background: rgba(255, 255, 255, 0.08); }
-
-        /* --- CONTENT --- */
-        .container { max-width: 900px; margin: 80px auto; padding: 0 20px; position: relative; z-index: 2; }
-        h1 { 
-            font-family: var(--font-heading); font-size: clamp(40px, 8vw, 64px); letter-spacing: -3px; margin-bottom: 60px; text-align: center;
-            background: linear-gradient(to bottom, #fff 40%, #555 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 40px;
         }
 
-        .legal-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 32px; padding: 60px; margin-bottom: 40px; backdrop-filter: blur(10px); }
-        h2 { font-family: var(--font-heading); font-size: 28px; margin-bottom: 25px; letter-spacing: -1px; display: flex; align-items: center; gap: 15px; }
-        h2::before { content: ''; width: 4px; height: 24px; background: #fff; border-radius: 100px; }
+        .group-label {
+            font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em;
+            color: var(--text-dim); margin-bottom: 25px; display: block;
+            font-family: var(--font-display); font-weight: 600;
+        }
 
-        .section-block { margin-bottom: 40px; }
-        .section-block h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: #444; margin-bottom: 15px; font-weight: 800; }
-        p, li { color: var(--text-secondary); font-size: 16px; margin-bottom: 20px; }
-        strong { color: #fff; font-weight: 600; }
+        h2 { 
+            font-family: var(--font-display); font-size: 28px; 
+            margin-bottom: 30px; letter-spacing: -0.02em; 
+        }
+
+        .section-block { margin-bottom: 35px; }
+        .section-block h3 { 
+            font-family: var(--font-display); font-size: 14px; 
+            text-transform: uppercase; color: #fff; 
+            margin-bottom: 12px; letter-spacing: 0.05em;
+        }
+
+        p, li { color: var(--text-dim); font-size: 15px; margin-bottom: 15px; }
+        strong { color: #fff; }
 
         ul { list-style: none; padding-left: 0; }
-        li { display: flex; gap: 12px; margin-bottom: 15px; }
-        li::before { content: '→'; color: #444; }
+        li { display: flex; gap: 12px; }
+        li::before { content: "—"; color: #444; }
 
-        .encryption-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(74, 222, 128, 0.05); border: 1px solid rgba(74, 222, 128, 0.1);
-            color: var(--accent); padding: 6px 14px; border-radius: 100px; font-family: 'JetBrains Mono'; font-size: 11px; margin-bottom: 20px;
+        .badge {
+            display: inline-block; padding: 4px 12px; border-radius: 6px;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            font-size: 10px; font-weight: 600; color: var(--text-dim);
+            margin-bottom: 20px; text-transform: uppercase;
         }
 
-        footer { padding: 60px 20px; text-align: center; color: #222; font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 3px; }
-        .reveal { opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.2, 1, 0.3, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        footer {
+            padding: 50px 5%; border-top: 1px solid var(--border);
+            display: flex; justify-content: space-between;
+            color: var(--text-dim); font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 50px; }
+            .legal-card { padding: 30px 20px; }
+        }
     </style>
 </head>
 <body>
-    <div class="ambient-glow" id="glow"></div>
 
-    <nav class="top-nav">
-        <div class="nav-pill">
+    <nav>
+        <a href="https://percs.fun" class="brand">
+            <img src="https://www.percs.fun/assets/percs.webp" alt="Logo">
+            PERCS
+        </a>
+        <div class="nav-links">
             <a href="https://percs.fun">Home</a>
             <a href="https://percs.fun/commands">Commands</a>
             <a href="https://percs.fun/faq">FAQ</a>
-            <a href="#" class="active">Legal</a>
+            <a href="#" style="color: #fff;">Legal</a>
         </div>
     </nav>
 
-    <div class="container">
-        <h1 class="reveal">Legal Protocols</h1>
+    <header class="hero">
+        <h1>Protocols.</h1>
+        <p>Guidelines and legal frameworks for the PERCS ecosystem.</p>
+    </header>
 
-        <section class="legal-card reveal">
-            <h2>Terms of Service</h2>
-            <div class="section-block">
-                <h3>01. Protocol Acceptance</h3>
-                <p>By integrating <strong>PERCS</strong>, you agree to these terms. Unauthorized use, reverse engineering of our AI moderation heuristics, or command flooding will result in a permanent hardware-level ban from our network infrastructure.</p>
-            </div>
-
-            <div class="section-block">
-                <h3>02. Service Availability</h3>
-                <p>While we maintain a 99.9% uptime target, PERCS is provided "as is." We are not liable for any data loss resulting from Discord API outages or server-side configuration errors by guild administrators.</p>
-            </div>
-
-            <div class="section-block">
-                <h3>03. Intellectual Property</h3>
-                <p>All proprietary code, custom branding, and the <strong>PERCS</strong> architecture are protected. Users are prohibited from mimicking the "PERCS" brand or reselling bot services under a different alias.</p>
-            </div>
-
-            <div class="section-block">
-                <h3>04. Termination</h3>
-                <p>We reserve the right to revoke access to any server found to be hosting malicious content or violating Discord’s Developer Policy. Termination results in immediate purging of all server-specific encrypted salts.</p>
-            </div>
-        </section>
-
-        <section class="legal-card reveal">
-            <div class="encryption-badge">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                AES-256-GCM ARCHITECTURE
-            </div>
-            <h2>Privacy Policy</h2>
+    <section>
+        <div class="legal-card">
+            <span class="group-label">Terms of Service</span>
+            <h2>Usage Agreement</h2>
             
             <div class="section-block">
-                <h3>01. AI Moderation Data</h3>
-                <p>Our <strong>Automated Content Filters</strong> process message data in volatile RAM. No plaintext message content is ever written to our permanent database disks. Sentiment scores are calculated locally and discarded once the moderation action is complete.</p>
+                <h3>01. Acceptance of Terms</h3>
+                <p>By adding <strong>PERCS</strong> to your Discord server or using its services, you acknowledge that you have read, understood, and agreed to be bound by these Terms of Service and Discord's own Terms of Service.</p>
             </div>
 
             <div class="section-block">
-                <h3>02. Collected Metadata</h3>
+                <h3>02. Prohibited Conduct</h3>
+                <p>Users are strictly prohibited from attempting to bypass security filters, exploiting economy vulnerabilities, or utilizing the bot to distribute malicious content. Any attempt to reverse-engineer our proprietary security heuristics will result in a permanent blacklist from the PERCS network.</p>
+            </div>
+
+            <div class="section-block">
+                <h3>03. Virtual Assets & Refunds</h3>
+                <p>Any virtual currency or "perks" obtained within the PERCS ecosystem hold no real-world value. All purchases and subscriptions are final. Refunds are only issued at the discretion of the management team in the event of a verified technical failure.</p>
+            </div>
+
+            <div class="section-block">
+                <h3>04. Limitation of Liability</h3>
+                <p>PERCS is provided on an "as is" basis. We are not responsible for damages, data loss, or server-side mismanagement resulting from the use of our administrative tools.</p>
+            </div>
+        </div>
+
+        <div class="legal-card">
+            <div class="badge">Revision: March 2026</div>
+            <span class="group-label">Privacy Policy</span>
+            <h2>Data Handling</h2>
+
+            <div class="section-block">
+                <h3>01. Information Collection</h3>
+                <p>To provide high-quality moderation and utility, we store essential metadata including:</p>
                 <ul>
-                    <li><strong>Cryptographic Hashes:</strong> Used for tracking economy balances and level progress.</li>
-                    <li><strong>Node Configurations:</strong> Stored settings for custom prefixes and auto-mod triggers.</li>
-                    <li><strong>Behavioral Vectors:</strong> Temporary patterns used to detect raids (purged every 60 minutes).</li>
+                    <li>Server IDs and channel configurations for command routing.</li>
+                    <li>User IDs for level tracking and economy balance persistence.</li>
+                    <li>Temporary behavioral logs to identify and mitigate raid attempts.</li>
                 </ul>
             </div>
 
             <div class="section-block">
-                <h3>03. Security Standards</h3>
-                <p>Decryption is hardware-bound. Even in the event of a database leak, your server settings remain unreadable without our private entropy keys stored on physical HSM (Hardware Security Modules).</p>
+                <h3>02. Stateless Processing</h3>
+                <p>We utilize a stateless processing architecture for all incoming events. Message data utilized by our security heuristics and content filters is treated as a transient stream; this data is never committed to persistent storage disks and is purged immediately following the completion of the requested moderation logic.</p>
             </div>
-        </section>
-    </div>
 
-    <footer>PERCS LEGAL &mdash; 2026</footer>
+            <div class="section-block">
+                <h3>03. Data Security</h3>
+                <p>All sensitive configuration data is encrypted using <strong>AES-256-GCM</strong>. Access to our database is restricted to authorized systems, protected by physical hardware security modules (HSM) and private entropy keys.</p>
+            </div>
 
-    <script>
-        const glow = document.getElementById('glow');
-        window.addEventListener('mousemove', (e) => {
-            glow.style.setProperty('--x', e.clientX + 'px');
-            glow.style.setProperty('--y', e.clientY + 'px');
-        });
+            <div class="section-block">
+                <h3>04. Data Deletion</h3>
+                <p>Owners may request a full purge of their server data by removing the bot and contacting our support hub. Data is automatically flagged for deletion 30 days after the bot leaves a guild.</p>
+            </div>
+        </div>
+    </section>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    </script>
+    <footer>
+        <span>&copy; 2026 PERCS LEGAL</span>
+        <div style="display:flex; gap: 24px;">
+            <a href="https://percs.fun/faq" style="color: inherit; text-decoration: none;">SUPPORT</a>
+            <a href="https://discord.gg/dAHEdfkDzX" style="color: inherit; text-decoration: none;">DISCORD</a>
+        </div>
+    </footer>
+
 </body>
 </html>
