@@ -3,240 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PERCS | Home</title>
-    <meta name="description" content="A high-performance Discord Bot built for scale, privacy, and seamless server management.">
-    <meta name="theme-color" content="#000000">
+    <title>PERCS | Simple, Powerful Management</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@700&family=JetBrains+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=Inter:wght@300;400;500&display=swap');
         
         :root {
-            --bg: #000000;
-            --card-bg: rgba(12, 12, 12, 0.7);
-            --text-primary: #ffffff;
-            --text-secondary: #888888;
+            --bg: #050505;
+            --surface: #0f0f0f;
+            --text: #ffffff;
+            --text-dim: #888888;
             --border: rgba(255, 255, 255, 0.08);
-            --font-main: 'Inter', sans-serif;
-            --font-heading: 'Plus Jakarta Sans', sans-serif;
-            --accent: #4ade80;
+            --font-display: 'Instrument Sans', sans-serif;
+            --font-body: 'Inter', sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
-        html { scroll-behavior: smooth; background: #000; }
-        body { background-color: var(--bg); color: var(--text-primary); font-family: var(--font-main); overflow-x: hidden; min-height: 100vh; }
-
-        /* --- AMBIENT VFX --- */
-        .ambient-glow {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.03) 0%, transparent 40%);
-            pointer-events: none; z-index: 1;
-        }
-
-        /* --- CLEAN NAV --- */
-        .top-nav { display: flex; justify-content: center; padding-top: 40px; position: sticky; top: 20px; z-index: 1000; }
-        .nav-pill {
-            display: flex; align-items: center;
-            background: rgba(13, 13, 13, 0.85);
-            backdrop-filter: blur(25px);
-            border: 1px solid var(--border);
-            padding: 8px 12px; border-radius: 100px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-        }
-        .nav-pill a {
-            color: var(--text-secondary); text-decoration: none; font-size: 13px;
-            font-weight: 500; padding: 8px 22px; border-radius: 100px; transition: 0.3s;
-        }
-        .nav-pill a:hover { color: #fff; }
-        .nav-pill a.active { color: #fff; background: rgba(255, 255, 255, 0.08); }
-
-        /* --- HERO --- */
-        .hero { height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; z-index: 2; position: relative; }
-        .hero h1 { font-family: var(--font-heading); font-size: clamp(60px, 12vw, 110px); letter-spacing: -6px; line-height: 0.85; margin-bottom: 24px; background: linear-gradient(to bottom, #fff 40%, #555 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { color: var(--text-secondary); max-width: 520px; margin-bottom: 40px; font-size: 18px; line-height: 1.6; }
-        .btn-primary { background: #fff; color: #000; padding: 18px 45px; border-radius: 100px; text-decoration: none; font-weight: 600; transition: 0.4s; border: 1px solid #fff; }
-        .btn-primary:hover { background: transparent; color: #fff; }
-
-        /* --- SECTIONS --- */
-        section { max-width: 1200px; margin: 0 auto; padding: 100px 20px; position: relative; z-index: 2; }
-        .section-title { font-family: var(--font-heading); font-size: 42px; letter-spacing: -2px; margin-bottom: 50px; text-align: center; }
-
-        /* --- GRID LAYOUTS --- */
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         
-        /* --- CARDS --- */
-        .feature-card { background: var(--card-bg); border: 1px solid var(--border); padding: 40px; border-radius: 32px; transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1); backdrop-filter: blur(10px); }
-        .feature-card:hover { border-color: rgba(255, 255, 255, 0.3); transform: translateY(-5px); }
-        .feature-icon { width: 45px; height: 45px; background: #111; border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; }
-        .feature-card h3 { font-family: var(--font-heading); font-size: 20px; margin-bottom: 12px; }
-        .feature-card p { color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: var(--font-body); 
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
 
-        /* --- NEW SECTION: DATA VIZ --- */
-        .stats-container { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 40px; padding: 60px; background: rgba(255,255,255,0.02); border-radius: 40px; border: 1px solid var(--border); }
-        .stat-item { text-align: center; }
-        .stat-value { font-family: var(--font-heading); font-size: 48px; display: block; color: #fff; }
-        .stat-label { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; }
+        nav {
+            padding: 25px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0; width: 100%;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
 
-        /* --- COMMAND CENTRAL --- */
-        .command-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; border-top: 1px solid var(--border); }
-        .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        .cat-box { background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 20px; border-radius: 20px; transition: 0.3s; }
-        .cat-box:hover { background: rgba(255,255,255,0.05); border-color: #fff; }
-        .cat-label { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
-        .cat-cmd { font-family: 'JetBrains Mono'; font-size: 11px; color: #444; }
+        .brand { 
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-display); 
+            font-weight: 600; 
+            font-size: 18px;
+        }
 
-        /* --- TERMINAL --- */
-        .terminal-window { background: #080808; border: 1px solid var(--border); border-radius: 24px; padding: 30px; font-family: 'JetBrains Mono'; font-size: 12px; min-height: 400px; }
-        .t-header { display: flex; justify-content: space-between; margin-bottom: 20px; color: #333; font-weight: 700; font-size: 10px; }
-        .t-hash { color: #333; font-size: 10px; margin-top: 4px; letter-spacing: 1px; }
+        .brand img { width: 32px; height: 32px; border-radius: 50%; }
 
-        /* --- NEW SECTION: FAQ --- */
-        .faq-grid { max-width: 800px; margin: 0 auto; }
-        .faq-item { border-bottom: 1px solid var(--border); padding: 30px 0; }
-        .faq-q { font-family: var(--font-heading); font-size: 18px; margin-bottom: 10px; color: #fff; }
-        .faq-a { color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
 
-        footer { padding: 100px 20px; text-align: center; color: #222; font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 3px; }
-        .reveal { opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.2, 1, 0.3, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        .hero {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            background: radial-gradient(circle at center, #111 0%, #050505 100%);
+        }
 
-        @media (max-width: 900px) { .command-section { grid-template-columns: 1fr; } }
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(40px, 8vw, 90px);
+            font-weight: 600;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: clamp(16px, 1.5vw, 19px);
+            color: var(--text-dim);
+            max-width: 550px;
+            margin-bottom: 35px;
+            font-weight: 300;
+        }
+
+        .cta-group { display: flex; gap: 15px; }
+
+        .btn {
+            padding: 14px 30px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .btn-main { background: var(--text); color: var(--bg); }
+        .btn-main:hover { transform: translateY(-2px); opacity: 0.9; }
+
+        .btn-sub { border: 1px solid var(--border); color: var(--text); }
+        .btn-sub:hover { background: var(--border); }
+
+        section { max-width: 1100px; margin: 0 auto; padding: 100px 5%; }
+
+        .section-header { margin-bottom: 50px; text-align: center; }
+        .section-header h2 { font-family: var(--font-display); font-size: 36px; letter-spacing: -0.02em; }
+        .section-header p { color: var(--text-dim); margin-top: 10px; }
+
+        /* Command Display Section */
+        .command-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .cmd-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 16px;
+            transition: 0.2s;
+        }
+
+        .cmd-card:hover { border-color: #333; }
+
+        .cmd-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .cmd-name {
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--text);
+            font-size: 16px;
+        }
+
+        .cmd-category {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: rgba(255,255,255,0.05);
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: var(--text-dim);
+        }
+
+        .cmd-desc {
+            font-size: 14px;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 50px;
+        }
+
+        .stat-box h3 { font-size: 32px; font-family: var(--font-display); text-align: center; }
+        .stat-box p { font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; text-align: center; }
+
+        footer {
+            padding: 50px 5%;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-dim);
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 50px; }
+            .nav-links { display: none; }
+            .stats-row { flex-direction: column; gap: 30px; }
+        }
     </style>
 </head>
 <body>
-    <div class="ambient-glow" id="glow"></div>
 
-    <nav class="top-nav">
-        <div class="nav-pill">
-            <a href="#" class="active">Home</a>
-            <a href="https://percs.fun/commands">Commands</a>
-            <a href="https://percs.fun/faq">FAQ</a>
+    <nav>
+        <div class="brand">
+            <img src="https://www.percs.fun/assets/percs.webp" alt="Logo">
+            PERCS
+        </div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="https://percs.fun/faq">Support</a>
             <a href="https://percs.fun/legal">Legal</a>
         </div>
     </nav>
 
     <header class="hero">
-        <h1 class="reveal">PERCS<span>.</span></h1>
-        <p class="reveal">Next-generation Discord architecture. High performance meets military-grade protocols.</p>
-        <div class="reveal">
-            <a href="https://discord.com/oauth2/authorize?client_id=1427020960837402704" class="btn-primary">Add to Discord</a>
+        <h1>Management made simple.</h1>
+        <p>Enhance your community with safety, utility, and fun—all integrated into one seamless experience.</p>
+        <div class="cta-group">
+            <a href="https://discord.com/oauth2/authorize?client_id=1427020960837402704" class="btn btn-main">Add to Discord</a>
+            <a href="#features" class="btn btn-sub">Explore Features</a>
         </div>
     </header>
 
-    <section class="grid-3">
-        <div class="feature-card reveal">
-            <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
-            <h3>Elite Security</h3>
-            <p>Data encrypted via AES-256-GCM. Using 64-character entropy salts, ensuring only private hardware keys can decrypt your data.</p>
+    <section id="features">
+        <div class="section-header">
+            <h2>Core Features</h2>
+            <p>A few examples of what you can do with PERCS.</p>
         </div>
-        <div class="feature-card reveal">
-            <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
-            <h3>Hardened Speed</h3>
-            <p>Engineered for sub-30ms execution. Our distributed backbone handles millions of requests with zero latency.</p>
-        </div>
-        <div class="feature-card reveal">
-            <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></div>
-            <h3>Modular Utility</h3>
-            <p>From Advanced Levels to Economy systems, toggle exactly what your community needs. Light weight, heavy impact.</p>
-        </div>
-    </section>
+        
+        <div class="command-grid">
+            <div class="cmd-card">
+                <div class="cmd-header">
+                    <span class="cmd-name">AFK Status</span>
+                    <span class="cmd-category">Utils</span>
+                </div>
+                <p class="cmd-desc">Let your community know when you're away with custom reasons and automated responses.</p>
+            </div>
 
-    <section class="reveal">
-        <h2 class="section-title">Bot Stats</h2>
-        <div class="stats-container">
-            <div class="stat-item">
-                <span class="stat-value">Servers In</span>
-                <span class="stat-label">Coming Soon</span>
+            <div class="cmd-card">
+                <div class="cmd-header">
+                    <span class="cmd-name">Anti-Nuke</span>
+                    <span class="cmd-category">AutoMod</span>
+                </div>
+                <p class="cmd-desc">Comprehensive server protection system to keep your server safe from malicious actions.</p>
             </div>
-            <div class="stat-item">
-                <span class="stat-value">Users Serving</span>
-                <span class="stat-label">Coming</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value">Uptime</span>
-                <span class="stat-label">Coming Soon</span>
-            </div>
-        </div>
-    </section>
 
-    <section class="command-section">
-        <div class="reveal">
-            <h2 style="font-family: var(--font-heading); font-size: 38px; margin-bottom: 20px; letter-spacing: -2px;">Command Central</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 40px; font-size: 14px;">Real-time command relay protected by hardware-level private keys.</p>
-            <div class="category-grid">
-                <div class="cat-box"><div class="cat-label">Levels</div><div class="cat-cmd">/add-level-role</div></div>
-                <div class="cat-box"><div class="cat-label">Roleplay</div><div class="cat-cmd">/airkiss</div></div>
-                <div class="cat-box"><div class="cat-label">Utils</div><div class="cat-cmd">.afk</div></div>
-                <div class="cat-box"><div class="cat-label">Security</div><div class="cat-cmd">/word-filter</div></div>
+            <div class="cmd-card">
+                <div class="cmd-header">
+                    <span class="cmd-name">Level Rewards</span>
+                    <span class="cmd-category">Level</span>
+                </div>
+                <p class="cmd-desc">Automatically assign roles to members as they reach specific milestones in your community.</p>
             </div>
-        </div>
-        <div class="reveal">
-            <div class="terminal-window">
-                <div class="t-header"><span>STATUS: ACTIVE</span><span style="color:#4ade80">SECURE</span></div>
-                <div id="encryption-stream"></div>
-            </div>
-        </div>
-    </section>
 
-    <section class="reveal">
-        <h2 class="section-title">Custom Logging</h2>
-        <div class="grid-3">
-            <div class="feature-card">
-                <h3>Modlog</h3>
-                <p>Log Actions Done By Mods In Your server. Etc</p>
+            <div class="cmd-card">
+                <div class="cmd-header">
+                    <span class="cmd-name">Interactions</span>
+                    <span class="cmd-category">Roleplay</span>
+                </div>
+                <p class="cmd-desc">Bring your members together with fun commands like airkiss, angrystare, and more.</p>
             </div>
-            <div class="feature-card">
-                <h3>Server Log</h3>
-                <p>Monitor Everything In Your server, igore users, roles, or channels. +MORE! </p>
+
+            <div class="cmd-card">
+                <div class="cmd-header">
+                    <span class="cmd-name">Smart Filtering</span>
+                    <span class="cmd-category">AutoMod</span>
+                </div>
+                <p class="cmd-desc">Advanced link filtering and domain whitelisting to prevent spam and harmful content.</p>
             </div>
-            <div class="feature-card">
-                <h3>Auto Moderation</h3>
-                <p>Enhance Your Server With Auto Moderation + Custom Modules. </p>
+
+            <div class="cmd-card">
+                <div class="cmd-header">
+                    <span class="cmd-name">Assets & Bags</span>
+                    <span class="cmd-category">Economy</span>
+                </div>
+                <p class="cmd-desc">A full inventory system where users can view owned items and manage their virtual assets.</p>
             </div>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-box"><h3>-</h3><p>Active Servers</p></div>
+            <div class="stat-box"><h3>-</h3><p>Community Members</p></div>
+            <div class="stat-box"><h3>99.9%</h3><p>Reliability</p></div>
         </div>
     </section>
 
-    <section class="reveal">
-        <h2 class="section-title">Frequent Inquiries</h2>
-        <div class="faq-grid">
-            <div class="faq-item">
-                <div class="faq-q">Is PERCS free to use?</div>
-                <div class="faq-a">Yes. Our core features—moderation, utility, etc are free. Advanced custom branding is reserved for tiered members. This is comning soon.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-q">How do I set up the economy?</div>
-                <div class="faq-a">The Conifg Is Already Set up, just do .daily, or .work to begin!</div>
-            </div>
-             <div class="faq-item">
-                <div class="faq-q">Is There A Dashboard?</div>
-                <div class="faq-a">No. Not at the momment, but one is in development.</div>
-            </div>
+    <footer>
+        <span>&copy; 2026 PERCS</span>
+        <div style="display:flex; gap: 20px;">
+            <a href="https://discord.com/oauth2/authorize?client_id=1427020960837402704" style="color:inherit; text-decoration:none;">Invite</a>
+            <a href="https://percs.fun/legal" style="color:inherit; text-decoration:none;">Terms</a>
         </div>
-    </section>
+    </footer>
 
-    <footer>PERCS &mdash; ON TOP &mdash; 2026</footer>
-
-    <script>
-        const glow = document.getElementById('glow');
-        window.addEventListener('mousemove', (e) => {
-            glow.style.setProperty('--x', e.clientX + 'px');
-            glow.style.setProperty('--y', e.clientY + 'px');
-        });
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        const stream = document.getElementById('encryption-stream');
-        const chars = 'ABCDEF0123456789!@#$%^&*';
-        setInterval(() => {
-            const line = document.createElement('div');
-            line.className = 't-hash';
-            let hash = ''; for(let i=0; i<40; i++) hash += chars.charAt(Math.floor(Math.random()*chars.length));
-            line.innerHTML = `<span style="color:#222">BUF_STREAM:</span> ${hash}`;
-            stream.prepend(line);
-            if (stream.children.length > 12) stream.lastChild.remove();
-        }, 500);
-    </script>
 </body>
 </html>
