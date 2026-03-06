@@ -29,82 +29,47 @@
 
         nav {
             padding: 25px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            top: 0; width: 100%;
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+            position: fixed; top: 0; width: 100%;
+            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(10px);
+            z-index: 1000; border-bottom: 1px solid var(--border);
         }
 
         .brand { 
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-family: var(--font-display); 
-            font-weight: 600; 
-            font-size: 18px;
-            text-decoration: none;
-            color: #fff;
+            display: flex; align-items: center; gap: 12px;
+            font-family: var(--font-display); font-weight: 600; font-size: 18px;
+            text-decoration: none; color: #fff;
         }
-
         .brand img { width: 32px; height: 32px; border-radius: 50%; }
 
         .nav-links a {
-            color: var(--text-dim);
-            text-decoration: none;
-            margin-left: 25px;
-            font-size: 14px;
-            font-weight: 500;
-            transition: 0.2s;
+            color: var(--text-dim); text-decoration: none;
+            margin-left: 25px; font-size: 14px; font-weight: 500; transition: 0.2s;
         }
         .nav-links a:hover { color: var(--text); }
 
         .hero {
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
+            height: 85vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 0 20px;
             background: radial-gradient(circle at center, #111 0%, #050505 100%);
         }
 
         .hero h1 {
-            font-family: var(--font-display);
-            font-size: clamp(40px, 8vw, 90px);
-            font-weight: 600;
-            letter-spacing: -0.04em;
-            line-height: 1.1;
-            margin-bottom: 20px;
+            font-family: var(--font-display); font-size: clamp(40px, 8vw, 90px);
+            font-weight: 600; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 20px;
         }
 
         .hero p {
-            font-size: clamp(16px, 1.5vw, 19px);
-            color: var(--text-dim);
-            max-width: 550px;
-            margin-bottom: 35px;
-            font-weight: 300;
+            font-size: clamp(16px, 1.2vw, 19px); color: var(--text-dim);
+            max-width: 550px; margin-bottom: 35px; font-weight: 300;
         }
-
-        .cta-group { display: flex; gap: 15px; }
 
         .btn {
-            padding: 14px 30px;
-            border-radius: 100px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: 0.3s;
+            padding: 14px 30px; border-radius: 100px;
+            text-decoration: none; font-size: 14px; font-weight: 500; transition: 0.3s;
         }
-
         .btn-main { background: var(--text); color: var(--bg); }
-        .btn-main:hover { transform: translateY(-2px); opacity: 0.9; }
-
         .btn-sub { border: 1px solid var(--border); color: var(--text); }
         .btn-sub:hover { background: var(--border); }
 
@@ -114,95 +79,39 @@
         .section-header h2 { font-family: var(--font-display); font-size: 36px; letter-spacing: -0.02em; }
         .section-header p { color: var(--text-dim); margin-top: 10px; }
 
-        /* Command Display Section */
-        .command-grid {
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
-            margin-bottom: 40px;
         }
 
-        .cmd-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            padding: 24px;
-            border-radius: 16px;
-            transition: 0.2s;
-            display: flex;
-            flex-direction: column;
+        .card {
+            background: var(--surface); border: 1px solid var(--border);
+            padding: 28px; border-radius: 20px; transition: 0.3s;
+            display: flex; flex-direction: column;
+        }
+        .card:hover { border-color: #444; transform: translateY(-5px); }
+
+        .card-tag {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em;
+            background: rgba(255,255,255,0.05); padding: 4px 10px;
+            border-radius: 6px; color: var(--text-dim); width: fit-content; margin-bottom: 12px;
         }
 
-        .cmd-card:hover { border-color: #333; transform: translateY(-4px); }
+        .card-title { font-family: var(--font-display); font-weight: 600; font-size: 18px; margin-bottom: 8px; }
+        .card-desc { font-size: 14px; color: var(--text-dim); flex-grow: 1; }
 
-        .cmd-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .cmd-name {
-            font-family: var(--font-display);
-            font-weight: 600;
-            color: var(--text);
-            font-size: 16px;
-        }
-
-        .cmd-category {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            background: rgba(255,255,255,0.05);
-            padding: 4px 8px;
-            border-radius: 4px;
-            color: var(--text-dim);
-        }
-
-        .cmd-desc {
-            font-size: 14px;
-            color: var(--text-dim);
-            line-height: 1.5;
-            flex-grow: 1;
-        }
-
-        /* Community Section */
-        .community-feature {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            margin-top: 60px;
-            padding: 60px 0;
-            border-top: 1px solid var(--border);
-        }
-
-        .comm-text h3 { font-family: var(--font-display); font-size: 28px; margin-bottom: 20px; }
-        .comm-text p { color: var(--text-dim); margin-bottom: 20px; }
-
-        .stats-row {
-            display: flex;
-            justify-content: space-around;
-            padding: 60px 0;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            margin-top: 50px;
-        }
-
-        .stat-box h3 { font-size: 32px; font-family: var(--font-display); text-align: center; }
-        .stat-box p { font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; text-align: center; }
+        .divider { height: 1px; background: var(--border); margin: 60px 0; }
 
         footer {
-            padding: 50px 5%;
-            display: flex;
-            justify-content: space-between;
-            color: var(--text-dim);
-            font-size: 13px;
+            padding: 50px 5%; border-top: 1px solid var(--border);
+            display: flex; justify-content: space-between;
+            color: var(--text-dim); font-size: 13px;
         }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 50px; }
             .nav-links { display: none; }
-            .stats-row, .community-feature { flex-direction: column; grid-template-columns: 1fr; gap: 40px; }
+            .hero h1 { font-size: 45px; }
         }
     </style>
 </head>
@@ -224,8 +133,8 @@
     <header class="hero">
         <h1>Management made simple.</h1>
         <p>Enhance your community with safety, utility, and fun—all integrated into one seamless experience.</p>
-        <div class="cta-group">
-            <a href="https://Server.com/oauth2/authorize?client_id=1427020960837402704" class="btn btn-main">Add to Server</a>
+        <div style="display: flex; gap: 15px;">
+            <a href="https://discord.com/oauth2/authorize?client_id=1427020960837402704" class="btn btn-main">Add to Discord</a>
             <a href="#features" class="btn btn-sub">Explore Features</a>
         </div>
     </header>
@@ -236,96 +145,84 @@
             <p>A refined toolkit for the modern community leader.</p>
         </div>
         
-        <div class="command-grid" id="featuredGrid">
-            <div class="cmd-card">
-                <div class="cmd-header">
-                    <span class="cmd-name">Anti-Raid</span>
-                    <span class="cmd-category">AutoMod</span>
-                </div>
-                <p class="cmd-desc">Comprehensive server protection system to keep your server safe from malicious surges.</p>
+        <div class="grid">
+            <div class="card">
+                <div class="card-tag">Security</div>
+                <div class="card-title">antinuke</div>
+                <p class="card-desc">Robust protection against unauthorized administrative actions and server destruction.</p>
             </div>
-            <div class="cmd-card">
-                <div class="cmd-header">
-                    <span class="cmd-name">Leveling</span>
-                    <span class="cmd-category">Social</span>
-                </div>
-                <p class="cmd-desc">Engage your members with automated rewards and milestones for active participation.</p>
+            <div class="card">
+                <div class="card-tag">Level</div>
+                <div class="card-title">add-level-role</div>
+                <p class="card-desc">Assign a role reward to a specific level milestone.</p>
             </div>
-            <div class="cmd-card">
-                <div class="cmd-header">
-                    <span class="cmd-name">Economy</span>
-                    <span class="cmd-category">Games</span>
-                </div>
-                <p class="cmd-desc">A deep, persistent asset and inventory system to build a unique server ecosystem.</p>
+            <div class="card">
+                <div class="card-tag">Utils</div>
+                <div class="card-title">afk</div>
+                <p class="card-desc">Set your AFK status with an optional reason for automated replies.</p>
             </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 20px;">
-            <a href="https://percs.fun/commands" class="btn btn-sub" style="font-size: 12px;">View Full Library</a>
-        </div>
-
-        <div class="community-feature">
-            <div class="comm-text">
-                <h3>Designed for Scale</h3>
-                <p>From private servers to massive public hubs, PERCS is built to handle high-traffic environments without compromising on speed or reliability.</p>
-                <p>We focus on the essentials: clean interaction, fast response times, and intuitive setup.</p>
+            <div class="card">
+                <div class="card-tag">Fun</div>
+                <div class="card-title">anime</div>
+                <p class="card-desc">Search MyAnimeList for anime details, ratings, and media.</p>
             </div>
-            <div class="cmd-card" style="height: fit-content;">
-                <div class="cmd-header"><span class="cmd-name">Uptime Monitoring</span></div>
-                <p class="cmd-desc">Our infrastructure is distributed across multiple regions to ensure your moderation tools are always online when you need them most.</p>
+            <div class="card">
+                <div class="card-tag">AutoMod</div>
+                <div class="card-title">antidelete</div>
+                <p class="card-desc">Configure advanced message deletion tracking and logging.</p>
+            </div>
+            <div class="card">
+                <div class="card-tag">AutoMod</div>
+                <div class="card-title">antirraid</div>
+                <p class="card-desc">Protect your server from raid attempts and mass-joins automatically.</p>
             </div>
         </div>
 
-        <div class="stats-row">
-            <div class="stat-box"><h3>-</h3><p>Active Servers</p></div>
-            <div class="stat-box"><h3>-</h3><p>Community Members</p></div>
-            <div class="stat-box"><h3>99.9%</h3><p>Reliability</p></div>
-        </div>
-    </section>
+        <div class="divider"></div>
 
-    <section>
         <div class="section-header">
-            <h2>Start Building.</h2>
-            <p>Join thousands of communities already using PERCS.</p>
-            <div class="cta-group" style="justify-content: center; margin-top: 30px;">
-                <a href="https://Server.com/oauth2/authorize?client_id=1427020960837402704" class="btn btn-main">Add to Server</a>
+            <h2>Discover More</h2>
+            <p>A live look into our extensive library of utilities.</p>
+        </div>
+
+        <div class="grid" id="randomGrid">
             </div>
+
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="https://percs.fun/commands" class="btn btn-main">View Full Library</a>
         </div>
     </section>
 
     <footer>
         <span>&copy; 2026 PERCS</span>
         <div style="display:flex; gap: 20px;">
-            <a href="https://Server.com/oauth2/authorize?client_id=1427020960837402704" style="color:inherit; text-decoration:none;">Invite</a>
-            <a href="https://percs.fun/legal" style="color:inherit; text-decoration:none;">Terms</a>
+            <a href="https://percs.fun/faq">FAQ</a>
+            <a href="https://percs.fun/legal">Legal</a>
         </div>
     </footer>
 
     <script>
-        // Optional: Fetch a few real commands to populate the feature grid dynamically
-        async function loadFeatured() {
+        async function loadRandomCommands() {
             try {
                 const res = await fetch('https://raw.githubusercontent.com/AC447724/Percs-Commands/refs/heads/main/commands/commands.json');
                 const data = await res.json();
-                const grid = document.getElementById('featuredGrid');
+                const grid = document.getElementById('randomGrid');
                 
-                // Pick 6 varied commands to show off
-                const featured = data.filter(c => ['AutoMod', 'Economy', 'Utils', 'Level', 'Music', 'Fun'].includes(c.category)).slice(0, 6);
+                const shuffled = data.sort(() => 0.5 - Math.random());
+                const selected = shuffled.slice(0, 3);
                 
-                if(featured.length > 0) {
-                    grid.innerHTML = featured.map(cmd => `
-                        <div class="cmd-card">
-                            <div class="cmd-header">
-                                <span class="cmd-name">${cmd.name}</span>
-                                <span class="cmd-category">${cmd.category}</span>
-                            </div>
-                            <p class="cmd-desc">${cmd.description}</p>
-                        </div>
-                    `).join('');
-                }
-            } catch(e) { console.log("Using static fallback features"); }
+                grid.innerHTML = selected.map(cmd => `
+                    <div class="card">
+                        <div class="card-tag">${cmd.category}</div>
+                        <div class="card-title">${cmd.name}</div>
+                        <p class="card-desc">${cmd.description}</p>
+                    </div>
+                `).join('');
+            } catch(e) {
+                console.error("Error loading commands.");
+            }
         }
-        loadFeatured();
+        loadRandomCommands();
     </script>
 </body>
 </html>
