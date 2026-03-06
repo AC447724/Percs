@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PERCS | Brand Kit Download</title>
+    
+    <meta property="og:title" content="PERCS Brand Kit">
+    <meta property="og:description" content="Official visual assets and brand guidelines for the PERCS ecosystem.">
+    <meta property="og:image" content="https://percs.fun/assets/brand/banner.png">
+    <meta name="theme-color" content="#050505">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@600&family=Inter:wght@300;400;500&display=swap');
+        
+        :root {
+            --bg: #050505;
+            --surface: #0f0f0f;
+            --text: #ffffff;
+            --text-dim: #888888;
+            --border: rgba(255, 255, 255, 0.08);
+            --font-display: 'Instrument Sans', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: var(--font-body); 
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #111 0%, #050505 100%);
+            -webkit-font-smoothing: antialiased;
+            overflow: hidden;
+        }
+
+        .download-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 50px 40px;
+            border-radius: 32px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+        }
+
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: 28px;
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: var(--text-dim);
+            font-size: 15px;
+            margin-bottom: 35px;
+            font-weight: 300;
+        }
+
+        .file-meta {
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 12px;
+            color: var(--text-dim);
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 35px;
+            font-family: monospace;
+        }
+
+        .btn-download {
+            display: block;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            padding: 16px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 25px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        .btn-back:hover { color: #fff; }
+
+        /* Progress Animation */
+        .loading-bar {
+            width: 100%;
+            height: 2px;
+            background: var(--border);
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .loading-bar.active { display: block; }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #fff;
+            transition: width 2s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="download-card">
+        <div class="icon-box">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+        </div>
+
+        <h1>Brand Kit</h1>
+        <p>Package includes high-res icons, no-bg variants, and system banners.</p>
+
+        <div class="file-meta">
+            <span>PERCS_KIT_2026.ZIP</span>
+            <span>~4.2 MB</span>
+        </div>
+
+        <a href="https://percs.fun/assets/brand/percs-brand-kit.zip" class="btn-download" id="dl-trigger">Initiate Download</a>
+        
+        <div class="loading-bar" id="loader">
+            <div class="progress" id="bar"></div>
+        </div>
+
+        <a href="https://percs.fun/assets" class="btn-back">Return to Library</a>
+    </div>
+
+    <script>
+        const btn = document.getElementById('dl-trigger');
+        const loader = document.getElementById('loader');
+        const bar = document.getElementById('bar');
+
+        btn.addEventListener('click', () => {
+            btn.innerText = "Processing...";
+            loader.classList.add('active');
+            setTimeout(() => {
+                bar.style.width = "100%";
+            }, 100);
+
+            // Resets button text after download starts
+            setTimeout(() => {
+                btn.innerText = "Download Started";
+            }, 2500);
+        });
+    </script>
+</body>
+</html>
