@@ -3,325 +3,305 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PERCS | FAQ & Tips</title>
-    <meta name="title" content="PERCS | FAQ">
-    <meta name="description" content="Frequently asked questions for the PERCS ecosystem. Explore moderation, security, and economy protocols.">
-    <meta name="keywords" content="Discord Bot, PERCS, Security, Antinuke, Discord Moderation, Economy Bot, FAQ">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#030303">
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://percs.fun/faq">
-    <meta property="og:title" content="PERCS | FAQ">
-    <meta property="og:description" content="Guide for the PERCS ecosystem. High-security moderation and advanced utility tools.">
-
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://percs.fun/faq">
-    <meta property="og:image" content="https://raw.githubusercontent.com/AC447724/Percs-Commands/refs/heads/main/assets/banner.png">
-    <link rel="icon" type="image/png" href="pf.png?v=2">
+    <title>PERCS | Questions</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@700&family=JetBrains+Mono&display=swap');
-
-        :root {
-            --bg: #030303;
-            --card-bg: rgba(15, 15, 15, 0.4);
-            --card-hover: rgba(20, 20, 20, 0.8);
-            --text-primary: #ffffff;
-            --text-secondary: #a1a1aa;
-            --border: rgba(255, 255, 255, 0.06);
-            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=Inter:wght@300;400;500&display=swap');
         
-        body {
-            background-color: var(--bg);
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
-            background-image: 
-                radial-gradient(circle at 50% 0%, rgba(255,255,255,0.05) 0%, transparent 50%),
-                radial-gradient(circle at 0% 0%, rgba(255,255,255,0.02) 0%, transparent 30%);
-            padding-bottom: 120px;
-            overflow-x: hidden;
+        :root {
+            --bg: #050505;
+            --surface: #0f0f0f;
+            --text: #ffffff;
+            --text-dim: #888888;
+            --border: rgba(255, 255, 255, 0.08);
+            --font-display: 'Instrument Sans', sans-serif;
+            --font-body: 'Inter', sans-serif;
         }
 
-        /* --- NAVIGATION --- */
-        .top-nav {
-            display: flex; justify-content: center;
-            padding-top: 40px; position: sticky; top: 0; z-index: 1000;
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: var(--font-body); 
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
-        .nav-pill {
-            display: flex; align-items: center;
-            background: rgba(10, 10, 10, 0.7);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--border);
-            padding: 6px; border-radius: 100px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-        .nav-pill a {
-            color: var(--text-secondary); text-decoration: none; font-size: 13px;
-            font-weight: 500; padding: 8px 20px; border-radius: 100px; 
-            transition: all 0.3s var(--ease-out);
-        }
-        .nav-pill a:hover { color: #fff; background: rgba(255,255,255,0.05); }
-        .nav-pill a.active { color: #fff; background: rgba(255,255,255,0.1); }
 
-        /* --- HERO --- */
-        .hero { text-align: center; margin: 100px 0 80px 0; opacity: 0; transform: translateY(20px); animation: fadeIn 0.8s var(--ease-out) forwards; }
-        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+        nav {
+            padding: 25px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            position: fixed; top: 0; width: 100%;
+            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(10px);
+            z-index: 1000; border-bottom: 1px solid var(--border);
+        }
+
+        .brand { 
+            display: flex; align-items: center; gap: 12px;
+            font-family: var(--font-display); font-weight: 600; font-size: 18px;
+            text-decoration: none; color: #fff;
+        }
+        .brand img { width: 32px; height: 32px; border-radius: 50%; }
+
+        .nav-links a {
+            color: var(--text-dim); text-decoration: none;
+            margin-left: 25px; font-size: 14px; font-weight: 500; transition: 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+
+        .hero {
+            height: 50vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 0 20px;
+            background: radial-gradient(circle at center, #111 0%, #050505 100%);
+        }
 
         .hero h1 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: clamp(48px, 10vw, 84px);
-            letter-spacing: -4px; line-height: 0.9; margin-bottom: 24px;
+            font-family: var(--font-display); font-size: clamp(40px, 8vw, 90px);
+            font-weight: 600; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 20px;
         }
-        .hero h1 span { color: #444; font-weight: 400; }
-        .hero p { color: var(--text-secondary); font-size: 18px; max-width: 500px; margin: 0 auto; line-height: 1.5; }
 
-        /* --- FAQ SECTION --- */
-        .faq-container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
-        .faq-group { margin-bottom: 56px; }
-        .group-label { 
-            font-family: 'JetBrains Mono'; 
-            font-size: 11px; color: #555; 
-            letter-spacing: 3px; margin-bottom: 24px; 
-            display: block; text-transform: uppercase;
+        .hero p {
+            font-size: clamp(16px, 1.2vw, 19px); color: var(--text-dim);
+            max-width: 550px; font-weight: 300;
+        }
+
+        section { max-width: 900px; margin: 0 auto; padding: 60px 5%; }
+
+        .faq-group { margin-bottom: 60px; }
+        .group-label {
+            font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em;
+            color: var(--text-dim); margin-bottom: 25px; display: block;
+            font-family: var(--font-display); font-weight: 600;
         }
 
         .faq-item {
-            background: var(--card-bg);
+            background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 20px;
             margin-bottom: 12px;
-            transition: all 0.4s var(--ease-out);
-        }
-
-        .faq-item:hover {
-            background: var(--card-hover);
-            border-color: rgba(255,255,255,0.12);
-            transform: scale(1.005);
+            transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
         }
 
         .faq-trigger {
-            width: 100%; padding: 28px 32px;
+            width: 100%; padding: 25px 30px;
             background: none; border: none;
             display: flex; justify-content: space-between; align-items: center;
             cursor: pointer; text-align: left;
         }
 
         .faq-trigger h3 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 18px; color: #efefef;
-            letter-spacing: -0.5px;
+            font-family: var(--font-display);
+            font-size: 17px; color: var(--text);
+            font-weight: 500;
         }
 
-        /* Fluid Dropdown Animation */
+        .chevron { transition: transform 0.4s ease; color: var(--text-dim); }
+
         .faq-content {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.5s var(--ease-out), opacity 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
             opacity: 0;
         }
 
-        .faq-item.active { background: rgba(20, 20, 20, 0.95); border-color: rgba(255,255,255,0.2); }
-        .faq-item.active .faq-content { grid-template-rows: 1fr; opacity: 1; }
+        .faq-item.active { border-color: #333; background: #0a0a0a; }
+        .faq-item.active .faq-content { max-height: 600px; opacity: 1; }
+        .faq-item.active .chevron { transform: rotate(180deg); color: #fff; }
 
-        .inner-wrap { overflow: hidden; }
         .inner-content {
-            padding: 0 32px 32px 32px;
-            color: var(--text-secondary);
+            padding: 0 30px 30px 30px;
+            color: var(--text-dim);
             font-size: 15px; line-height: 1.7;
         }
 
-        .chevron { transition: transform 0.5s var(--ease-out); color: #444; }
-        .faq-item.active .chevron { transform: rotate(180deg); color: #fff; }
-
         code {
             background: rgba(255,255,255,0.06);
-            padding: 3px 7px; border-radius: 6px;
-            font-family: 'JetBrains Mono'; font-size: 13px; color: #ddd;
+            padding: 2px 6px; border-radius: 5px;
+            font-family: monospace; font-size: 13px; color: #eee;
         }
 
-        /* --- CTA --- */
-        .cta { text-align: center; margin-top: 100px; }
-        .discord-btn {
-            display: inline-flex; align-items: center; gap: 12px;
-            background: #fff; color: #000; padding: 16px 36px;
-            border-radius: 100px; text-decoration: none; font-weight: 600;
-            transition: 0.4s var(--ease-out);
+        .cta-footer {
+            text-align: center; padding: 100px 20px;
+            border-top: 1px solid var(--border);
         }
-        .discord-btn:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(255,255,255,0.15); }
 
+        .btn {
+            padding: 14px 35px; border-radius: 100px;
+            text-decoration: none; font-size: 14px; font-weight: 600; transition: 0.3s;
+            display: inline-block;
+        }
+        .btn-main { background: var(--text); color: var(--bg); }
+        .btn-main:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        footer {
+            padding: 50px 5%; border-top: 1px solid var(--border);
+            display: flex; justify-content: space-between;
+            color: var(--text-dim); font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 50px; }
+            .faq-trigger { padding: 20px; }
+        }
     </style>
 </head>
 <body>
 
-    <nav class="top-nav">
-        <div class="nav-pill">
+    <nav>
+        <a href="https://percs.fun" class="brand">
+            <img src="https://www.percs.fun/assets/percs.webp" alt="Logo">
+            PERCS
+        </a>
+        <div class="nav-links">
             <a href="https://percs.fun">Home</a>
             <a href="https://percs.fun/commands">Commands</a>
-            <a href="#" class="active">FAQ</a>
+            <a href="#" style="color: #fff;">FAQ</a>
             <a href="https://percs.fun/legal">Legal</a>
         </div>
     </nav>
 
-    <div class="hero">
-        <h1>Global <span>Index</span></h1>
-        <p>Frequently asked questions regarding the PERCS ecosystem.</p>
-    </div>
+    <header class="hero">
+        <h1>Questions.</h1>
+        <p>Everything you need to know about setting up and managing PERCS.</p>
+    </header>
 
-    <div class="faq-container">
+    <section>
         <div class="faq-group">
-            <span class="group-label">1. Security & Moderation</span>
+            <span class="group-label">01 / Security & Trust</span>
             
             <div class="faq-item">
                 <button class="faq-trigger" onclick="toggleFaq(this)">
-                    <h3>How do I secure my server from nukes?</h3>
-                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    <h3>How do I enable Antinuke protection?</h3>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
                 </button>
                 <div class="faq-content">
-                    <div class="inner-wrap">
-                        <div class="inner-content">
-                            Use the <code>.antinuke</code> (or <code>.an</code>) command to initialize our comprehensive protection system. This monitors mass deletions and unauthorized administrative changes in real-time.
-                        </div>
+                    <div class="inner-content">
+                        Execute <code>.antinuke</code> to toggle the module. You can configure specific limits for channel deletions, role updates, and member kicks to ensure your server stays intact.
                     </div>
                 </div>
             </div>
 
             <div class="faq-item">
                 <button class="faq-trigger" onclick="toggleFaq(this)">
-                    <h3>How can I detect potential alt accounts?</h3>
-                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    <h3>Can I prevent alt accounts from joining?</h3>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
                 </button>
                 <div class="faq-content">
-                    <div class="inner-wrap">
-                        <div class="inner-content">
-                            The <code>/lookup</code> command traces user identity signatures to detect potential alt accounts. For general data, use <code>.whois</code> or <code>.ui</code>.
-                        </div>
+                    <div class="inner-content">
+                        Yes, use the <code>.antiraid</code> settings to set an account age requirement. Accounts newer than your specified limit will be automatically handled based on your config.
                     </div>
                 </div>
             </div>
 
             <div class="faq-item">
                 <button class="faq-trigger" onclick="toggleFaq(this)">
-                    <h3>What is the difference between ban and hardban?</h3>
-                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    <h3>How does the whitelist system work?</h3>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
                 </button>
                 <div class="faq-content">
-                    <div class="inner-wrap">
-                        <div class="inner-content">
-                            While <code>.ban</code> removes a user from the server, <code>.hardban</code> permanently firewalls the user from the server to prevent reentry through any means.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <button class="faq-trigger" onclick="toggleFaq(this)">
-                    <h3>How do I prevent link spam?</h3>
-                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </button>
-                <div class="faq-content">
-                    <div class="inner-wrap">
-                        <div class="inner-content">
-                            Enable <code>.antilink</code> for advanced filtering with domain whitelisting and punishment escalation protocols.
-                        </div>
+                    <div class="inner-content">
+                        Whitelisting a user bypasses all security checks. This should only be used for highly trusted administrators. Use <code>.whitelist add @user</code> to manage this list.
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="faq-group">
-            <span class="group-label">2. Utility & Content</span>
+            <span class="group-label">02 / Utility & Engagement</span>
             
             <div class="faq-item">
                 <button class="faq-trigger" onclick="toggleFaq(this)">
-                    <h3>Can I extract text from images?</h3>
-                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    <h3>How do I setup Leveling and Rewards?</h3>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
                 </button>
                 <div class="faq-content">
-                    <div class="inner-wrap">
-                        <div class="inner-content">
-                            Yes. Use <code>.ocr</code> to extract text from an image or <code>.ocrtr</code> to extract and translate it simultaneously. Both utilize the Tesseract engine for high accuracy.
-                        </div>
+                    <div class="inner-content">
+                        Use <code>/add-level-role</code> to link a role to a specific level milestone. Users will automatically receive the role once they reach the required XP.
                     </div>
                 </div>
             </div>
 
             <div class="faq-item">
                 <button class="faq-trigger" onclick="toggleFaq(this)">
-                    <h3>How do I manage server welcome messages?</h3>
-                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    <h3>Can I customize the Welcome/Leave messages?</h3>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
                 </button>
                 <div class="faq-content">
-                    <div class="inner-wrap">
-                        <div class="inner-content">
-                            Admins can use <code>/welcome set</code> to configure join messages and <code>/welcome test</code> to verify the appearance. Similar controls exist for <code>/leave</code> messages.
-                        </div>
+                    <div class="inner-content">
+                        Yes. Use <code>/welcome set</code> and <code>/leave set</code> to design custom messages. You can use variables like {user.mention} and {guild.name} to personalize them.
                     </div>
                 </div>
             </div>
 
             <div class="faq-item">
                 <button class="faq-trigger" onclick="toggleFaq(this)">
-                    <h3>How do I set up level role rewards?</h3>
-                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    <h3>How does the AFK system work?</h3>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
                 </button>
                 <div class="faq-content">
-                    <div class="inner-wrap">
-                        <div class="inner-content">
-                            Use <code>/add-level-role</code> to assign a specific role reward to a target level. You can view all active rewards using <code>/level-roles-list</code>.
-                        </div>
+                    <div class="inner-content">
+                        Running <code>.afk [reason]</code> sets your status. If anyone pings you while you are away, PERCS will notify them of your status. Your AFK status is removed as soon as you send a message.
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="faq-group">
-            <span class="group-label">3. Global Services</span>
-
+            <span class="group-label">03 / Social & Integration</span>
+            
             <div class="faq-item">
                 <button class="faq-trigger" onclick="toggleFaq(this)">
-                    <h3>Can I track crypto and currency rates?</h3>
-                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    <h3>How do I use Roleplay commands?</h3>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
                 </button>
                 <div class="faq-content">
-                    <div class="inner-wrap">
-                        <div class="inner-content">
-                            Yes. Use <code>.crypto</code> to fetch live market data for any coin, or <code>.exchange</code> to convert amounts between global currencies using live rates.
-                        </div>
+                    <div class="inner-content">
+                        Commands like <code>.hug</code>, <code>.slap</code>, or <code>.pat</code> create animated interactions between users. Simply mention the user you want to interact with.
                     </div>
                 </div>
             </div>
 
             <div class="faq-item">
                 <button class="faq-trigger" onclick="toggleFaq(this)">
-                    <h3>How do I create custom embeds?</h3>
-                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    <h3>Can I search for Anime and Manga?</h3>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
                 </button>
                 <div class="faq-content">
-                    <div class="inner-wrap">
-                        <div class="inner-content">
-                            The <code>/embed</code> suite allows you to create, edit, and manage custom interactive embeds. Use <code>/embed create</code> to start a new design.
-                        </div>
+                    <div class="inner-content">
+                        Yes. The <code>.anime [query]</code> command pulls live data, images, and ratings directly from MyAnimeList to share with your server.
                     </div>
                 </div>
             </div>
         </div>
+    </section>
+
+    <div class="cta-footer">
+        <h2 style="font-family: var(--font-display); font-size: 32px; margin-bottom: 20px; letter-spacing: -1px;">Still confused?</h2>
+        <a href="https://discord.gg/dAHEdfkDzX" class="btn btn-main">Join the Support Hub</a>
     </div>
 
-    <div class="cta">
-        <a href="https://discord.gg/dAHEdfkDzX" class="discord-btn">Discord Server</a>
-    </div>
+    <footer>
+        <span>&copy; 2026 PERCS</span>
+        <div style="display:flex; gap: 24px;">
+            <a href="https://percs.fun/faq" style="color: inherit; text-decoration: none;">FAQ</a>
+            <a href="https://percs.fun/legal" style="color: inherit; text-decoration: none;">TERMS</a>
+        </div>
+    </footer>
 
     <script>
         function toggleFaq(button) {
             const item = button.parentElement;
             const isActive = item.classList.contains('active');
+            
+            // Close all items
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-            if (!isActive) item.classList.add('active');
+
+            // Open clicked item if it wasn't already active
+            if (!isActive) {
+                item.classList.add('active');
+            }
         }
     </script>
 </body>
