@@ -1,16 +1,17 @@
 [
   {
-    "name": "247",
-    "description": "Toggle 24/7 mode to keep the bot in voice.",
-    "category": "Music",
+    "name": "activity",
+    "description": "Shows what you or another user is currently doing (Spotify, playing, watching, streaming, VC, custom status).",
+    "category": "Fun",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
     "aliases": [
-      "24/7",
-      "stay"
+      "presence",
+      "act"
     ],
-    "load_error": false
+    "load_error": false,
+    "usage": "[@user]"
   },
   {
     "name": "add-level-role",
@@ -38,7 +39,7 @@
   {
     "name": "afk",
     "description": "Set your AFK status with an optional reason.",
-    "category": "Utils",
+    "category": "Utility",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
@@ -70,7 +71,7 @@
   },
   {
     "name": "airkiss",
-    "description": "Blow an air kiss to someone.",
+    "description": "Perform a airkiss action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -80,7 +81,7 @@
   },
   {
     "name": "angrystare",
-    "description": "Stare angrily at someone.",
+    "description": "Perform a angrystare action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -109,18 +110,8 @@
     "load_error": false
   },
   {
-    "name": "antidelete",
-    "description": "Configure message deletion logging.",
-    "category": "Moderation",
-    "type": "prefix",
-    "arguments": [],
-    "permissions": [],
-    "aliases": [],
-    "load_error": false
-  },
-  {
     "name": "antilink",
-    "description": "Advanced link filtering with domain whitelisting and punishment escalation.",
+    "description": "Link filtering with domain whitelisting and punishment escalation.",
     "category": "AutoMod",
     "type": "prefix",
     "arguments": [],
@@ -140,7 +131,7 @@
   },
   {
     "name": "antinuke",
-    "description": "Comprehensive server protection system.",
+    "description": "Server protection system against mass actions.",
     "category": "AutoMod",
     "type": "prefix",
     "arguments": [],
@@ -152,7 +143,7 @@
   },
   {
     "name": "antiraid",
-    "description": "Comprehensive anti-raid protection system.",
+    "description": "Advanced server protection suite against coordinated raids.",
     "category": "AutoMod",
     "type": "prefix",
     "arguments": [],
@@ -173,14 +164,15 @@
     "load_error": false
   },
   {
-    "name": "antispam",
-    "description": "Configure anti-spam module.",
-    "category": "Moderation",
+    "name": "ascii",
+    "description": "Converts text to ASCII art.",
+    "category": "Fun",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
     "aliases": [],
-    "load_error": false
+    "load_error": false,
+    "usage": "ascii <text>"
   },
   {
     "name": "assets",
@@ -198,18 +190,8 @@
   },
   {
     "name": "automod",
-    "description": "Configure the AutoMod system for this server.",
+    "description": "Unified AutoMod management — configure modules, bypasses, and view status.",
     "category": "AutoMod",
-    "type": "prefix",
-    "arguments": [],
-    "permissions": [],
-    "aliases": [],
-    "load_error": false
-  },
-  {
-    "name": "automod",
-    "description": "Configure the AutoMod system for this server.",
-    "category": "Moderation",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
@@ -218,13 +200,24 @@
   },
   {
     "name": "automod-setup",
-    "description": "Interactive AutoMod setup wizard.",
+    "description": "AutoMod configuration interface.",
     "category": "AutoMod",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
     "aliases": [],
     "load_error": false
+  },
+  {
+    "name": "autoreact",
+    "description": "Manage auto reactions.",
+    "category": "Utility",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [],
+    "load_error": false,
+    "usage": ".autoreact <add|remove|edit|list> [trigger] [emoji]"
   },
   {
     "name": "autoreact",
@@ -240,6 +233,19 @@
     "permissions": [],
     "aliases": [],
     "load_error": false
+  },
+  {
+    "name": "autoresponder",
+    "description": "Manage auto responders. Append -embed to response text to send as embed.",
+    "category": "Utility",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "ar"
+    ],
+    "load_error": false,
+    "usage": ".autoresponder <add|remove|edit|list> [trigger] [response] [-embed]"
   },
   {
     "name": "autoresponder",
@@ -282,7 +288,7 @@
   },
   {
     "name": "baccarat",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Baccarat simulation (Banker vs Player).",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -294,8 +300,50 @@
     "load_error": false
   },
   {
+    "name": "backup",
+    "description": "Server backup system.",
+    "category": "Backup",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "bk"
+    ],
+    "load_error": false
+  },
+  {
+    "name": "backup",
+    "description": "Server archival and restoration system.",
+    "category": "Backup",
+    "type": "slash",
+    "arguments": [
+      "[create]",
+      "[list]",
+      "[info]",
+      "[load]",
+      "[delete]"
+    ],
+    "permissions": [],
+    "aliases": [],
+    "load_error": false
+  },
+  {
+    "name": "bad-kanye",
+    "description": "Generates a fake tweet of one of Kanye's negative or inspirational quotes.",
+    "category": "Fun",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "badye",
+      "badtweet"
+    ],
+    "load_error": false,
+    "cooldown": 5
+  },
+  {
     "name": "balance",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Check your wallet and bank balance. Can view other users' balances too. Usage: .balance [user]",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -307,7 +355,7 @@
   },
   {
     "name": "ban",
-    "description": "Bans a user from the server by mention, ID, or partial name.",
+    "description": "Permanently ban a user from the server. Can ban by mention, ID, or partial name. Include reason with `reason <text>`. Logs to modlog. Usage: .ban <user> [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -317,7 +365,7 @@
   },
   {
     "name": "bark",
-    "description": "Barks at someone.",
+    "description": "Perform a bark action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -326,8 +374,21 @@
     "load_error": false
   },
   {
+    "name": "birthday",
+    "description": "View or set your birthday.",
+    "category": "Utility",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "bday"
+    ],
+    "load_error": false,
+    "usage": "[set MM-DD | @user | test]"
+  },
+  {
     "name": "bite",
-    "description": "Bite someone.",
+    "description": "Perform a bite action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -337,7 +398,7 @@
   },
   {
     "name": "blackjack",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Blackjack simulation.",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -349,7 +410,7 @@
   },
   {
     "name": "bleh",
-    "description": "Bleh at someone.",
+    "description": "Perform a bleh action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -359,17 +420,20 @@
   },
   {
     "name": "blunt",
-    "description": "Elite persistent blunt session with automatic schema fixing.",
+    "description": "Pass the blunt and track the rotation.",
     "category": "Fun",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
-    "aliases": [],
+    "aliases": [
+      "smoke",
+      "sesh"
+    ],
     "load_error": false
   },
   {
     "name": "bonus",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Claim daily bonus rewards based on activity and server participation. Rewards: 500-5000c. Cooldown: 24 hours. Usage: .bonus",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -390,7 +454,7 @@
   {
     "name": "boosterrole",
     "description": "⚠️ Could not load details for this command.",
-    "category": "Utils",
+    "category": "Utility",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
@@ -402,7 +466,7 @@
   },
   {
     "name": "brofist",
-    "description": "Bro fist someone.",
+    "description": "Perform a brofist action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -412,8 +476,8 @@
   },
   {
     "name": "buttonrole",
-    "description": "⚠️ Could not load details for this command.",
-    "category": "Utils",
+    "description": "Create interactive button role systems. Users click buttons to assign/remove roles. Admin only. Usage: .buttonrole <create|list|delete> [options]",
+    "category": "Utility",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
@@ -424,12 +488,25 @@
   },
   {
     "name": "buy",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Purchase items from the store.",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
     "aliases": [],
+    "load_error": false
+  },
+  {
+    "name": "cashapp",
+    "description": "Looks up a Cash App $Cashtag to verify its existence.",
+    "category": "Fun",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "cash",
+      "ca"
+    ],
     "load_error": false
   },
   {
@@ -447,7 +524,7 @@
   },
   {
     "name": "celebrate",
-    "description": "Celebrate with someone.",
+    "description": "Perform a celebrate action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -457,7 +534,7 @@
   },
   {
     "name": "channel",
-    "description": "Advanced channel and category management.",
+    "description": "Management of server channels including creation, deletion, cloning, and permission synchronization.",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -479,7 +556,7 @@
   },
   {
     "name": "cheers",
-    "description": "Cheers with someone.",
+    "description": "Perform a cheers action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -499,7 +576,7 @@
   },
   {
     "name": "clap",
-    "description": "Clap at someone.",
+    "description": "Perform a clap action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -508,21 +585,8 @@
     "load_error": false
   },
   {
-    "name": "clearqueue",
-    "description": "Clear the entire song queue.",
-    "category": "Music",
-    "type": "prefix",
-    "arguments": [],
-    "permissions": [],
-    "aliases": [
-      "cq",
-      "qc"
-    ],
-    "load_error": false
-  },
-  {
     "name": "clearsnipe",
-    "description": "Clears all deleted messages stored for this channel.",
+    "description": "Clear all stored deleted messages for this channel. Removes snipe history. Usage: .clearsnipe",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -534,7 +598,7 @@
   },
   {
     "name": "clearwarns",
-    "description": "Clear all warnings for a member.",
+    "description": "Clear all warnings for a member. Resets their warning count to 0. Admin only. Usage: .clearwarns <user>",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -547,7 +611,7 @@
   },
   {
     "name": "cockfight",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Cockfighting betting: wager on your fighter. Win = 2x.",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -559,7 +623,7 @@
   },
   {
     "name": "coinflip",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Simple coin flip: bet heads or tails. Win = 2x. Min 10c. Usage: .coinflip <heads|tails> <amount>",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -570,8 +634,32 @@
     "load_error": false
   },
   {
+    "name": "companion",
+    "description": "Set a waifu as your companion to gain XP from fishing, mining, hunting, and work. Rarity determines XP gain (Trash=10 → Mythic=800). Usage: .companion [waifu_id] or .companion to view current",
+    "category": "Anime",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "setcompanion",
+      "mycompanion"
+    ],
+    "load_error": false
+  },
+  {
+    "name": "compliment",
+    "description": "Sends a random compliment to a user.",
+    "category": "Fun",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [],
+    "load_error": false,
+    "usage": "compliment [@user]"
+  },
+  {
     "name": "confused",
-    "description": "Act confused at someone.",
+    "description": "Perform a confused action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -591,7 +679,7 @@
   },
   {
     "name": "cool",
-    "description": "Be cool with someone.",
+    "description": "Perform a cool action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -601,7 +689,7 @@
   },
   {
     "name": "counter",
-    "description": "Manage server statistic counters on channels.",
+    "description": "Management of dynamic server statistic counters on channels.",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -611,7 +699,7 @@
   },
   {
     "name": "crash",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Play crash: watch a multiplier climb and cash out before it crashes. Set your bet and cash-out multiplier. Min 10c, max 20k. Usage: .crash <amount>",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -621,7 +709,7 @@
   },
   {
     "name": "crime",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Attempt a crime to steal credits from the server bank pool. Success: ~30%. Reward: 200-2000c. Cooldown: 45 seconds. Usage: .crime",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -631,7 +719,7 @@
   },
   {
     "name": "cry",
-    "description": "Cry at someone.",
+    "description": "Perform a cry action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -641,21 +729,21 @@
   },
   {
     "name": "crypto",
-    "description": "Fetches the current price and market data for a cryptocurrency.",
-    "category": "Utils",
+    "description": "Check coin prices and market data.",
+    "category": "Utility",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
     "aliases": [
-      "lalalalalalalalallalalaidkwhatthisaliasistbh",
       "coin",
-      "price"
+      "price",
+      "check"
     ],
     "load_error": false
   },
   {
     "name": "cuddle",
-    "description": "Cuddle someone.",
+    "description": "Perform a cuddle action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -665,17 +753,19 @@
   },
   {
     "name": "daily",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Retrieve daily credit allocation.",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
-    "aliases": [],
+    "aliases": [
+      "day"
+    ],
     "load_error": false
   },
   {
     "name": "dance",
-    "description": "Dance with someone.",
+    "description": "Perform a dance action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -707,7 +797,7 @@
   },
   {
     "name": "dice",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Roll dice: bet on outcome. Predict over/under 3.5, even/odd, or specific range. Win =1.9x. Usage: .dice <roll|even|odd> <amount>",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -720,7 +810,7 @@
   },
   {
     "name": "disable",
-    "description": "Disable or enable commands and categories in this server.",
+    "description": "Management of command and category availability guild-wide.",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -768,7 +858,7 @@
   },
   {
     "name": "drag",
-    "description": "Drags a member or members to your voice channel.",
+    "description": "Drag a member or members to your voice channel. Usage: .drag <@user> [@user2] [@user3]...",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -778,7 +868,7 @@
   },
   {
     "name": "drool",
-    "description": "Drool on someone.",
+    "description": "Perform a drool action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -814,7 +904,7 @@
   },
   {
     "name": "editsnipe",
-    "description": "Retrieve recently edited messages.",
+    "description": "View recently edited messages in this channel (last 50). Shows before/after content with timestamps. Usage: .editsnipe [number]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -826,8 +916,8 @@
   },
   {
     "name": "embed",
-    "description": "Send a custom embed to a channel.",
-    "category": "Utils",
+    "description": "Post a custom embed to a channel.",
+    "category": "Utility",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
@@ -856,7 +946,7 @@
   },
   {
     "name": "evillaugh",
-    "description": "Laugh evilly at someone.",
+    "description": "Perform a evillaugh action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -865,9 +955,21 @@
     "load_error": false
   },
   {
+    "name": "evolve",
+    "description": "Evolve your waifus through 6 tiers (Common → Uncommon → Rare → Epic → Legendary → Mythic). Requires credits and evolution materials (Essence Crystals, Celestial Shards, etc). Each tier boosts stats. Usage: .evolve <waifu_id>",
+    "category": "Anime",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "evo"
+    ],
+    "load_error": false
+  },
+  {
     "name": "exchange",
-    "description": "Converts an amount from one currency to another using live rates.",
-    "category": "Utils",
+    "description": "Convert currency values.",
+    "category": "Utility",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
@@ -879,7 +981,7 @@
   },
   {
     "name": "facepalm",
-    "description": "Facepalm at someone.",
+    "description": "Perform a facepalm action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -888,8 +990,19 @@
     "load_error": false
   },
   {
+    "name": "fact",
+    "description": "Sends a random fun fact from an API.",
+    "category": "Fun",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [],
+    "load_error": false,
+    "usage": "fact"
+  },
+  {
     "name": "fakedm",
-    "description": "Generates a fake DM image from a user.",
+    "description": "Generates a visual representation of a direct message.",
     "category": "Admin",
     "type": "slash",
     "arguments": [
@@ -950,14 +1063,29 @@
     "load_error": false
   },
   {
-    "name": "filter",
-    "description": "Manage the word filter blacklist.",
-    "category": "Moderation",
+    "name": "find-id",
+    "description": "Finds the Genius.com artist ID for a given artist name.",
+    "category": "Fun",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
     "aliases": [],
-    "load_error": false
+    "load_error": false,
+    "usage": "<artist name>"
+  },
+  {
+    "name": "findsong",
+    "description": "Finds a song using the Genius API and displays its information.",
+    "category": "Fun",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "song",
+      "search"
+    ],
+    "load_error": false,
+    "usage": "<song name>"
   },
   {
     "name": "firstmessage",
@@ -974,7 +1102,7 @@
   },
   {
     "name": "fish",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Catch fish with your fishing rod for credits and loot. Catch varies from Bass (100c) to Cosmic Whale (5500c) with random attributes. Cooldown: 30 seconds. Companion XP: rarity-based (10-800 XP). Usage: .fish",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -984,7 +1112,7 @@
   },
   {
     "name": "fn",
-    "description": "Forcefully change and lock a user's nickname, or reset it.",
+    "description": "Lock a member's nickname so they can't change it.",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -1018,6 +1146,17 @@
     "load_error": false
   },
   {
+    "name": "gayrate",
+    "description": "Rate how gay someone is",
+    "category": "Fun",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [],
+    "load_error": false,
+    "usage": "[user]"
+  },
+  {
     "name": "gift",
     "description": "⚠️ Could not load details for this command.",
     "category": "Anime",
@@ -1041,11 +1180,11 @@
   },
   {
     "name": "giveaway",
-    "description": "Sentinel Security Giveaway System",
+    "description": "System for prize distribution and selection.",
     "category": "General",
     "type": "slash",
     "arguments": [
-      "[start]",
+      "[create]",
       "[end]",
       "[reroll]"
     ],
@@ -1078,7 +1217,7 @@
   },
   {
     "name": "handhold",
-    "description": "Hold hands with someone.",
+    "description": "Perform a handhold action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -1114,7 +1253,7 @@
   },
   {
     "name": "happy",
-    "description": "Be happy with someone.",
+    "description": "Perform a happy action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -1124,8 +1263,20 @@
   },
   {
     "name": "hardban",
-    "description": "Permanently firewalls a user from the server.",
+    "description": "Permanently firewall a user from the server. IP-based ban (if possible). Complete access block. Usage: .hardban <user> [reason]",
     "category": "Moderation",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "hban"
+    ],
+    "load_error": false
+  },
+  {
+    "name": "headbang",
+    "description": "Perform a headbang action on a user.",
+    "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
@@ -1133,13 +1284,16 @@
     "load_error": false
   },
   {
-    "name": "headbang",
-    "description": "Headbang into someone.",
-    "category": "Roleplay",
+    "name": "heist",
+    "description": "Start a multiplayer heist to rob a bank! More people = higher success chance.",
+    "category": "Economy",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
-    "aliases": [],
+    "aliases": [
+      "robbery",
+      "raid"
+    ],
     "load_error": false
   },
   {
@@ -1156,8 +1310,22 @@
     "load_error": false
   },
   {
+    "name": "hex",
+    "description": "Converts a color name to its HEX code and shows a preview.",
+    "category": "Utility",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "color",
+      "hexcode"
+    ],
+    "load_error": false,
+    "usage": "hex <color_name>"
+  },
+  {
     "name": "hide",
-    "description": "Hides a channel from the @everyone role.",
+    "description": "Hide a channel from @everyone role. Only specific roles can see it. Usage: .hide [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -1167,12 +1335,13 @@
   },
   {
     "name": "higherlow",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Card guessing game: predict if next card is higher or lower than current. Win=2x. Lose=none. Usage: .higherlow <amount>",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
     "aliases": [
+      "hl",
       "hilo",
       "cardgame"
     ],
@@ -1180,7 +1349,7 @@
   },
   {
     "name": "history",
-    "description": "View and manage moderation history",
+    "description": "View moderation history for a member (bans, kicks, warns, etc) or search by action. Usage: .history <user|action>",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -1214,7 +1383,7 @@
   },
   {
     "name": "image",
-    "description": "Search Google Images with interactive gallery",
+    "description": "Search Google Images with interactive gallery.",
     "category": "Fun",
     "type": "prefix",
     "arguments": [],
@@ -1228,7 +1397,7 @@
   },
   {
     "name": "impersonate",
-    "description": "Send a message as another user using a webhook.",
+    "description": "Dispatches a webhook message mimicking a specified user identity.",
     "category": "Fun",
     "type": "slash",
     "arguments": [
@@ -1243,7 +1412,7 @@
   },
   {
     "name": "imute",
-    "description": "Restricts a member from sending links and files.",
+    "description": "Restrict a member from sending links and files. Still allows text. Usage: .imute <user> [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -1262,6 +1431,18 @@
     "load_error": false
   },
   {
+    "name": "interval",
+    "description": "Automatic backup intervals.",
+    "category": "Backup",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "autobackup"
+    ],
+    "load_error": false
+  },
+  {
     "name": "invites",
     "description": "Show a user's invite stats (joins, leaves, fake, etc).",
     "category": "Utils",
@@ -1274,8 +1455,21 @@
     "load_error": false
   },
   {
+    "name": "ip",
+    "description": "Check security and location information for an IP address.",
+    "category": "Utility",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "ipcheck",
+      "lookup"
+    ],
+    "load_error": false
+  },
+  {
     "name": "iunmute",
-    "description": "Restores multimedia permissions for a member.",
+    "description": "Restore link/file permissions to a member. Usage: .iunmute <user> [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -1285,12 +1479,26 @@
   },
   {
     "name": "jail",
-    "description": "Jail a member, block channel access, and notify them via DM.",
+    "description": "Jail a member (blocks channel access, removes roles). Notifies user via DM. Auto-logs. Usage: .jail <user> [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
     "aliases": [],
+    "load_error": false
+  },
+  {
+    "name": "job",
+    "description": "View the job market or apply for a job. Usage: .job [apply <name>]",
+    "category": "Economy",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "jobmarket",
+      "career",
+      "jobs"
+    ],
     "load_error": false
   },
   {
@@ -1317,8 +1525,22 @@
     "load_error": false
   },
   {
+    "name": "kanye-song",
+    "description": "Searches for a Kanye West or Ye song and displays its details.",
+    "category": "Fun",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "yesong",
+      "kanyesong"
+    ],
+    "load_error": false,
+    "cooldown": 10
+  },
+  {
     "name": "keno",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Play keno: select number of spots (1-10) and number of picks (20). Match picks to your spots for payouts. Min 10c. Usage: .keno",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -1331,7 +1553,7 @@
   },
   {
     "name": "kick",
-    "description": "Kick a member from the server by mention, ID, or partial name.",
+    "description": "Kick a member from the server (they can rejoin). Can target by mention, ID, or name. Logs to modlog. Usage: .kick <user> [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -1351,7 +1573,7 @@
   },
   {
     "name": "laptop",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Hack/work with your laptop for credits. Income: 300-1500c. Requires laptop in inventory. Cooldown: 2 minutes. Usage: .laptop",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -1364,7 +1586,7 @@
   },
   {
     "name": "laugh",
-    "description": "Laugh with someone.",
+    "description": "Perform a laugh action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -1388,15 +1610,25 @@
   },
   {
     "name": "leave",
-    "description": "Configure advanced exit protocols.",
+    "description": "Set up and manage server leave messages.",
+    "category": "General",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [],
+    "load_error": false
+  },
+  {
+    "name": "leave",
+    "description": "Configure server leave messages for departing members.",
     "category": "Setup",
     "type": "slash",
     "arguments": [
-      "[set-channel]",
-      "[msg]",
-      "[embed]",
-      "[toggle]",
-      "[status]"
+      "[channel]",
+      "[dm]",
+      "[test]",
+      "[status]",
+      "[disable]"
     ],
     "permissions": [],
     "aliases": [],
@@ -1411,6 +1643,17 @@
     "permissions": [],
     "aliases": [],
     "load_error": false
+  },
+  {
+    "name": "lesbianrate",
+    "description": "Rate how lesbian someone is",
+    "category": "Fun",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [],
+    "load_error": false,
+    "usage": "[user]"
   },
   {
     "name": "level-roles-list",
@@ -1452,7 +1695,7 @@
   },
   {
     "name": "lick",
-    "description": "Lick someone.",
+    "description": "Perform a lick action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -1462,7 +1705,7 @@
   },
   {
     "name": "limbo",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Play limbo: watch multiplier climb and cash out before it goes below your target. Set multiplier between 1.0x and 100.0x. Usage: .limbo <amount> <multiplier>",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -1474,7 +1717,7 @@
   },
   {
     "name": "lock",
-    "description": "Locks a channel to prevent users from sending messages.",
+    "description": "Lock a channel to prevent users from sending messages. Everyone can still read. Usage: .lock [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -1486,7 +1729,7 @@
   },
   {
     "name": "lockdown",
-    "description": "Advanced lockdown system for channels and servers.",
+    "description": "Advanced lockdown system for channels and servers. Complete access control with granular permissions. Usage: .lockdown <full|partial|view>",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -1498,7 +1741,7 @@
   },
   {
     "name": "log",
-    "description": "Set up logging for your community.",
+    "description": "Configure audit logging for the guild.",
     "category": "Logger",
     "type": "prefix",
     "arguments": [],
@@ -1522,7 +1765,7 @@
   },
   {
     "name": "lookup",
-    "description": "Trace a user identity signature and detect potential alt accounts.",
+    "description": "Retrieve database records associated with a specific user ID.",
     "category": "Moderation",
     "type": "slash",
     "arguments": [
@@ -1533,21 +1776,8 @@
     "load_error": false
   },
   {
-    "name": "loop",
-    "description": "Toggle loop mode (off, track, queue).",
-    "category": "Music",
-    "type": "prefix",
-    "arguments": [],
-    "permissions": [],
-    "aliases": [
-      "inf",
-      "repeat"
-    ],
-    "load_error": false
-  },
-  {
     "name": "love",
-    "description": "Love someone.",
+    "description": "Perform a love action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -1567,7 +1797,7 @@
   },
   {
     "name": "mad",
-    "description": "Get mad at someone.",
+    "description": "Perform a mad action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -1622,12 +1852,25 @@
   },
   {
     "name": "meow",
-    "description": "Meows at someone.",
+    "description": "Perform a meow action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
     "aliases": [],
+    "load_error": false
+  },
+  {
+    "name": "messages",
+    "description": "Check message statistics for a user.",
+    "category": "General",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "m",
+      "msg"
+    ],
     "load_error": false
   },
   {
@@ -1641,8 +1884,19 @@
     "load_error": false
   },
   {
+    "name": "mock",
+    "description": "Converts your text to sPoNgEbOb mOcK tExT.",
+    "category": "Fun",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [],
+    "load_error": false,
+    "usage": "mock <text>"
+  },
+  {
     "name": "modlog",
-    "description": "Sets the channel where moderation actions will be logged.",
+    "description": "Set the channel where all moderation actions (bans, kicks, warns) are logged. Usage: .modlog <#channel>",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -1652,7 +1906,7 @@
   },
   {
     "name": "modstats",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "View moderator statistics (bans, kicks, warns, etc) for yourself or another mod. Usage: .modstats [@mod]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -1664,20 +1918,8 @@
     "load_error": false
   },
   {
-    "name": "move",
-    "description": "Move a track to a different position in the queue.",
-    "category": "Music",
-    "type": "prefix",
-    "arguments": [],
-    "permissions": [],
-    "aliases": [
-      "mv"
-    ],
-    "load_error": false
-  },
-  {
     "name": "moveall",
-    "description": "Moves all members from your current voice channel to another.",
+    "description": "Move all members from your current voice channel to another voice channel. Usage: .moveall <#channel>",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -1700,7 +1942,7 @@
   },
   {
     "name": "mute",
-    "description": "Mutes a member using a dedicated Muted role.",
+    "description": "Mute a member using the Muted role (blocks messages). Permanent until unmuted. Hierarchy protected. Usage: .mute <user> [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -1710,7 +1952,7 @@
   },
   {
     "name": "nervous",
-    "description": "Get nervous around someone.",
+    "description": "Perform a nervous action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -1720,7 +1962,7 @@
   },
   {
     "name": "nick",
-    "description": "Update a user's nickname.",
+    "description": "Change or reset a member's nickname in the server. Usage: .nick <user> [new_nickname]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -1730,7 +1972,7 @@
   },
   {
     "name": "nom",
-    "description": "Nibble on someone.",
+    "description": "Perform a nom action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -1740,29 +1982,19 @@
   },
   {
     "name": "notes",
-    "description": "Manage moderator notes for a member.",
+    "description": "Manage moderator notes for a member. Add/view/remove internal notes without penalties. Usage: .notes <user> [add/view/remove] [text]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
-    "aliases": [],
-    "load_error": false
-  },
-  {
-    "name": "nowplaying",
-    "description": "Show the currently playing track.",
-    "category": "Music",
-    "type": "prefix",
-    "arguments": [],
-    "permissions": [],
     "aliases": [
-      "np"
+      "note"
     ],
     "load_error": false
   },
   {
     "name": "nuke",
-    "description": "Deletes and clones a channel to clear its history.",
+    "description": "Nuke (delete and clone) a channel to clear all messages. Preserves permissions and settings. All messages deleted. Usage: .nuke [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -1772,7 +2004,7 @@
   },
   {
     "name": "nuzzle",
-    "description": "Nuzzle someone.",
+    "description": "Perform a nuzzle action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -1782,7 +2014,7 @@
   },
   {
     "name": "nyah",
-    "description": "Nyahhh at someone.",
+    "description": "Perform a nyah action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -1811,14 +2043,15 @@
     "load_error": false
   },
   {
-    "name": "owner",
-    "description": "Manage the AI system. (Dev only)",
-    "category": "AI",
+    "name": "owoify",
+    "description": "Turns your text into owo speak.",
+    "category": "Fun",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
     "aliases": [],
-    "load_error": false
+    "load_error": false,
+    "usage": "owoify <text>"
   },
   {
     "name": "parents",
@@ -1832,24 +2065,12 @@
   },
   {
     "name": "pat",
-    "description": "Pat someone.",
+    "description": "Perform a pat action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
     "aliases": [],
-    "load_error": false
-  },
-  {
-    "name": "pause",
-    "description": "Pause the current playback.",
-    "category": "Music",
-    "type": "prefix",
-    "arguments": [],
-    "permissions": [],
-    "aliases": [
-      "pa"
-    ],
     "load_error": false
   },
   {
@@ -1867,7 +2088,7 @@
   },
   {
     "name": "peek",
-    "description": "Peek at someone.",
+    "description": "Perform a peek action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -1877,7 +2098,7 @@
   },
   {
     "name": "permissions",
-    "description": "Displays a member's permissions and administrative status.",
+    "description": "Display a member's permissions and admin status in the server. Shows all permissions they have. Usage: .perms [@user]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -1890,7 +2111,7 @@
   },
   {
     "name": "pinch",
-    "description": "Pinch someone.",
+    "description": "Perform a pinch action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -1909,20 +2130,8 @@
     "load_error": false
   },
   {
-    "name": "play",
-    "description": "Play a song from a given query or URL.",
-    "category": "Music",
-    "type": "prefix",
-    "arguments": [],
-    "permissions": [],
-    "aliases": [
-      "p"
-    ],
-    "load_error": false
-  },
-  {
     "name": "poke",
-    "description": "Poke someone.",
+    "description": "Perform a poke action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -1932,7 +2141,7 @@
   },
   {
     "name": "pout",
-    "description": "Pout at someone.",
+    "description": "Perform a pout action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -1942,7 +2151,7 @@
   },
   {
     "name": "prefix",
-    "description": "Manage the server-specific bot prefix.",
+    "description": "View or change the server-specific bot prefix. Usage: .prefix [new_prefix]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -1979,7 +2188,7 @@
   },
   {
     "name": "profile",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "View your or another user's profile with balance, level, waifus owned, and rep score. Usage: .profile [user]",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -1991,7 +2200,7 @@
   },
   {
     "name": "punch",
-    "description": "Punch someone.",
+    "description": "Perform a punch action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2001,7 +2210,7 @@
   },
   {
     "name": "purge",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Mass-delete recent messages from the channel. Shows deleted count and logs to modlog. Usage: .purge <number> [filter]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2014,15 +2223,13 @@
     "load_error": false
   },
   {
-    "name": "queue",
-    "description": "Display the current song queue.",
-    "category": "Music",
+    "name": "quote",
+    "description": "⚠️ Could not load details for this command.",
+    "category": "Fun",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
-    "aliases": [
-      "q"
-    ],
+    "aliases": [],
     "load_error": false
   },
   {
@@ -2051,8 +2258,58 @@
     "load_error": false
   },
   {
+    "name": "rate",
+    "description": "Rate a user or anything with a dynamically generated image.",
+    "category": "Fun",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "gayrate",
+      "lesbianrate",
+      "coolrate",
+      "smartness",
+      "beautyrate",
+      "awkwardrate",
+      "funnyrate",
+      "sexyrate",
+      "hornyrate",
+      "simprate",
+      "epicrate",
+      "savage",
+      "chillrate",
+      "kindrate",
+      "crazyrate",
+      "hotrate",
+      "shyrate",
+      "nerdrate",
+      "swagrate",
+      "thugrate",
+      "cuterate",
+      "beastmode",
+      "tiredrate",
+      "romanticrate",
+      "danceability",
+      "hackerlevel",
+      "gamerate",
+      "bosslevel",
+      "clumsyrate",
+      "spicyrate",
+      "thing",
+      "rizzarate",
+      "dramarate",
+      "luckrate",
+      "basedrate",
+      "procrastinationrate",
+      "villainrate",
+      "angelrate"
+    ],
+    "load_error": false,
+    "usage": ".<type> [@user|text]"
+  },
+  {
     "name": "reactionsnipe",
-    "description": "Retrieve recently removed reactions.",
+    "description": "Retrieve recently removed reactions from messages. Shows emoji, user, and timestamp. Usage: .reactionsnipe [number]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2064,7 +2321,7 @@
   },
   {
     "name": "reason",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Update or view last moderation action's reason in modlog. Admin only. Usage: .reason [new_reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2084,8 +2341,8 @@
   },
   {
     "name": "remind",
-    "description": "⚠️ Could not load details for this command.",
-    "category": "Utils",
+    "description": "Set a reminder for yourself that will be sent via DM. Time format: 10m, 1h30m, 2d, etc. Usage: .remind <time> [reason]",
+    "category": "Utility",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
@@ -2093,21 +2350,8 @@
     "load_error": false
   },
   {
-    "name": "remove",
-    "description": "Remove a track from the queue by position.",
-    "category": "Music",
-    "type": "prefix",
-    "arguments": [],
-    "permissions": [],
-    "aliases": [
-      "rm",
-      "delete"
-    ],
-    "load_error": false
-  },
-  {
     "name": "rep",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Give or check reputation for a user. +1 rep takes 24 hours (cooldown). Usage: .rep [@user / check @user]",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -2116,27 +2360,27 @@
     "load_error": false
   },
   {
+    "name": "rerollmove",
+    "description": "⚠️ Could not load details for this command.",
+    "category": "Anime",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "rrm",
+      "reroll-move"
+    ],
+    "load_error": false
+  },
+  {
     "name": "restrictcommand",
-    "description": "Restricts a specific command to a specific role.",
+    "description": "Restrict a command to only users with a specific role. Usage: .restrictcommand <command> <role>",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
     "aliases": [
       "rc"
-    ],
-    "load_error": false
-  },
-  {
-    "name": "resume",
-    "description": "Resume the paused playback.",
-    "category": "Music",
-    "type": "prefix",
-    "arguments": [],
-    "permissions": [],
-    "aliases": [
-      "r",
-      "res"
     ],
     "load_error": false
   },
@@ -2154,7 +2398,7 @@
   },
   {
     "name": "rich",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "View top 10 richest players or top waifus. Use .topwaifus for waifu leaderboard. Usage: .rich or .topwaifus",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -2167,7 +2411,7 @@
   },
   {
     "name": "rmute",
-    "description": "Restricts a member from using reactions and external emotes.",
+    "description": "Restrict a member from using reactions and external emotes. All reactions disabled. Usage: .rmute <user> [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2176,8 +2420,18 @@
     "load_error": false
   },
   {
+    "name": "roast",
+    "description": "Roasts someone",
+    "category": "Fun",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [],
+    "load_error": false
+  },
+  {
     "name": "rob",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Attempt to rob another user's wallet. Success: 50/50. Reward: 10-50% of target's wallet. Failure: lose double the attempted amount. Usage: .rob @user",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -2199,7 +2453,7 @@
   },
   {
     "name": "role",
-    "description": "Comprehensive role management suite.",
+    "description": "Manage server roles.",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2223,7 +2477,7 @@
   },
   {
     "name": "roles",
-    "description": "Lists all roles in the server from highest to lowest position.",
+    "description": "List all roles in the server from highest to lowest position. Shows role count and info. Usage: .roles",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2240,13 +2494,14 @@
     "permissions": [],
     "aliases": [
       "waifu",
-      "w"
+      "w",
+      "rwaifu"
     ],
     "load_error": false
   },
   {
     "name": "roulette",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Play roulette: bet on red, black, or green. Red/black: 2x, Green: 15x. Min 10c. Usage: .roulette <red|black|green> <amount>",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -2268,7 +2523,7 @@
   },
   {
     "name": "runmute",
-    "description": "Restores reaction permissions for a member.",
+    "description": "Restore reaction permissions to a member. Usage: .runmute <user> [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2278,7 +2533,7 @@
   },
   {
     "name": "sad",
-    "description": "Be sad because of someone.",
+    "description": "Perform a sad action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2288,7 +2543,7 @@
   },
   {
     "name": "scared",
-    "description": "Get scared of someone.",
+    "description": "Perform a scared action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2310,7 +2565,7 @@
   },
   {
     "name": "scratch",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Scratch card: reveal 3 panels for payouts. Payouts range 0x-50x. Min 10c. Usage: .scratch <amount>",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -2322,8 +2577,21 @@
     "load_error": false
   },
   {
+    "name": "screenshot",
+    "description": "OWNER ONLY: Takes a high-quality screenshot of a website.",
+    "category": "Utility",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "ss",
+      "capture"
+    ],
+    "load_error": false
+  },
+  {
     "name": "sellwaifu",
-    "description": "Sell a waifu by DB id. Usage: .sellwaifu <id>",
+    "description": "Sell a fighter by its ID.",
     "category": "Anime",
     "type": "prefix",
     "arguments": [],
@@ -2342,13 +2610,14 @@
     "permissions": [],
     "aliases": [
       "si",
-      "server"
+      "server",
+      "guildinfo"
     ],
     "load_error": false
   },
   {
     "name": "setup",
-    "description": "Unified command for initializing server security and management features.",
+    "description": "Unified command for initializing server security and management features. Sets up modlog, mute role, and more. Usage: .setup",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2358,12 +2627,14 @@
   },
   {
     "name": "setupmute",
-    "description": "Sets up the necessary roles and permissions for the mute system.",
+    "description": "Set up the necessary Muted role and permissions for the mute system. Admin only. Usage: .setupmute",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
-    "aliases": [],
+    "aliases": [
+      "setup-mute"
+    ],
     "load_error": false
   },
   {
@@ -2378,7 +2649,7 @@
   },
   {
     "name": "shop",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Display the item shop with a dropdown and 30s inactivity timeout.",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -2390,8 +2661,19 @@
     "load_error": false
   },
   {
+    "name": "shorten",
+    "description": "Shorten a URL using is.gd",
+    "category": "Fun",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [],
+    "load_error": false,
+    "usage": "shorten <url>"
+  },
+  {
     "name": "shout",
-    "description": "Shout at someone.",
+    "description": "Perform a shout action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2401,7 +2683,7 @@
   },
   {
     "name": "shrug",
-    "description": "Shrug at someone.",
+    "description": "Perform a shrug action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2410,21 +2692,8 @@
     "load_error": false
   },
   {
-    "name": "shuffle",
-    "description": "Shuffle the current queue.",
-    "category": "Music",
-    "type": "prefix",
-    "arguments": [],
-    "permissions": [],
-    "aliases": [
-      "sh",
-      "mix"
-    ],
-    "load_error": false
-  },
-  {
     "name": "shy",
-    "description": "Get shy around someone.",
+    "description": "Perform a shy action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2444,7 +2713,7 @@
   },
   {
     "name": "sigh",
-    "description": "Sigh at someone.",
+    "description": "Perform a sigh action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2454,7 +2723,7 @@
   },
   {
     "name": "sip",
-    "description": "Sip something with someone.",
+    "description": "Perform a sip action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2463,21 +2732,8 @@
     "load_error": false
   },
   {
-    "name": "skip",
-    "description": "Skip the current track.",
-    "category": "Music",
-    "type": "prefix",
-    "arguments": [],
-    "permissions": [],
-    "aliases": [
-      "sagf23",
-      "next"
-    ],
-    "load_error": false
-  },
-  {
     "name": "slap",
-    "description": "Slap someone.",
+    "description": "Perform a slap action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2487,7 +2743,7 @@
   },
   {
     "name": "sleep",
-    "description": "Sleep with someone.",
+    "description": "Perform a sleep action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2497,7 +2753,7 @@
   },
   {
     "name": "slots",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Play slots: spin 3 symbols for payouts (🍒=2x, 🍊=3x, 💎=15x). Min 10c, max 20k. Usage: .slots <amount>",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
@@ -2510,7 +2766,7 @@
   },
   {
     "name": "slowclap",
-    "description": "Slow clap at someone.",
+    "description": "Perform a slowclap action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2520,7 +2776,7 @@
   },
   {
     "name": "slowmode",
-    "description": "Set the slowmode for a channel.",
+    "description": "Set slowmode (message cooldown) for a channel. Format: 5s, 1m. Set to 0 to disable. Usage: .slowmode <time>",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2533,7 +2789,7 @@
   },
   {
     "name": "smack",
-    "description": "Smack someone.",
+    "description": "Perform a smack action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2543,7 +2799,7 @@
   },
   {
     "name": "smile",
-    "description": "Smile at someone.",
+    "description": "Perform a smile action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2553,7 +2809,7 @@
   },
   {
     "name": "smug",
-    "description": "Be smug at someone.",
+    "description": "Perform a smug action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2563,7 +2819,7 @@
   },
   {
     "name": "sneeze",
-    "description": "Sneeze on someone.",
+    "description": "Perform a sneeze action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2573,7 +2829,7 @@
   },
   {
     "name": "snipe",
-    "description": "Retrieve recently deleted messages.",
+    "description": "View recently deleted messages in this channel (last 50). Shows author, timestamp, and content. Usage: .snipe [number]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2585,7 +2841,7 @@
   },
   {
     "name": "softban",
-    "description": "Bans and immediately unbans a user to clear their messages.",
+    "description": "Ban and immediately unban a user to delete all their messages. Member can rejoin. Usage: .softban <user> [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2595,7 +2851,7 @@
   },
   {
     "name": "sorry",
-    "description": "Be sorry to someone.",
+    "description": "Perform a sorry action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2605,7 +2861,7 @@
   },
   {
     "name": "stare",
-    "description": "Stare at someone.",
+    "description": "Perform a stare action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2641,7 +2897,7 @@
   },
   {
     "name": "stickyrole",
-    "description": "Enforces role persistence for a user.",
+    "description": "Enforce a role to always stay on a member when they rejoin. Usage: .stickyrole <user> <role> [enable/disable]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2652,21 +2908,22 @@
     "load_error": false
   },
   {
-    "name": "stop",
-    "description": "Stop playback and clear the queue.",
-    "category": "Music",
+    "name": "streaming",
+    "description": "Shows what a specified user is currently streaming.",
+    "category": "Fun",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
     "aliases": [
-      "st",
-      "leave"
+      "stream",
+      "live"
     ],
-    "load_error": false
+    "load_error": false,
+    "usage": "[user]"
   },
   {
     "name": "stripstaff",
-    "description": "Emergency protocol to remove all administrative roles from a user.",
+    "description": "Emergency protocol: remove all admin roles from a member. Only for compromised/rogue staff. Usage: .stripstaff <user>",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2676,7 +2933,7 @@
   },
   {
     "name": "surprised",
-    "description": "Be surprised by someone.",
+    "description": "Perform a surprised action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2686,10 +2943,38 @@
   },
   {
     "name": "sweat",
-    "description": "Sweat around someone.",
+    "description": "Perform a sweat action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
+    "permissions": [],
+    "aliases": [],
+    "load_error": false
+  },
+  {
+    "name": "sync",
+    "description": "Cross-server synchronization.",
+    "category": "Backup",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [],
+    "load_error": false
+  },
+  {
+    "name": "sync",
+    "description": "Cross-server synchronization management.",
+    "category": "Backup",
+    "type": "slash",
+    "arguments": [
+      "[create]",
+      "[join]",
+      "[leave]",
+      "[status]",
+      "[toggle]",
+      "[link]",
+      "[unlink]"
+    ],
     "permissions": [],
     "aliases": [],
     "load_error": false
@@ -2706,7 +2991,7 @@
   },
   {
     "name": "tempban",
-    "description": "Bans a user temporarily.",
+    "description": "Temporarily ban a user for a set duration (1h, 2d, etc). Auto-unbans after duration. Usage: .tempban <user> <time> [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2715,8 +3000,37 @@
     "load_error": false
   },
   {
+    "name": "template",
+    "description": "Server configuration templates.",
+    "category": "Backup",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "tp"
+    ],
+    "load_error": false
+  },
+  {
+    "name": "template",
+    "description": "Server template system",
+    "category": "Backup",
+    "type": "slash",
+    "arguments": [
+      "[create]",
+      "[list]",
+      "[search]",
+      "[info]",
+      "[load]",
+      "[delete]"
+    ],
+    "permissions": [],
+    "aliases": [],
+    "load_error": false
+  },
+  {
     "name": "temprole",
-    "description": "Temporarily gives a role to a member.",
+    "description": "Temporarily give a role to a member for a duration (1h, 2d, etc). Auto-removes after time. Usage: .temprole <user> <role> <time>",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2726,7 +3040,7 @@
   },
   {
     "name": "thread",
-    "description": "Commands to manage threads and forum posts.",
+    "description": "Commands to manage threads and forum posts. Create/archive/lock/delete threads. Usage: .thread <action> [args]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2736,7 +3050,7 @@
   },
   {
     "name": "thumbsup",
-    "description": "Give a thumbs up to someone.",
+    "description": "Perform a thumbsup action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2746,7 +3060,7 @@
   },
   {
     "name": "tickle",
-    "description": "Tickle someone.",
+    "description": "Perform a tickle action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2766,7 +3080,7 @@
   },
   {
     "name": "timeout",
-    "description": "Timeout a member with hierarchy protection and partial name matching.",
+    "description": "Timeout a member (blocks all interaction) for a duration. Discord 2000-char limit applies. Format: 1h, 30m. Hierarchy protected. Usage: .timeout <user> <time> [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2775,8 +3089,22 @@
     "load_error": false
   },
   {
+    "name": "timezone",
+    "description": "Set your timezone by city name.",
+    "category": "Utility",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "tz",
+      "tzone"
+    ],
+    "load_error": false,
+    "usage": "[set <city> | search <query> | @user]"
+  },
+  {
     "name": "tired",
-    "description": "Get tired around someone.",
+    "description": "Perform a tired action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -2794,6 +3122,19 @@
     "aliases": [
       "analyze",
       "sentiment"
+    ],
+    "load_error": false
+  },
+  {
+    "name": "tower",
+    "description": "Bet coins and climb the tower! Higher floors = massive multipliers.",
+    "category": "Economy",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "climb",
+      "twr"
     ],
     "load_error": false
   },
@@ -2858,7 +3199,7 @@
   },
   {
     "name": "tts",
-    "description": "Text-to-speech",
+    "description": "Generates a TTS audio file from text and sends it in the channel.",
     "category": "Fun",
     "type": "prefix",
     "arguments": [],
@@ -2895,7 +3236,7 @@
   },
   {
     "name": "unban",
-    "description": "Unban a user by ID, Tag, or Partial Name.",
+    "description": "Unban a user from the server by ID, tag, or partial name. Usage: .unban <user> [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2905,7 +3246,7 @@
   },
   {
     "name": "unbanall",
-    "description": "Unbans everyone in the server.",
+    "description": "Unban all users from the server. Dangerous - reverses all bans. Admin only. Usage: .unbanall",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2927,7 +3268,7 @@
   },
   {
     "name": "unhide",
-    "description": "Restores visibility of a channel to @everyone.",
+    "description": "Restore a hidden channel visibility to @everyone. Usage: .unhide [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2937,7 +3278,7 @@
   },
   {
     "name": "unjail",
-    "description": "Release a member from jail and notify them via DM.",
+    "description": "Release a jailed member and restore their roles. Notifies them via DM. Usage: .unjail <user> [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2959,7 +3300,7 @@
   },
   {
     "name": "unlockall",
-    "description": "Unlocks every channel in the server.",
+    "description": "Unlock all channels in the server. Reverts them all from locked state. Usage: .unlockall [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -2969,7 +3310,7 @@
   },
   {
     "name": "unmute",
-    "description": "Unmutes a member by removing the Muted role.",
+    "description": "Remove mute from a member (restore message permissions). Usage: .unmute <user> [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -3013,9 +3354,19 @@
     "load_error": false
   },
   {
+    "name": "use",
+    "description": "Use consumable items from your inventory. Supports luck potions (personal XP boost), incenses (channel-wide boost), and waifu leveling scrolls (grant XP to waifus). Usage: .use <item_name>",
+    "category": "Economy",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [],
+    "load_error": false
+  },
+  {
     "name": "vanity",
     "description": "Configure vanity status rewards.",
-    "category": "Utils",
+    "category": "Utility",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
@@ -3042,34 +3393,22 @@
   },
   {
     "name": "verify",
-    "description": "Sentinel Verification System Control",
+    "description": "Percs Verification System Control",
     "category": "Setup",
     "type": "slash",
     "arguments": [
       "[panel]",
-      "[config]"
+      "[config]",
+      "[status]"
     ],
     "permissions": [],
     "aliases": [],
     "load_error": false
   },
   {
-    "name": "volume",
-    "description": "Set the playback volume (1-100).",
-    "category": "Music",
-    "type": "prefix",
-    "arguments": [],
-    "permissions": [],
-    "aliases": [
-      "v",
-      "vol"
-    ],
-    "load_error": false
-  },
-  {
     "name": "vouch",
     "description": "Give a vouch to a user to build their reputation.",
-    "category": "Utils",
+    "category": "Utility",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
@@ -3082,7 +3421,7 @@
   {
     "name": "vouches",
     "description": "Displays a user's vouch history.",
-    "category": "Utils",
+    "category": "Utility",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
@@ -3101,13 +3440,13 @@
     "permissions": [],
     "aliases": [
       "harem",
-      "baddies"
+      "collection"
     ],
     "load_error": false
   },
   {
     "name": "warn",
-    "description": "Warn a member using the SQLite database.",
+    "description": "Issue a warning to a member for breaking rules. Warnings stack and can trigger auto-moderation. Usage: .warn <user> [reason]",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -3117,7 +3456,7 @@
   },
   {
     "name": "warns",
-    "description": "Check warning history from the database.",
+    "description": "View a member's warning history with reasons and dates. Admin can clear with `.clearwarns`. Usage: .warns <user>",
     "category": "Moderation",
     "type": "prefix",
     "arguments": [],
@@ -3130,7 +3469,7 @@
   },
   {
     "name": "wave",
-    "description": "Wave at someone.",
+    "description": "Perform a wave action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -3139,8 +3478,31 @@
     "load_error": false
   },
   {
+    "name": "wdex",
+    "description": "⚠️ Could not load details for this command.",
+    "category": "Anime",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "harem-list",
+      "hlist"
+    ],
+    "load_error": false
+  },
+  {
+    "name": "weather",
+    "description": "Provides detailed weather information for any location.",
+    "category": "Fun",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [],
+    "load_error": false
+  },
+  {
     "name": "welcome",
-    "description": "Configure server welcome messages (supports prefix and slash).",
+    "description": "Set up and manage server welcome messages.",
     "category": "General",
     "type": "prefix",
     "arguments": [],
@@ -3150,15 +3512,15 @@
   },
   {
     "name": "welcome",
-    "description": "Configure the server's welcome messages.",
+    "description": "Configure server welcome messages for new members.",
     "category": "Setup",
     "type": "slash",
     "arguments": [
       "[channel]",
       "[dm]",
-      "[disable]",
       "[test]",
-      "[status]"
+      "[status]",
+      "[disable]"
     ],
     "permissions": [],
     "aliases": [],
@@ -3166,14 +3528,12 @@
   },
   {
     "name": "wheel",
-    "description": "⚠️ Could not load details for this command.",
+    "description": "Spin the wheel for multiplier-based wins (segments 0.5x-100x). Min 10c, max 20k. Usage: .wheel <amount>",
     "category": "Economy",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
-    "aliases": [
-      "spinwheel"
-    ],
+    "aliases": [],
     "load_error": false
   },
   {
@@ -3206,7 +3566,7 @@
   },
   {
     "name": "wink",
-    "description": "Wink at someone.",
+    "description": "Perform a wink action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -3228,7 +3588,7 @@
   },
   {
     "name": "woah",
-    "description": "Gasp at someone.",
+    "description": "Perform a woah action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -3283,7 +3643,7 @@
   },
   {
     "name": "yawn",
-    "description": "Yawn at someone.",
+    "description": "Perform a yawn action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -3293,7 +3653,7 @@
   },
   {
     "name": "yay",
-    "description": "Get excited around someone.",
+    "description": "Perform a yay action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
@@ -3303,12 +3663,24 @@
   },
   {
     "name": "yes",
-    "description": "Say yes to someone.",
+    "description": "Perform a yes action on a user.",
     "category": "Roleplay",
     "type": "prefix",
     "arguments": [],
     "permissions": [],
     "aliases": [],
+    "load_error": false
+  },
+  {
+    "name": "youtube",
+    "description": "Search YouTube for videos, channels, or playlists.",
+    "category": "Fun",
+    "type": "prefix",
+    "arguments": [],
+    "permissions": [],
+    "aliases": [
+      "yt"
+    ],
     "load_error": false
   }
 ]
