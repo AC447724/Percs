@@ -80,7 +80,7 @@
 
 <nav>
     <div style="font-weight: 600; font-family: var(--font-mono); font-size: 13px;">PERCS</div>
-    <div id="last-sync" style="font-family: var(--font-mono); font-size: 11px; color: var(--text-mute);">UPDATING...</div>
+    <div id="last-ping" style="font-family: var(--font-mono); font-size: 11px; color: var(--text-mute);">UPDATING...</div>
 </nav>
 
 <div class="container">
@@ -172,7 +172,7 @@
                     `;
                 }
 
-                document.getElementById('last-sync').innerText = `LAST_SYNC: ${new Date(d.last_sync).toLocaleTimeString()}`;
+                document.getElementById('last-ping').innerText = `LAST_ping: ${new Date(d.last_ping).toLocaleTimeString()}`;
             }
         } catch (e) { console.error(e); }
     }
