@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PERCS | Community Management Simplified</title>
     
+    <link rel="icon" type="image/png" href="https://percs.fun/assets/brand/logo-no-bg.png">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=Inter:wght@300;400;500&display=swap');
         
@@ -15,7 +17,6 @@
             --text-dim: #88888b;
             --border: rgba(255, 255, 255, 0.08);
             --accent: #0070f3;
-            --success: #2ecc71;
             --font-display: 'Instrument Sans', sans-serif;
             --font-body: 'Inter', sans-serif;
         }
@@ -40,7 +41,30 @@
             font-family: var(--font-display); font-weight: 600; font-size: 19px;
             text-decoration: none; color: #fff; letter-spacing: -0.02em;
         }
-        .brand img { width: 30px; height: 30px; object-fit: contain; }
+        .brand img { width: 32px; height: 32px; object-fit: contain; }
+
+        .nav-right { display: flex; gap: 32px; align-items: center; }
+        
+        .dropdown { position: relative; display: inline-block; }
+        .dropbtn { 
+            color: var(--text-dim); text-decoration: none; font-size: 14px; 
+            font-weight: 500; cursor: pointer; transition: 0.2s;
+            display: flex; align-items: center; gap: 4px;
+        }
+        .dropbtn:hover { color: #fff; }
+        
+        .dropdown-content {
+            display: none; position: absolute; right: 0; top: 100%;
+            background-color: #0d0d0d; min-width: 180px;
+            border: 1px solid var(--border); border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5); padding: 8px 0; z-index: 1;
+        }
+        .dropdown-content a {
+            color: var(--text-dim); padding: 10px 16px; text-decoration: none;
+            display: block; font-size: 13px; transition: 0.2s;
+        }
+        .dropdown-content a:hover { background: #161616; color: #fff; }
+        .dropdown:hover .dropdown-content { display: block; }
 
         .hero {
             height: 85vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -65,57 +89,24 @@
         .btn-main { background: #fff; color: #000; }
         .btn-sub { border: 1px solid var(--border); color: #fff; background: rgba(255,255,255,0.03); }
 
-        /* Ticker Section */
         .trust-ticker {
             border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
             padding: 24px 0; overflow: hidden; background: var(--surface);
         }
-        .ticker-track {
-            display: flex; gap: 80px; width: max-content;
-            animation: ticker-roll 40s linear infinite;
-        }
-        .ticker-item {
-            display: flex; align-items: center; gap: 10px;
-            color: var(--text-dim); font-size: 14px; font-weight: 500; flex-shrink: 0;
-        }
-        .ticker-item b { color: #fff; font-weight: 600; }
+        .ticker-track { display: flex; gap: 80px; width: max-content; animation: ticker-roll 40s linear infinite; }
+        .ticker-item { display: flex; align-items: center; gap: 10px; color: var(--text-dim); font-size: 14px; font-weight: 500; flex-shrink: 0; }
+        @keyframes ticker-roll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        @keyframes ticker-roll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* Features */
         section { max-width: 1200px; margin: 0 auto; padding: 100px 6%; }
-        .section-header { margin-bottom: 60px; }
+        .section-header { margin-bottom: 60px; display: flex; justify-content: space-between; align-items: flex-end; }
         .section-header h2 { font-family: var(--font-display); font-size: 36px; font-weight: 600; }
         .section-header p { color: var(--text-dim); font-size: 17px; margin-top: 10px; }
-
-        .grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 24px;
-        }
-        .card {
-            background: var(--surface); border: 1px solid var(--border);
-            padding: 40px; border-radius: 12px; transition: 0.3s;
-        }
-        .card:hover { border-color: rgba(255,255,255,0.2); }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+        .card { background: var(--surface); border: 1px solid var(--border); padding: 40px; border-radius: 12px; }
         .card-title { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
         .card-desc { font-size: 15px; color: var(--text-dim); }
 
-        /* Testimonials */
-        .testimonial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        .testimonial-card {
-            background: #0d0d0d; border: 1px solid var(--border);
-            padding: 40px; border-radius: 12px;
-        }
-        .testimonial-text { font-size: 16px; color: var(--text); margin-bottom: 24px; font-style: normal; }
-        .testimonial-author { display: flex; align-items: center; gap: 12px; }
-        .testimonial-author img { width: 36px; height: 36px; border-radius: 50%; background: #222; }
-        .author-name { font-weight: 600; font-size: 14px; }
-        .author-meta { font-size: 12px; color: var(--text-dim); }
-
-        /* Command Browser */
         .command-browser {
             background: var(--surface); border: 1px solid var(--border);
             border-radius: 12px; overflow: hidden; margin-top: 40px;
@@ -124,29 +115,30 @@
             padding: 24px 32px; display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid var(--border); background: #0d0d0d;
         }
-        .browser-title { font-size: 13px; font-weight: 600; letter-spacing: 0.05em; color: var(--text-dim); }
+        .browser-title { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; color: var(--text-dim); }
         .browser-search {
             background: #161616; border: 1px solid var(--border); padding: 10px 16px;
             border-radius: 6px; color: #fff; font-size: 14px; width: 240px;
         }
-
-        .cmd-item {
-            padding: 16px 32px; display: flex; justify-content: space-between;
-            border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text-dim);
-        }
+        .cmd-item { padding: 16px 32px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text-dim); }
         .cmd-item:last-child { border-bottom: none; }
         .cmd-name { color: #fff; font-weight: 500; }
 
-        footer {
-            padding: 60px 6%; border-top: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center;
+        .terminal-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            padding: 8px 16px; border-radius: 6px; color: #fff; text-decoration: none;
+            font-size: 13px; font-weight: 500; transition: 0.2s;
         }
+        .terminal-btn:hover { background: #fff; color: #000; }
+
+        footer { padding: 60px 6%; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-dim); }
+        footer a { color: inherit; text-decoration: none; margin-left: 24px; }
 
         @media (max-width: 800px) {
-            .testimonial-grid { grid-template-columns: 1fr; }
-            .browser-header { flex-direction: column; gap: 16px; align-items: flex-start; }
+            .nav-right { display: none; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .browser-header { flex-direction: column; gap: 16px; align-items: stretch; }
             .browser-search { width: 100%; }
-            footer { flex-direction: column; gap: 20px; }
         }
     </style>
 </head>
@@ -154,12 +146,20 @@
 
     <nav>
         <a href="/" class="brand">
-            <img src="https://www.percs.fun/assets/percs.webp" alt="PERCS">
+            <img src="https://percs.fun/assets/brand/logo.png" alt="PERCS">
             PERCS
         </a>
-        <div style="display: flex; gap: 24px; font-size: 14px; font-weight: 500;">
-            <a href="#features" style="color: var(--text-dim); text-decoration: none;">Features</a>
-            <a href="#commands" style="color: var(--text-dim); text-decoration: none;">Library</a>
+        <div class="nav-right">
+            <a href="#features" class="dropbtn">Features</a>
+            <div class="dropdown">
+                <span class="dropbtn">Resources <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                <div class="dropdown-content">
+                    <a href="https://percs.fun/commands">Command Library</a>
+                    <a href="https://percs.fun/faq">Support FAQ</a>
+                    <a href="https://percs.fun/legal">Legal</a>
+                </div>
+            </div>
+            <a href="https://percs.fun/commands" class="dropbtn">Directory</a>
         </div>
     </nav>
 
@@ -168,7 +168,7 @@
         <p>A professional suite of tools designed to protect your space and reward your most active members.</p>
         <div class="btn-group">
             <a href="#" class="btn btn-main">Add to Discord</a>
-            <a href="#commands" class="btn btn-sub">View Library</a>
+            <a href="https://percs.fun/commands" class="btn btn-sub">View Library</a>
         </div>
     </header>
 
@@ -176,12 +176,12 @@
         <div class="ticker-track">
             <div class="ticker-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Official Discord Verified Partner</div>
             <div class="ticker-item">● Serving over <b>5,000 active members</b></div>
-            <div class="ticker-item">● Secure <b>Encryption Standards</b></div>
+            <div class="ticker-item">● Secure <b>AES-256 GCM Standards</b></div>
             <div class="ticker-item">● Global <b>99.9% Uptime</b></div>
             <div class="ticker-item">● Real-time <b>Moderation Feedback</b></div>
             <div class="ticker-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Official Discord Verified Partner</div>
             <div class="ticker-item">● Serving over <b>5,000 active members</b></div>
-            <div class="ticker-item">● Secure <b>Encryption Standards</b></div>
+            <div class="ticker-item">● Secure <b>AES-256 GCM Standards</b></div>
             <div class="ticker-item">● Global <b>99.9% Uptime</b></div>
             <div class="ticker-item">● Real-time <b>Moderation Feedback</b></div>
         </div>
@@ -189,13 +189,15 @@
 
     <section id="features">
         <div class="section-header">
-            <h2>The PERCS Standard.</h2>
-            <p>Reliable infrastructure that scales with your growth.</p>
+            <div>
+                <h2>The PERCS Standard.</h2>
+                <p>Reliable infrastructure that scales with your growth.</p>
+            </div>
         </div>
         <div class="grid">
             <div class="card">
-                <div class="card-title">Advanced Protection</div>
-                <p class="card-desc">Safeguard your server from unwanted changes with our intelligent monitoring systems.</p>
+                <div class="card-title">AES-256 Protection</div>
+                <p class="card-desc">Your community configuration is protected by industry-leading encryption, ensuring data integrity at every level.</p>
             </div>
             <div class="card">
                 <div class="card-title">Activity Rewards</div>
@@ -208,58 +210,12 @@
         </div>
     </section>
 
-    <section style="background: var(--surface);">
-        <div class="section-header">
-            <h2>Trusted by community leaders.</h2>
-            <p>Practical feedback from the people who manage large-scale servers every day.</p>
-        </div>
-        <div class="testimonial-grid">
-            <div class="testimonial-card">
-                <p class="testimonial-text">“The safety features within PERCS are unmatched. It has completely transformed how we handle security, providing peace of mind for our entire staff team.”</p>
-                <div class="testimonial-author">
-                    <img src="https://i.pravatar.cc/40?u=1" alt="">
-                    <div>
-                        <div class="author-name">Marcus Henderson</div>
-                        <div class="author-meta">Director of Operations</div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card">
-                <p class="testimonial-text">“We saw a massive spike in daily participation once we started using the automated reward system. It makes every member feel valued for their time.”</p>
-                <div class="testimonial-author">
-                    <img src="https://i.pravatar.cc/40?u=2" alt="">
-                    <div>
-                        <div class="author-name">Sarah Jenkins</div>
-                        <div class="author-meta">Community Lead</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="commands">
-        <div class="section-header">
-            <h2>Resource Library</h2>
-            <p>Explore our extensive collection of tools and utilities.</p>
-        </div>
-
-        <div class="command-browser">
-            <div class="browser-header">
-                <div class="browser-title">PERCS DIRECTORY</div>
-                <input type="text" class="browser-search" placeholder="Search resources..." id="cmdSearch">
-            </div>
-            <div id="cmdGrid">
-                </div>
-        </div>
-    </section>
 
     <footer>
-        <div style="font-size: 13px; color: var(--text-dim);">
-            © 2026 PERCS. All rights reserved.
-        </div>
-        <div style="display: flex; gap: 24px; font-size: 13px;">
-            <a href="#" style="color: var(--text-dim); text-decoration: none;">Terms of Service</a>
-            <a href="#" style="color: var(--text-dim); text-decoration: none;">Privacy Policy</a>
+        <div>© 2026 PERCS. All rights reserved.</div>
+        <div>
+            <a href="https://percs.fun/legal">Terms of Service</a>
+            <a href="https://percs.fun/legal">Privacy Policy</a>
         </div>
     </footer>
 
@@ -281,10 +237,9 @@
                 }
 
                 render(data.sort(() => 0.5 - Math.random()));
-
                 searchInput.addEventListener('input', (e) => {
                     const val = e.target.value.toLowerCase();
-                    const filtered = data.filter(c => c.name.includes(val));
+                    const filtered = data.filter(c => c.name.toLowerCase().includes(val));
                     render(val === '' ? data.sort(() => 0.5 - Math.random()) : filtered);
                 });
             } catch(e) {}
