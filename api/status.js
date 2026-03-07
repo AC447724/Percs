@@ -8,9 +8,12 @@ const redis = new Redis({
 export default async function handler(req, res) {
   try {
     const data = await redis.get('bot_status');
+    const botData = typeof data === 'string' ? JSON.parse(data) : data;
+
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.status(200).json(data);
+    res.setHeader('Content-Type', 'application/json');
+    return res.status(200).json(botData);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch status' });
+    return res.status(500).json({ error: error.message });
   }
 }
