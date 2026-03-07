@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status | PERCS</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Instrument+Sans:wght@400;600&display=swap');
+        
+        :root {
+            --bg: #050505;
+            --surface: #0a0a0a;
+            --border: rgba(255, 255, 255, 0.05);
+            --text-main: #ffffff;
+            --text-mute: #666666;
+            --accent: #2ecc71;
+            --accent-dim: rgba(46, 204, 113, 0.1);
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body { 
+            background: var(--bg); color: var(--text-main); 
+            font-family: 'Instrument Sans', sans-serif; margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Scanline effect to break the "clean" AI look */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 2px, 3px 100%; pointer-events: none; z-index: 1000;
+        }
+
+        nav {
+            padding: 20px 5%; display: flex; justify-content: space-between;
+            border-bottom: 1px solid var(--border); background: #050505;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 60px 5%; }
+
+        /* Terminal Header */
+        .status-header {
+            display: flex; align-items: flex-end; justify-content: space-between;
+            margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 20px;
+        }
+
+        .sys-info { font-family: var(--font-mono); font-size: 12px; color: var(--text-mute); text-transform: uppercase; }
+
+        /* Grid - Asymmetric Layout */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 15px;
+        }
+
+        .panel {
+            background: var(--surface); border: 1px solid var(--border);
+            padding: 24px; border-radius: 4px; position: relative;
+        }
+
+        .panel-label {
+            font-family: var(--font-mono); font-size: 10px; color: var(--text-mute);
+            text-transform: uppercase; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;
+        }
+
+        .pulse {
+            width: 6px; height: 6px; background: var(--accent); border-radius: 50%;
+            display: inline-block; animation: blink 1.5s infinite;
+        }
+
+        .big-value { font-family: var(--font-mono); font-size: 32px; font-weight: 500; letter-spacing: -1px; }
+        .unit { font-size: 14px; color: var(--text-mute); margin-left: 4px; }
+
+        /* Custom Progress Bar */
+        .meter {
+            height: 4px; background: #1a1a1a; width: 100%; margin-top: 15px; border-radius: 2px; overflow: hidden;
+        }
+        .meter-fill { height: 100%; background: var(--accent); width: 0%; transition: width 1s ease; }
+
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .dashboard { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div style="font-weight: 600; letter-spacing: -0.5px;">PERCS</div>
+        <div class="sys-info" id="last-update">Last Sync: --:--:--</div>
+    </nav>
+
+    <div class="container">
+        <header class="status-header">
+            <div>
+                <h1 style="font-size: 24px; margin-bottom: 5px;">Instances</h1>
+                <p style="color: var(--text-mute); font-size: 14px;">Monitoring core shards and hardware allocation.</p>
+            </div>
+            <div id="main-status" style="font-family: var(--font-mono); font-size: 14px; color: var(--accent);">
+                ● OPERATIONAL
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <div class="panel" style="grid-row: span 2;">
+                <div class="panel-label"><span class="pulse"></span> Network & Throughput</div>
+                <div style="margin-top: 40px;">
+                    <div class="big-value" id="val-servers">--</div>
+                    <div style="color: var(--text-mute); font-size: 13px; margin-top: 5px;">Active Discord Guilds Connected</div>
+                </div>
+                <div style="margin-top: 40px; border-top: 1px solid var(--border); padding-top: 20px;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="font-size: 13px; color: var(--text-mute);">Heartbeat Latency</span>
+                        <span id="val-ping" style="font-family: var(--font-mono); color: var(--accent);">--ms</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-label">Memory Index</div>
+                <div class="big-value" id="val-ram">--<span class="unit">%</span></div>
+                <div class="meter"><div id="fill-ram" class="meter-fill"></div></div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-label">CPU Load</div>
+                <div class="big-value" id="val-cpu">--<span class="unit">%</span></div>
+                <div class="meter"><div id="fill-cpu" class="meter-fill"></div></div>
+            </div>
+
+            <div class="panel" style="grid-column: span 2;">
+                <div class="panel-label">Total Runtime</div>
+                <div class="big-value" id="val-uptime" style="font-size: 24px;">--:--:--</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function updateMetrics() {
+            try {
+                const res = await fetch('/api/status');
+                const data = await res.json();
+                const isOnline = data && (Date.now() - data.lastSeen < 120000);
+
+                if (isOnline) {
+                    document.getElementById('val-servers').innerText = data.guilds.toLocaleString();
+                    document.getElementById('val-ping').innerText = data.ping;
+                    document.getElementById('val-ram').innerHTML = `${data.ram}<span class="unit">%</span>`;
+                    document.getElementById('fill-ram').style.width = data.ram;
+                    document.getElementById('val-cpu').innerHTML = `${data.cpu}<span class="unit">%</span>`;
+                    document.getElementById('fill-cpu').style.width = data.cpu;
+                    document.getElementById('val-uptime').innerText = data.uptime;
+                    document.getElementById('last-update').innerText = `Last: ${new Date().toLocaleTimeString()}`;
+                } else {
+                    document.getElementById('main-status').innerText = "○ DISCONNECTED";
+                    document.getElementById('main-status').style.color = "#f23f43";
+                }
+            } catch (e) { console.error("Sync error."); }
+        }
+
+        updateMetrics();
+        setInterval(updateMetrics, 15000); // Shorter interval for "live" feel
+    </script>
+</body>
+</html>
