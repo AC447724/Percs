@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "public": true,
+  "outputDirectory": ".",
   "rewrites": [
     {
       "source": "/assets/u/:slug",
