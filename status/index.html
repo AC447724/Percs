@@ -79,7 +79,7 @@
 <body>
 
 <nav>
-    <div style="font-weight: 600; font-family: var(--font-mono); font-size: 13px;">PERCS // STATUS</div>
+    <div style="font-weight: 600; font-family: var(--font-mono); font-size: 13px;">PERCS</div>
     <div id="last-sync" style="font-family: var(--font-mono); font-size: 11px; color: var(--text-mute);">UPDATING...</div>
 </nav>
 
@@ -165,9 +165,9 @@
                     const isActive = d.bot.current_shard === i;
                     shardContainer.innerHTML += `
                         <div class="shard-row" style="${isActive ? 'color: var(--accent);' : 'color: var(--text-mute);'}">
-                            <span>SHARD_${i}</span>
-                            <span>${d.bot.cached_users.toLocaleString()} USERS // ${d.bot.cached_channels} CHANNELS</span>
-                            <span style="text-align: right;">${isActive ? '● ACTIVE' : '○ STANDBY'}</span>
+                            <span>SHARD ${i}</span>
+                            <span>${d.bot.cached_users.toLocaleString()} USERS ${d.bot.cached_channels} CHANNELS</span>
+                            <span style="text-align: right;">${isActive ? '● Active' : '○ STANDBY'}</span>
                         </div>
                     `;
                 }
