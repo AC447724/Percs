@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PERCS | OSINT Scanner</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:400,700|Titan+One" />
+    <style>
+        :root {
+            --bg: #050505;
+            --surface: #0f0f0f;
+            --sidebar: #0a0a0a;
+            --accent: #df9000;
+            --text-main: #ffffff;
+            --text-dim: #888888;
+            --border: rgba(255, 255, 255, 0.08);
+            --success: #00ff88;
+            --error: #ff4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Nunito', sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 240px;
+            background: var(--sidebar);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+        }
+
+        .brand { font-family: 'Titan One', sans-serif; color: var(--accent); font-size: 22px; margin-bottom: 40px; text-align: center; }
+
+        .nav-item {
+            padding: 12px 15px;
+            border-radius: 8px;
+            color: var(--text-dim);
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: 0.2s;
+            font-weight: 600;
+        }
+        .nav-item.active { background: var(--surface); color: white; }
+
+        .main { flex-grow: 1; padding: 40px; overflow-y: auto; display: flex; flex-direction: column; gap: 30px; }
+
+        .header h1 { font-family: 'Titan One'; font-size: 32px; letter-spacing: 1px; }
+        .header p { color: var(--text-dim); }
+
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .stat-card { background: var(--surface); padding: 20px; border-radius: 12px; border: 1px solid var(--border); position: relative; }
+        .stat-val { font-size: 24px; font-weight: 800; display: block; margin-top: 5px; }
+        .stat-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Icon Container */
+        #serverIcon {
+            width: 48px; height: 48px; border-radius: 6px; 
+            background: #222; position: absolute; top: 20px; right: 20px;
+            border: 1px solid var(--border); display: none;
+        }
+
+        .panel { background: var(--surface); border-radius: 16px; border: 1px solid var(--border); padding: 30px; }
+        
+        .input-box { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+        .input-box label { font-size: 11px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; }
+        
+        input { 
+            background: var(--bg); border: 1px solid var(--border); padding: 15px; 
+            border-radius: 8px; color: white; outline: none; transition: 0.2s; font-size: 16px;
+        }
+        input:focus { border-color: var(--accent); }
+
+        .scan-btn {
+            width: 100%; background: var(--accent); color: black; border: none;
+            padding: 18px; border-radius: 8px; font-weight: 800; font-size: 16px;
+            cursor: pointer; transition: 0.2s;
+        }
+        .scan-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .scan-btn:disabled { background: #333; cursor: not-allowed; transform: none; }
+
+        .terminal {
+            background: #000; border: 1px solid var(--border); border-radius: 12px;
+            padding: 20px; font-family: monospace; font-size: 13px; color: #aaa;
+            height: 250px; overflow-y: auto;
+        }
+        .term-line { margin-bottom: 6px; border-left: 2px solid transparent; padding-left: 10px; }
+        .term-time { color: #555; margin-right: 10px; }
+        .term-success { color: var(--success); border-color: var(--success); }
+        .term-error { color: var(--error); border-color: var(--error); }
+        .term-info { color: var(--accent); }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="brand">PERCS.OSINT</div>
+        <div class="nav-item active">Network Scan</div>
+        <div class="nav-item">History</div>
+        <div class="nav-item">API Docs</div>
+        <div class="nav-item" style="margin-top: auto;">kfu/sativabluntz</div>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <h1>OSINT Searcher</h1>
+            <p>Gathering intelligence from Minecraft network protocols.</p>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-card">
+                <span class="stat-label">Online Players</span>
+                <span class="stat-val" id="playerCount">0</span>
+                <img id="serverIcon" src="" alt="Icon">
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Server Version</span>
+                <span class="stat-val" id="serverVersion">N/A</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Protocol Status</span>
+                <span class="stat-val" id="statusText">Idle</span>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="input-box">
+                <label>Target IP Address</label>
+                <input type="text" id="targetIp" placeholder="e.g. mc.hypixel.net or 127.0.0.1">
+            </div>
+            <button class="scan-btn" id="scanBtn" onclick="runScan()">EXECUTE OSINT SCAN</button>
+        </div>
+
+        <div class="terminal" id="terminal">
+            <div class="term-line"><span class="term-time">[SYSTEM]</span> Ready. Input target IP to begin data extraction.</div>
+        </div>
+    </div>
+
+    <script>
+        function log(msg, type = '') {
+            const term = document.getElementById('terminal');
+            const time = new Date().toLocaleTimeString([], { hour12: false });
+            const line = document.createElement('div');
+            line.className = `term-line ${type ? 'term-' + type : ''}`;
+            line.innerHTML = `<span class="term-time">[${time}]</span> ${msg}`;
+            term.appendChild(line);
+            term.scrollTop = term.scrollHeight;
+        }
+
+        async function runScan() {
+            const target = document.getElementById('targetIp').value.trim();
+            const btn = document.getElementById('scanBtn');
+            
+            if (!target) return log("ERROR: No target specified.", "error");
+
+            // Reset UI
+            btn.disabled = true;
+            btn.innerText = "SCANNING...";
+            document.getElementById('statusText').innerText = "Scanning...";
+            document.getElementById('serverIcon').style.display = "none";
+            
+            log(`Starting extraction on ${target}...`, "info");
+
+            try {
+                const response = await fetch('/api/scan', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ target: target })
+                });
+
+                const data = await response.json();
+
+                if (data.online) {
+                    log(`Connection established with ${target}.`, "success");
+                    
+                    // Update Stat Cards
+                    document.getElementById('playerCount').innerText = `${data.players} / ${data.maxPlayers}`;
+                    document.getElementById('serverVersion').innerText = data.version;
+                    document.getElementById('statusText').innerText = "ONLINE";
+                    document.getElementById('statusText').style.color = "var(--success)";
+
+                    // Update Icon
+                    if (data.icon) {
+                        const iconEl = document.getElementById('serverIcon');
+                        iconEl.src = data.icon;
+                        iconEl.style.display = "block";
+                    }
+
+                    // Detailed Terminal Logs
+                    log(`MOTD: ${data.motd}`);
+                    log(`Protocol: Java Edition`, "info");
+                    log(`Data extraction complete.`, "success");
+                } else {
+                    log(`Target ${target} is unreachable or offline.`, "error");
+                    document.getElementById('statusText').innerText = "OFFLINE";
+                    document.getElementById('statusText').style.color = "var(--error)";
+                }
+            } catch (err) {
+                log(`CRITICAL: Backend function failed. Ensure api/scan.js is deployed.`, "error");
+            }
+
+            btn.disabled = false;
+            btn.innerText = "EXECUTE OSINT SCAN";
+        }
+    </script>
+</body>
+</html>
