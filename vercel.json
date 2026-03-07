@@ -5,6 +5,14 @@
     {
       "source": "/assets/u/:slug",
       "destination": "/api/assets/[slug]"
+    },
+    { 
+      "source": "/login", 
+      "destination": "/api/auth/login" 
+    },
+    { 
+      "source": "/api/callback", 
+      "destination": "/api/auth/callback" 
     }
   ]
 }
