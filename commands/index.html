@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PERCS | Commands Library</title>
     
+    <link rel="icon" type="image/png" href="https://percs.fun/assets/brand/logo-no-bg.png">
+    
     <meta name="description" content="Search through the PERCS command library.">
     <meta name="theme-color" content="#050505">
 
@@ -201,7 +203,7 @@
 
     <nav>
         <a href="https://percs.fun" class="brand">
-            <img src="https://www.percs.fun/assets/brand/logo.png" alt="Logo">
+            <img src="https://percs.fun/assets/brand/logo.png" alt="Logo">
             PERCS
         </a>
         <div class="nav-links">
@@ -230,13 +232,15 @@
 
         async function init() {
             try {
-                // Fetching from your provided GitHub link
-                const res = await fetch('https://raw.githubusercontent.com/AC447724/Percs-Commands/refs/heads/main/commands/commands.json');
+                // Now fetching from the local relative path "commands.json"
+                const res = await fetch('commands.json');
+                if (!res.ok) throw new Error('File not found');
                 cmdData = await res.json();
                 renderCategories();
                 renderCards(cmdData);
             } catch (e) {
-                document.getElementById('cmdGrid').innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--text-dim);">Unable to load commands.</p>`;
+                console.error(e);
+                document.getElementById('cmdGrid').innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--text-dim);">Unable to load commands.json from the local directory.</p>`;
             }
         }
 
