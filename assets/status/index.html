@@ -1,0 +1,35 @@
+<div id="bot-status-card" style="padding: 15px; border-radius: 8px; background: #2f3136; color: white; width: fit-content;">
+    <h3 id="status-text">Loading Status...</h3>
+    <p id="status-details"></p>
+</div>
+
+<script>
+    async function updateStatus() {
+        try {
+            const response = await fetch('/api/status');
+            const data = await response.json();
+            
+            const statusText = document.getElementById('status-text');
+            const details = document.getElementById('status-details');
+            const card = document.getElementById('bot-status-card');
+            const isOnline = data && (Date.now() - data.lastSeen < 120000);
+
+            if (isOnline) {
+                statusText.innerText = "🟢 Online";
+                statusText.style.color = "#2ecc71";
+                details.innerText = `Servers: ${data.guilds} | Ping: ${data.ping}ms`;
+                card.style.borderLeft = "4px solid #2ecc71";
+            } else {
+                statusText.innerText = "🔴 Offline";
+                statusText.style.color = "#e74c3c";
+                details.innerText = "Bot is currently disconnected.";
+                card.style.borderLeft = "4px solid #e74c3c";
+            }
+        } catch (err) {
+            console.error("Failed to load bot status");
+        }
+    }
+
+    updateStatus();
+    setInterval(updateStatus, 60000); // Refresh every minute
+</script>
