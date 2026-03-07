@@ -144,7 +144,7 @@
             try {
                 const res = await fetch('/api/status');
                 const data = await res.json();
-                const isOnline = data && (Date.now() - data.lastSeen < 120000);
+                const isOnline = data && (Date.now() - data.lastSeen < 300000);
 
                 if (isOnline) {
                     document.getElementById('val-servers').innerText = data.guilds.toLocaleString();
