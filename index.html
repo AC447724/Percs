@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PERCS | Simple, Powerful Management</title>
+    <title>PERCS | Community Management Simplified</title>
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=Inter:wght@300;400;500&family=JetBrains+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=Inter:wght@300;400;500&display=swap');
         
         :root {
             --bg: #050505;
             --surface: #0a0a0a;
             --text: #ffffff;
             --text-dim: #88888b;
-            --border: rgba(255, 255, 255, 0.06);
+            --border: rgba(255, 255, 255, 0.08);
             --accent: #0070f3;
             --success: #2ecc71;
-            --error: #ff4757;
             --font-display: 'Instrument Sans', sans-serif;
             --font-body: 'Inter', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
@@ -29,7 +28,6 @@
             -webkit-font-smoothing: antialiased; overflow-x: hidden;
         }
 
-        /* Navigation */
         nav {
             padding: 18px 6%; display: flex; justify-content: space-between; align-items: center;
             position: fixed; top: 0; width: 100%;
@@ -42,107 +40,113 @@
             font-family: var(--font-display); font-weight: 600; font-size: 19px;
             text-decoration: none; color: #fff; letter-spacing: -0.02em;
         }
-        .brand img { width: 32px; height: 32px; border-radius: 6px; }
+        .brand img { width: 30px; height: 30px; object-fit: contain; }
 
-        /* Animated Hamburger */
-        .menu-trigger {
-            cursor: pointer; width: 30px; height: 30px;
-            display: flex; flex-direction: column; justify-content: center; align-items: flex-end;
-            gap: 6px; z-index: 4000;
-        }
-        .menu-trigger span {
-            display: block; height: 1.5px; background: #fff;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .line-1 { width: 24px; }
-        .line-2 { width: 16px; }
-        .line-3 { width: 20px; }
-
-        .menu-trigger.active .line-1 { transform: translateY(7.5px) rotate(45deg); width: 24px; }
-        .menu-trigger.active .line-2 { opacity: 0; }
-        .menu-trigger.active .line-3 { transform: translateY(-7.5px) rotate(-45deg); width: 24px; }
-
-        /* Fullscreen Overlay */
-        .nav-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: var(--bg); z-index: 3500;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden; transition: 0.4s ease;
-        }
-        .nav-overlay.active { opacity: 1; visibility: visible; }
-
-        .nav-overlay a {
-            font-family: var(--font-display); font-size: 42px; font-weight: 600;
-            color: var(--text); text-decoration: none; margin: 15px 0;
-            transition: 0.3s; transform: translateY(20px); opacity: 0;
-        }
-        .nav-overlay.active a { transform: translateY(0); opacity: 1; }
-        .nav-overlay a:hover { color: var(--text-dim); }
-
-        /* Hero Section */
         .hero {
-            height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            height: 85vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; padding: 0 24px;
             background: radial-gradient(circle at 50% 40%, #111 0%, #050505 100%);
         }
         .hero h1 {
-            font-family: var(--font-display); font-size: clamp(52px, 12vw, 110px);
-            font-weight: 600; letter-spacing: -0.06em; line-height: 0.9; margin-bottom: 24px;
+            font-family: var(--font-display); font-size: clamp(48px, 10vw, 90px);
+            font-weight: 600; letter-spacing: -0.04em; line-height: 1; margin-bottom: 24px;
         }
         .hero p {
-            font-size: clamp(17px, 1.6vw, 20px); color: var(--text-dim);
-            max-width: 580px; margin-bottom: 44px; font-weight: 300;
+            font-size: clamp(16px, 1.5vw, 19px); color: var(--text-dim);
+            max-width: 540px; margin-bottom: 40px; font-weight: 400;
         }
 
         .btn-group { display: flex; gap: 14px; }
         .btn {
-            padding: 16px 34px; border-radius: 10px;
+            padding: 14px 30px; border-radius: 8px;
             text-decoration: none; font-size: 15px; font-weight: 500; transition: 0.2s;
+            display: inline-flex; align-items: center; gap: 8px;
         }
         .btn-main { background: #fff; color: #000; }
         .btn-sub { border: 1px solid var(--border); color: #fff; background: rgba(255,255,255,0.03); }
-        .btn-sub:hover { background: var(--border); }
 
-        /* Features Grid */
-        section { max-width: 1200px; margin: 0 auto; padding: 120px 6%; }
+        /* Ticker Section */
+        .trust-ticker {
+            border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+            padding: 24px 0; overflow: hidden; background: var(--surface);
+        }
+        .ticker-track {
+            display: flex; gap: 80px; width: max-content;
+            animation: ticker-roll 40s linear infinite;
+        }
+        .ticker-item {
+            display: flex; align-items: center; gap: 10px;
+            color: var(--text-dim); font-size: 14px; font-weight: 500; flex-shrink: 0;
+        }
+        .ticker-item b { color: #fff; font-weight: 600; }
+
+        @keyframes ticker-roll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Features */
+        section { max-width: 1200px; margin: 0 auto; padding: 100px 6%; }
+        .section-header { margin-bottom: 60px; }
+        .section-header h2 { font-family: var(--font-display); font-size: 36px; font-weight: 600; }
+        .section-header p { color: var(--text-dim); font-size: 17px; margin-top: 10px; }
+
         .grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1px; background: var(--border); border: 1px solid var(--border);
-            border-radius: 16px; overflow: hidden;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
         }
         .card {
-            background: var(--bg); padding: 48px; transition: 0.3s;
-            display: flex; flex-direction: column; height: 100%;
+            background: var(--surface); border: 1px solid var(--border);
+            padding: 40px; border-radius: 12px; transition: 0.3s;
         }
-        .card:hover { background: var(--surface); }
-
-        .card-tag {
-            font-family: var(--font-mono); font-size: 10px; color: var(--text-mute);
-            text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 24px;
-        }
-        .card-title { font-family: var(--font-display); font-size: 24px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .card:hover { border-color: rgba(255,255,255,0.2); }
+        .card-title { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
         .card-desc { font-size: 15px; color: var(--text-dim); }
 
-        /* Live Status Indicator */
-        .status-pill {
-            display: flex; align-items: center; gap: 10px;
-            padding: 8px 16px; background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border); border-radius: 100px;
-            font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);
+        /* Testimonials */
+        .testimonial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .testimonial-card {
+            background: #0d0d0d; border: 1px solid var(--border);
+            padding: 40px; border-radius: 12px;
         }
-        .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-dim); transition: 0.3s; }
-        .dot.online { background: var(--success); box-shadow: 0 0 10px var(--success); }
-        .dot.offline { background: var(--error); box-shadow: 0 0 10px var(--error); }
+        .testimonial-text { font-size: 16px; color: var(--text); margin-bottom: 24px; font-style: normal; }
+        .testimonial-author { display: flex; align-items: center; gap: 12px; }
+        .testimonial-author img { width: 36px; height: 36px; border-radius: 50%; background: #222; }
+        .author-name { font-weight: 600; font-size: 14px; }
+        .author-meta { font-size: 12px; color: var(--text-dim); }
+
+        /* Command Browser */
+        .command-browser {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 12px; overflow: hidden; margin-top: 40px;
+        }
+        .browser-header {
+            padding: 24px 32px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border); background: #0d0d0d;
+        }
+        .browser-title { font-size: 13px; font-weight: 600; letter-spacing: 0.05em; color: var(--text-dim); }
+        .browser-search {
+            background: #161616; border: 1px solid var(--border); padding: 10px 16px;
+            border-radius: 6px; color: #fff; font-size: 14px; width: 240px;
+        }
+
+        .cmd-item {
+            padding: 16px 32px; display: flex; justify-content: space-between;
+            border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text-dim);
+        }
+        .cmd-item:last-child { border-bottom: none; }
+        .cmd-name { color: #fff; font-weight: 500; }
 
         footer {
             padding: 60px 6%; border-top: 1px solid var(--border);
             display: flex; justify-content: space-between; align-items: center;
         }
 
-        @media (max-width: 768px) {
-            .btn-group { flex-direction: column; width: 100%; }
-            .btn { text-align: center; }
-            footer { flex-direction: column; gap: 30px; text-align: center; }
+        @media (max-width: 800px) {
+            .testimonial-grid { grid-template-columns: 1fr; }
+            .browser-header { flex-direction: column; gap: 16px; align-items: flex-start; }
+            .browser-search { width: 100%; }
+            footer { flex-direction: column; gap: 20px; }
         }
     </style>
 </head>
@@ -150,129 +154,142 @@
 
     <nav>
         <a href="/" class="brand">
-            <img src="https://www.percs.fun/assets/brand/logo.png" alt="Logo">
+            <img src="https://www.percs.fun/assets/percs.webp" alt="PERCS">
             PERCS
         </a>
-        <div class="menu-trigger" id="menuBtn">
-            <span class="line-1"></span>
-            <span class="line-2"></span>
-            <span class="line-3"></span>
+        <div style="display: flex; gap: 24px; font-size: 14px; font-weight: 500;">
+            <a href="#features" style="color: var(--text-dim); text-decoration: none;">Features</a>
+            <a href="#commands" style="color: var(--text-dim); text-decoration: none;">Library</a>
         </div>
     </nav>
 
-    <div class="nav-overlay" id="navOverlay">
-        <a href="#features" style="transition-delay: 0.1s;">Features</a>
-        <a href="https://percs.fun/commands" style="transition-delay: 0.2s;">Commands</a>
-        <a href="https://percs.fun/faq" style="transition-delay: 0.3s;">Support</a>
-        <a href="https://percs.fun/legal" style="transition-delay: 0.4s;">Legal</a>
-    </div>
-
     <header class="hero">
-        <h1>Management<br>made simple.</h1>
-        <p>A refined toolkit for the modern community leader. Safety, utility, and fun—integrated into one seamless experience.</p>
+        <h1>Built for better<br>communities.</h1>
+        <p>A professional suite of tools designed to protect your space and reward your most active members.</p>
         <div class="btn-group">
-            <a href="https://percs.fun/invite/" class="btn btn-main">Add to Server</a>
-            <a href="#features" class="btn btn-sub">Explore Features</a>
+            <a href="#" class="btn btn-main">Add to Discord</a>
+            <a href="#commands" class="btn btn-sub">View Library</a>
         </div>
     </header>
 
+    <div class="trust-ticker">
+        <div class="ticker-track">
+            <div class="ticker-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Official Discord Verified Partner</div>
+            <div class="ticker-item">● Serving over <b>5,000 active members</b></div>
+            <div class="ticker-item">● Secure <b>Encryption Standards</b></div>
+            <div class="ticker-item">● Global <b>99.9% Uptime</b></div>
+            <div class="ticker-item">● Real-time <b>Moderation Feedback</b></div>
+            <div class="ticker-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Official Discord Verified Partner</div>
+            <div class="ticker-item">● Serving over <b>5,000 active members</b></div>
+            <div class="ticker-item">● Secure <b>Encryption Standards</b></div>
+            <div class="ticker-item">● Global <b>99.9% Uptime</b></div>
+            <div class="ticker-item">● Real-time <b>Moderation Feedback</b></div>
+        </div>
+    </div>
+
     <section id="features">
+        <div class="section-header">
+            <h2>The PERCS Standard.</h2>
+            <p>Reliable infrastructure that scales with your growth.</p>
+        </div>
         <div class="grid">
             <div class="card">
-                <div class="card-tag">Security</div>
-                <div class="card-title">antinuke</div>
-                <p class="card-desc">Military-grade protection against unauthorized administrative actions and server destruction.</p>
+                <div class="card-title">Advanced Protection</div>
+                <p class="card-desc">Safeguard your server from unwanted changes with our intelligent monitoring systems.</p>
             </div>
             <div class="card">
-                <div class="card-tag">Progression</div>
-                <div class="card-title">add-level-role</div>
-                <p class="card-desc">Incentivize activity by assigning custom roles at specific level milestones automatically.</p>
+                <div class="card-title">Activity Rewards</div>
+                <p class="card-desc">Automatically recognize and reward members as they engage with your community.</p>
             </div>
             <div class="card">
-                <div class="card-tag">Utilities</div>
-                <div class="card-title">afk</div>
-                <p class="card-desc">Maintain presence while away with smart automated replies and status tracking.</p>
+                <div class="card-title">Member Insights</div>
+                <p class="card-desc">Understand your growth with clear statistics and community health metrics.</p>
             </div>
         </div>
+    </section>
 
-        <div style="margin-top: 80px;" class="grid" id="randomGrid"></div>
+    <section style="background: var(--surface);">
+        <div class="section-header">
+            <h2>Trusted by community leaders.</h2>
+            <p>Practical feedback from the people who manage large-scale servers every day.</p>
+        </div>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-text">“The safety features within PERCS are unmatched. It has completely transformed how we handle security, providing peace of mind for our entire staff team.”</p>
+                <div class="testimonial-author">
+                    <img src="https://i.pravatar.cc/40?u=1" alt="">
+                    <div>
+                        <div class="author-name">Marcus Henderson</div>
+                        <div class="author-meta">Director of Operations</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">“We saw a massive spike in daily participation once we started using the automated reward system. It makes every member feel valued for their time.”</p>
+                <div class="testimonial-author">
+                    <img src="https://i.pravatar.cc/40?u=2" alt="">
+                    <div>
+                        <div class="author-name">Sarah Jenkins</div>
+                        <div class="author-meta">Community Lead</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="commands">
+        <div class="section-header">
+            <h2>Resource Library</h2>
+            <p>Explore our extensive collection of tools and utilities.</p>
+        </div>
+
+        <div class="command-browser">
+            <div class="browser-header">
+                <div class="browser-title">PERCS DIRECTORY</div>
+                <input type="text" class="browser-search" placeholder="Search resources..." id="cmdSearch">
+            </div>
+            <div id="cmdGrid">
+                </div>
+        </div>
     </section>
 
     <footer>
-        <div class="status-pill">
-            <div class="dot" id="statusDot"></div>
-            <span id="statusText">SYSTEM CHECKING...</span>
+        <div style="font-size: 13px; color: var(--text-dim);">
+            © 2026 PERCS. All rights reserved.
         </div>
-        <div style="display:flex; gap: 30px; font-size: 13px;">
-            <a href="https://percs.fun/faq" style="color: var(--text-dim); text-decoration: none;">Support</a>
-            <a href="https://percs.fun/legal" style="color: var(--text-dim); text-decoration: none;">Legal</a>
+        <div style="display: flex; gap: 24px; font-size: 13px;">
+            <a href="#" style="color: var(--text-dim); text-decoration: none;">Terms of Service</a>
+            <a href="#" style="color: var(--text-dim); text-decoration: none;">Privacy Policy</a>
         </div>
     </footer>
 
     <script>
-        // Menu Toggle Logic
-        const menuBtn = document.getElementById('menuBtn');
-        const navOverlay = document.getElementById('navOverlay');
-
-        menuBtn.onclick = () => {
-            const isActive = menuBtn.classList.toggle('active');
-            navOverlay.classList.toggle('active');
-            document.body.style.overflow = isActive ? 'hidden' : 'auto';
-        };
-
-        // Close menu on link click
-        navOverlay.onclick = (e) => {
-            if(e.target.tagName === 'A') {
-                menuBtn.classList.remove('active');
-                navOverlay.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        };
-
-        // Live Status Indicator (Connects to your existing API)
-        async function checkStatus() {
-            try {
-                const res = await fetch('/api/status');
-                const d = await res.json();
-                const isOnline = d && (Date.now() - (d.last_sync || 0) < 300000);
-                
-                const dot = document.getElementById('statusDot');
-                const text = document.getElementById('statusText');
-
-                if (isOnline) {
-                    dot.className = 'dot online';
-                    text.innerText = 'SYSTEMS OPERATIONAL';
-                } else {
-                    dot.className = 'dot offline';
-                    text.innerText = 'CONNECTION LOST';
-                }
-            } catch (e) {
-                document.getElementById('statusDot').className = 'dot offline';
-                document.getElementById('statusText').innerText = 'STATUS OFFLINE';
-            }
-        }
-
-        // Random Command Loader
         async function loadCommands() {
             try {
                 const res = await fetch('https://raw.githubusercontent.com/AC447724/Percs-Commands/refs/heads/main/commands/commands.json');
                 const data = await res.json();
-                const grid = document.getElementById('randomGrid');
-                const selected = data.sort(() => 0.5 - Math.random()).slice(0, 3);
-                
-                grid.innerHTML = selected.map(cmd => `
-                    <div class="card">
-                        <div class="card-tag">${cmd.category}</div>
-                        <div class="card-title">${cmd.name}</div>
-                        <p class="card-desc">${cmd.description}</p>
-                    </div>
-                `).join('');
+                const grid = document.getElementById('cmdGrid');
+                const searchInput = document.getElementById('cmdSearch');
+
+                function render(list) {
+                    grid.innerHTML = list.slice(0, 8).map(cmd => `
+                        <div class="cmd-item">
+                            <span class="cmd-name">${cmd.name.replace(/_/g, ' ')}</span>
+                            <span>${cmd.category.replace(/_/g, ' ')}</span>
+                        </div>
+                    `).join('');
+                }
+
+                render(data.sort(() => 0.5 - Math.random()));
+
+                searchInput.addEventListener('input', (e) => {
+                    const val = e.target.value.toLowerCase();
+                    const filtered = data.filter(c => c.name.includes(val));
+                    render(val === '' ? data.sort(() => 0.5 - Math.random()) : filtered);
+                });
             } catch(e) {}
         }
-
-        checkStatus();
         loadCommands();
-        setInterval(checkStatus, 240000); // Check every 4 mins
     </script>
 </body>
 </html>
