@@ -86,53 +86,62 @@
             margin-bottom: 20px;
         }
 
-        .search-wrapper { max-width: 600px; margin: 0 auto 30px auto; position: relative; }
+        .search-wrapper { 
+            max-width: 600px; 
+            margin: 0 auto 30px auto; 
+            position: relative; 
+            display: flex;
+            align-items: center;
+        }
         .search-bar {
             width: 100%;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 100px;
-            padding: 18px 30px;
+            padding: 18px 80px 18px 30px;
             color: #fff;
             font-size: 16px;
             outline: none;
             transition: 0.3s;
-            text-align: center;
         }
         .search-bar:focus { border-color: rgba(255,255,255,0.3); }
 
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            max-width: 1000px;
-            margin: 0 auto 60px auto;
+        .cmd-count-badge {
+            position: absolute;
+            right: 25px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-dim);
+            background: rgba(255,255,255,0.05);
+            padding: 4px 12px;
+            border-radius: 50px;
+            pointer-events: none;
         }
 
-        .categories-container, .toggle-container {
+        .filter-controls {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
+            margin-bottom: 60px;
         }
 
-        .cat-pill, .toggle-pill {
-            background: transparent;
+        .dropdown-select {
+            background: var(--surface);
             border: 1px solid var(--border);
-            padding: 8px 20px;
-            border-radius: 100px;
-            font-size: 13px;
-            color: var(--text-dim);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
             cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            transition: 0.2s;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            padding-right: 40px;
         }
-
-        .cat-pill span { opacity: 0.5; font-size: 11px; }
-        .cat-pill:hover, .toggle-pill:hover { border-color: var(--text-dim); color: #fff; }
-        .cat-pill.active, .toggle-pill.active { background: #fff; color: #000; border-color: #fff; }
+        .dropdown-select:hover { border-color: rgba(255,255,255,0.2); }
 
         .grid {
             display: grid;
@@ -152,7 +161,6 @@
             flex-direction: column;
             transition: 0.3s ease;
         }
-
         .card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-4px); }
 
         .cmd-header {
@@ -163,7 +171,6 @@
         }
 
         .cmd-name { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: #fff; }
-        
         .type-badge {
             font-size: 10px;
             text-transform: uppercase;
@@ -200,29 +207,9 @@
             letter-spacing: 0.05em;
         }
 
-        .meta-tag {
-            background: rgba(255,255,255,0.05);
-            padding: 2px 8px;
-            border-radius: 4px;
-            color: #ccc;
-        }
-
-        .meta-arg {
-            background: rgba(255,255,255,0.1);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-family: monospace;
-            color: #fff;
-        }
-
-        .meta-perm {
-            background: rgba(255, 99, 99, 0.05);
-            border: 1px solid var(--perm-border);
-            padding: 2px 8px;
-            border-radius: 4px;
-            color: #ff9d9d;
-            font-size: 11px;
-        }
+        .meta-tag { background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 4px; color: #ccc; }
+        .meta-arg { background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px; font-family: monospace; color: #fff; }
+        .meta-perm { background: rgba(255, 99, 99, 0.05); border: 1px solid var(--perm-border); padding: 2px 8px; border-radius: 4px; color: #ff9d9d; font-size: 11px; }
 
         .usage-container {
             margin-top: auto;
@@ -248,6 +235,22 @@
             opacity: 0; transition: 0.3s;
             pointer-events: none; z-index: 2000;
         }
+
+        #scrollTop {
+            position: fixed; bottom: 40px; right: 40px;
+            width: 50px; height: 50px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; cursor: pointer;
+            opacity: 0; transform: translateY(20px);
+            transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 1500;
+        }
+        #scrollTop.show { opacity: 1; transform: translateY(0); }
+        #scrollTop:hover { background: white; color: black; border-color: white; }
+
     </style>
 </head>
 <body>
@@ -268,16 +271,20 @@
     <div class="hero" id="commands">
         <h1>Command Library</h1>
         <div class="search-wrapper">
-            <input type="text" id="searchInput" class="search-bar" placeholder="Find a command or alias..." onkeyup="processFilter()">
+            <input type="text" id="searchInput" class="search-bar" placeholder="Find a command..." onkeyup="processFilter()">
+            <span class="cmd-count-badge" id="countLabel">0</span>
         </div>
         
-        <div class="filter-group">
-            <div class="toggle-container" id="typeBox">
-                <div class="toggle-pill active" onclick="setType('all', this)">All Types</div>
-                <div class="toggle-pill" onclick="setType('prefix', this)">Prefix Only</div>
-                <div class="toggle-pill" onclick="setType('slash', this)">Slash Only</div>
-            </div>
-            <div class="categories-container" id="catBox"></div>
+        <div class="filter-controls">
+            <select id="typeSelect" class="dropdown-select" onchange="processFilter()">
+                <option value="all">All Types</option>
+                <option value="prefix">Prefix</option>
+                <option value="slash">Slash</option>
+            </select>
+
+            <select id="catSelect" class="dropdown-select" onchange="processFilter()">
+                <option value="All">All Categories</option>
+            </select>
         </div>
     </div>
 
@@ -285,54 +292,47 @@
 
     <div id="toast">Copied to clipboard</div>
 
+    <div id="scrollTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    </div>
+
     <script>
         let cmdData = [];
-        let currentCat = 'All';
-        let currentType = 'all';
 
         async function init() {
             try {
                 const res = await fetch('commands.json');
                 if (!res.ok) throw new Error('File not found');
                 cmdData = await res.json();
-                renderCategories();
-                renderCards(cmdData);
+                populateCategoryDropdown();
+                processFilter();
             } catch (e) {
                 console.error(e);
                 document.getElementById('cmdGrid').innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--text-dim);">Unable to load commands.json.</p>`;
             }
         }
 
-        function renderCategories() {
-            const counts = cmdData.reduce((acc, cmd) => {
-                acc[cmd.category] = (acc[cmd.category] || 0) + 1;
-                return acc;
-            }, {});
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('scrollTop');
+            btn.classList.toggle('show', window.scrollY > 400);
+        });
 
+        function populateCategoryDropdown() {
+            const dropdown = document.getElementById('catSelect');
             const uniqueCats = [...new Set(cmdData.map(c => c.category))].sort();
-            const container = document.getElementById('catBox');
-            
-            let html = `<div class="cat-pill ${currentCat === 'All' ? 'active' : ''}" onclick="setCategory('All', this)">All <span>${cmdData.length}</span></div>`;
-            html += uniqueCats.map(cat => `<div class="cat-pill ${cat === currentCat ? 'active' : ''}" onclick="setCategory('${cat}', this)">${cat} <span>${counts[cat]}</span></div>`).join('');
-            container.innerHTML = html;
-        }
-
-        function setCategory(cat, el) {
-            currentCat = cat;
-            document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
-            el.classList.add('active');
-            processFilter();
-        }
-
-        function setType(type, el) {
-            currentType = type;
-            document.querySelectorAll('.toggle-pill').forEach(p => p.classList.remove('active'));
-            el.classList.add('active');
-            processFilter();
+            uniqueCats.forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat;
+                opt.textContent = cat;
+                dropdown.appendChild(opt);
+            });
         }
 
         function processFilter() {
             const term = document.getElementById('searchInput').value.toLowerCase();
+            const currentCat = document.getElementById('catSelect').value;
+            const currentType = document.getElementById('typeSelect').value;
+
             const filtered = cmdData.filter(c => {
                 const matchesSearch = c.name.toLowerCase().includes(term) || 
                                     c.description.toLowerCase().includes(term) ||
@@ -343,6 +343,8 @@
                 
                 return matchesSearch && matchesCat && matchesType;
             });
+
+            document.getElementById('countLabel').textContent = filtered.length;
             renderCards(filtered);
         }
 
@@ -357,16 +359,13 @@
                 }
 
                 const aliases = (cmd.aliases && cmd.aliases.length) 
-                    ? `<div class="meta-line"><span class="meta-label">Aliases</span>${cmd.aliases.map(a => `<span class="meta-tag">${a}</span>`).join('')}</div>` 
-                    : '';
+                    ? `<div class="meta-line"><span class="meta-label">Aliases</span>${cmd.aliases.map(a => `<span class="meta-tag">${a}</span>`).join('')}</div>` : '';
 
                 const args = (cmd.arguments && cmd.arguments.length)
-                    ? `<div class="meta-line"><span class="meta-label">Arguments</span>${cmd.arguments.map(a => `<span class="meta-arg">${a}</span>`).join('')}</div>`
-                    : '';
+                    ? `<div class="meta-line"><span class="meta-label">Arguments</span>${cmd.arguments.map(a => `<span class="meta-arg">${a}</span>`).join('')}</div>` : '';
 
                 const perms = (cmd.permissions && cmd.permissions.length)
-                    ? `<div class="meta-line"><span class="meta-label">Permissions</span>${cmd.permissions.map(p => `<span class="meta-perm">${p}</span>`).join('')}</div>`
-                    : '';
+                    ? `<div class="meta-line"><span class="meta-label">Permissions</span>${cmd.permissions.map(p => `<span class="meta-perm">${p}</span>`).join('')}</div>` : '';
 
                 return `
                 <div class="card">
@@ -375,13 +374,9 @@
                         <span class="type-badge">${cmd.type}</span>
                     </div>
                     <p class="cmd-desc">${cmd.description}</p>
-                    
                     <div class="cmd-meta">
-                        ${aliases}
-                        ${args}
-                        ${perms}
+                        ${aliases}${args}${perms}
                     </div>
-
                     <div class="usage-container" onclick="copyText('${usageStr.replace(/'/g, "\\'")}')">
                         <span class="usage-text">${usageStr}</span>
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
