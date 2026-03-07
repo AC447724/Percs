@@ -2,148 +2,144 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Status | PERCS</title>
     
-    <meta name="description" content="Status Of The Percs Bot.">
-    <meta property="og:image" content="https://www.percs.fun/assets/percs.webp">
-    <meta name="theme-color" content="#050505">
-
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Instrument+Sans:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
         
         :root {
-            --bg: #050505;
-            --surface: #0a0a0a;
-            --border: rgba(255, 255, 255, 0.05);
-            --text-main: #ffffff;
-            --text-mute: #666666;
-            --accent: #2ecc71;
+            --bg: #000000;
+            --card: #0a0a0a;
+            --border: #1f1f1f;
+            --text-main: #f5f5f7;
+            --text-mute: #86868b;
+            --accent: #0071e3; /* Modern Blue instead of Hacker Green */
+            --success: #2ecc71;
+            --font-sans: 'Inter', -apple-system, sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
-            color-scheme: dark;
         }
 
+        * { box-sizing: border-box; transition: all 0.2s ease; }
         body { 
             background: var(--bg); color: var(--text-main); 
-            font-family: 'Instrument Sans', sans-serif; margin: 0;
-            overflow-x: hidden;
-        }
-
-        /* Hardware scanline overlay */
-        body::before {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
-            background-size: 100% 2px, 3px 100%; pointer-events: none; z-index: 1000;
+            font-family: var(--font-sans); margin: 0; padding: 0;
         }
 
         nav {
-            padding: 20px 5%; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--border); background: #050505;
+            padding: 16px 40px; border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(0,0,0,0.8); backdrop-filter: saturate(180%) blur(20px);
+            position: sticky; top: 0; z-index: 100;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
 
-        .header {
-            display: flex; justify-content: space-between; align-items: flex-end;
-            margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 20px;
+        /* Top Summary Section */
+        .summary-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px; margin-bottom: 40px;
         }
 
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+        .stat-card {
+            background: var(--card); border: 1px solid var(--border);
+            padding: 24px; border-radius: 12px;
         }
 
-        .panel {
-            background: var(--surface); border: 1px solid var(--border);
-            padding: 20px; border-radius: 4px; display: flex; flex-direction: column;
+        .stat-label { color: var(--text-mute); font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+        .stat-value { font-size: 28px; font-weight: 600; letter-spacing: -0.5px; }
+
+        /* Shard Grid */
+        .section-title { font-size: 14px; color: var(--text-mute); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .shard-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px; margin-bottom: 40px;
         }
 
-        .panel-label {
-            font-family: var(--font-mono); font-size: 10px; color: var(--text-mute);
-            text-transform: uppercase; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;
+        .shard-tile {
+            background: var(--card); border: 1px solid var(--border);
+            padding: 20px; border-radius: 12px;
+            display: flex; justify-content: space-between; align-items: center;
         }
 
-        .pulse {
-            width: 6px; height: 6px; background: var(--accent); border-radius: 50%;
-            animation: blink 1.5s infinite;
+        .shard-info h3 { font-size: 16px; margin: 0; color: var(--text-main); }
+        .shard-info p { font-size: 13px; margin: 4px 0 0 0; color: var(--text-mute); font-family: var(--font-mono); }
+
+        .shard-indicator {
+            display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600;
         }
 
-        .data-row {
-            display: flex; justify-content: space-between; margin-bottom: 8px;
-            font-family: var(--font-mono); font-size: 13px;
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); box-shadow: 0 0 10px var(--success); }
+
+        /* Infrastructure Group */
+        .system-footer {
+            display: flex; justify-content: space-between; gap: 20px;
+            padding: 24px; border: 1px solid var(--border); border-radius: 12px;
+            background: rgba(255,255,255,0.02);
         }
 
-        .data-label { color: var(--text-mute); }
-        .data-value { color: var(--text-main); }
+        .sys-group h4 { font-size: 11px; color: var(--text-mute); margin: 0 0 12px 0; letter-spacing: 1px; }
+        .sys-value { font-size: 14px; color: var(--text-main); font-weight: 500; }
 
-        .big-stat { font-family: var(--font-mono); font-size: 28px; margin: 10px 0; }
-        .unit { font-size: 12px; color: var(--text-mute); }
-
-        .meter { height: 3px; background: #1a1a1a; width: 100%; margin-top: 10px; border-radius: 2px; overflow: hidden; }
-        .meter-fill { height: 100%; background: var(--accent); width: 0%; transition: width 1s ease; }
-
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-        @media (max-width: 1000px) { .dashboard { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) {
+            .system-footer { flex-direction: column; gap: 32px; }
+        }
     </style>
 </head>
 <body>
 
 <nav>
-    <div style="font-weight: 600;">PERCS</div>
-    <div id="last-sync" style="font-family: var(--font-mono); font-size: 11px; color: var(--text-mute);">Last Check: --:--:--</div>
+    <div style="font-weight: 600; letter-spacing: -0.5px;">PERCS</div>
+    <div id="last-sync" style="font-size: 12px; color: var(--text-mute);">SYNC: --:--:--</div>
 </nav>
 
 <div class="container">
-    <header class="header">
-        <div>
-            <h1 style="font-size: 22px; margin: 0;" id="bot-tag">--</h1>
-            <p style="color: var(--text-mute); font-size: 13px; margin: 5px 0 0 0;">ID: <span id="bot-id">--</span></p>
+    <div class="summary-grid">
+        <div class="stat-card">
+            <div class="stat-label">Network Distribution</div>
+            <div class="stat-value" id="val-guilds">--</div>
+            <p style="font-size: 13px; color: var(--text-mute); margin: 8px 0 0 0;">Active Discord Guilds</p>
         </div>
-        <div id="status-badge" style="font-family: var(--font-mono); font-size: 13px; color: var(--accent);">● OPERATIONAL</div>
-    </header>
-
-    <div class="dashboard">
-        <div class="panel">
-            <div class="panel-label"><span class="pulse"></span> Network Shard</div>
-            <div class="big-stat" id="bot-guilds">--</div>
-            <div class="data-row"><span class="data-label">Latency</span><span class="data-value" id="bot-ping">--ms</span></div>
-            <div class="data-row"><span class="data-label">Cache</span><span class="data-value" id="bot-users">--</span></div>
-            <div class="data-row"><span class="data-label">Channels</span><span class="data-value" id="bot-channels">--</span></div>
-            <div class="data-row"><span class="data-label">Uptime</span><span class="data-value" id="bot-uptime">--</span></div>
+        <div class="stat-card">
+            <div class="stat-label">Instance Latency</div>
+            <div class="stat-value" id="val-ping">--ms</div>
+            <p style="font-size: 13px; color: var(--text-mute); margin: 8px 0 0 0;">Bot Heartbeat Pulse</p>
         </div>
+        <div class="stat-card">
+            <div class="stat-label">Operational Uptime</div>
+            <div class="stat-value" id="val-uptime" style="font-size: 20px;">--</div>
+            <p style="font-size: 13px; color: var(--text-mute); margin: 8px 0 0 0;">Since Last Reboot</p>
+        </div>
+    </div>
 
-        <div class="panel">
-            <div class="panel-label">Ht Infrastructure</div>
-            <div class="data-row"><span class="data-label">OS</span><span class="data-value" id="sys-os">--</span></div>
-            <div class="data-row"><span class="data-label">CPU</span><span class="data-value" style="font-size: 11px;" id="sys-cpu">--</span></div>
-            
-            <div style="margin-top: 15px;">
-                <div class="data-row"><span class="data-label">CPU Load</span><span id="sys-cpu-load">--%</span></div>
-                <div class="meter"><div id="fill-cpu" class="meter-fill"></div></div>
-            </div>
-
-            <div style="margin-top: 15px;">
-                <div class="data-row"><span class="data-label">RAM Usage</span><span id="sys-ram-pct">--%</span></div>
-                <div class="meter"><div id="fill-ram" class="meter-fill"></div></div>
-                <div style="font-size: 10px; color: var(--text-mute); margin-top: 5px;" id="sys-ram-mb">-- / -- MB</div>
+    <div class="section-title">Shard Telemetry</div>
+    <div class="shard-grid" id="shard-grid">
+        <div class="shard-tile">
+            <div class="shard-info">
+                <h3>Primary Core</h3>
+                <p>Initializing...</p>
             </div>
         </div>
+    </div>
 
-        <div class="panel">
-            <div class="panel-label">Process Environment</div>
-            <div class="data-row"><span class="data-label">Node JS</span><span class="data-value" id="proc-node">--</span></div>
-            <div class="data-row"><span class="data-label">PID</span><span class="data-value" id="proc-pid">--</span></div>
-            <div class="data-row"><span class="data-label">Heap Use</span><span class="data-value" id="proc-heap">-- MB</span></div>
-            <div class="data-row"><span class="data-label">RSS Use</span><span class="data-value" id="proc-rss">-- MB</span></div>
-            <div style="margin-top: auto; padding-top: 15px; border-top: 1px solid var(--border);">
-                <div class="data-row" style="margin-bottom: 0;">
-                    <span class="data-label">RAM/Guild</span>
-                    <span class="data-value" id="proc-per-guild" style="color: var(--accent);">-- MB</span>
-                </div>
-            </div>
+    <div class="section-title">Infrastructure Status</div>
+    <div class="system-footer">
+        <div class="sys-group">
+            <h4>PROCESSOR</h4>
+            <div class="sys-value" id="val-cpu">--</div>
+        </div>
+        <div class="sys-group">
+            <h4>OS & PLATFORM</h4>
+            <div class="sys-value" id="val-os">--</div>
+        </div>
+        <div class="sys-group">
+            <h4>MEMORY ALLOCATION</h4>
+            <div class="sys-value" id="val-ram">-- / -- MB</div>
+        </div>
+        <div class="sys-group">
+            <h4>RUNTIME</h4>
+            <div class="sys-value" id="val-node">--</div>
         </div>
     </div>
 </div>
@@ -153,48 +149,49 @@
         try {
             const res = await fetch('/api/status');
             const d = await res.json();
-            const isOnline = d && (Date.now() - (d.last_sync || 0) < 180000);
+            const isOnline = d && (Date.now() - (d.last_sync || 0) < 300000);
 
             if (isOnline) {
-                // Header
-                document.getElementById('bot-tag').innerText = d.bot.tag;
-                document.getElementById('bot-id').innerText = d.bot.id;
-                
-                // Bot Panel
-                document.getElementById('bot-guilds').innerHTML = `${d.bot.cached_guilds} <span class="unit">Guilds</span>`;
-                document.getElementById('bot-ping').innerText = `${d.bot.ping}ms`;
-                document.getElementById('bot-users').innerText = d.bot.cached_users.toLocaleString();
-                document.getElementById('bot-channels').innerText = d.bot.cached_channels.toLocaleString();
-                document.getElementById('bot-uptime').innerText = d.bot.uptime_formatted;
+                // Summary
+                document.getElementById('val-guilds').innerText = d.bot.cached_guilds.toLocaleString();
+                document.getElementById('val-ping').innerText = `${d.bot.ping}`;
+                document.getElementById('val-uptime').innerText = d.bot.uptime_formatted;
 
-                // Hardware Panel
-                document.getElementById('sys-os').innerText = d.system.platform + " " + d.system.release;
-                document.getElementById('sys-cpu').innerText = d.system.cpu;
-                document.getElementById('sys-cpu-load').innerText = d.system.cpu_load;
-                document.getElementById('fill-cpu').style.width = d.system.cpu_load;
-                document.getElementById('sys-ram-pct').innerText = d.system.ram_usage_percent;
-                document.getElementById('fill-ram').style.width = d.system.ram_usage_percent;
-                document.getElementById('sys-ram-mb').innerText = `${Math.round(d.system.ram_used_mb)} / ${Math.round(d.system.ram_total_mb)} MB`;
+                // Shards Logic - Dynamically Build
+                const shardContainer = document.getElementById('shard-grid');
+                shardContainer.innerHTML = ''; // Clear previous
 
-                // Process Panel
-                document.getElementById('proc-node').innerText = d.process.node_version;
-                document.getElementById('proc-pid').innerText = d.process.pid;
-                document.getElementById('proc-heap').innerText = d.process.memory_heap_mb;
-                document.getElementById('proc-rss').innerText = d.process.memory_rss_mb;
-                document.getElementById('proc-per-guild').innerText = d.process.memory_per_guild_mb + " MB";
+                // Handle single or multiple shards
+                const shardCount = d.bot.shard_count || 1;
+                for (let i = 0; i < shardCount; i++) {
+                    const active = d.bot.current_shard === i;
+                    shardContainer.innerHTML += `
+                        <div class="shard-tile" style="${active ? 'border-color: var(--accent);' : ''}">
+                            <div class="shard-info">
+                                <h3>Shard #${i} ${active ? '(Current)' : ''}</h3>
+                                <p>${d.bot.cached_users.toLocaleString()} Users &bull; ${d.bot.cached_channels} Channels</p>
+                            </div>
+                            <div class="shard-indicator">
+                                <div class="dot"></div>
+                                <span style="color: var(--success)">ACTIVE</span>
+                            </div>
+                        </div>
+                    `;
+                }
 
-                document.getElementById('last-sync').innerText = `SYNC: ${new Date(d.last_sync).toLocaleTimeString()}`;
-                document.getElementById('status-badge').innerText = "● OPERATIONAL";
-                document.getElementById('status-badge').style.color = "var(--accent)";
-            } else {
-                document.getElementById('status-badge').innerText = "○ DISCONNECTED";
-                document.getElementById('status-badge').style.color = "#f23f43";
+                // System Footer
+                document.getElementById('val-cpu').innerText = d.system.cpu.split(' ')[0] + ' ' + d.system.cpu.split(' ')[1] + ' Series';
+                document.getElementById('val-os').innerText = d.system.platform.charAt(0).toUpperCase() + d.system.platform.slice(1);
+                document.getElementById('val-ram').innerText = `${Math.round(d.system.ram_used_mb).toLocaleString()} / ${Math.round(d.system.ram_total_mb / 1024)} GB`;
+                document.getElementById('val-node').innerText = `Node ${d.process.node_version}`;
+
+                document.getElementById('last-sync').innerText = `SYNC: ${new Date(d.last_sync).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
             }
-        } catch (e) { console.error("Sync Error:", e); }
+        } catch (e) { console.error(e); }
     }
 
     update();
-    setInterval(update, 300000);
+    setInterval(update, 240000);
 </script>
 </body>
 </html>
