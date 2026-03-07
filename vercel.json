@@ -1,8 +1,10 @@
 {
+  "version": 2,
+  "public": true,
   "rewrites": [
     {
       "source": "/assets/u/:slug",
-      "destination": "/api/assets/:slug"
+      "destination": "/api/assets/[slug]"
     }
   ]
 }
