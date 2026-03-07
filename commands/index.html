@@ -22,6 +22,7 @@
             --accent: #ffffff;
             --font-display: 'Instrument Sans', sans-serif;
             --font-body: 'Inter', sans-serif;
+            --perm-border: rgba(255, 99, 99, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
@@ -179,7 +180,7 @@
             margin-bottom: 25px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .meta-line {
@@ -192,10 +193,11 @@
 
         .meta-label {
             text-transform: uppercase;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 600;
             color: var(--text-dim);
-            width: 70px;
+            width: 85px;
+            letter-spacing: 0.05em;
         }
 
         .meta-tag {
@@ -211,6 +213,15 @@
             border-radius: 4px;
             font-family: monospace;
             color: #fff;
+        }
+
+        .meta-perm {
+            background: rgba(255, 99, 99, 0.05);
+            border: 1px solid var(--perm-border);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #ff9d9d;
+            font-size: 11px;
         }
 
         .usage-container {
@@ -341,8 +352,8 @@
                 let usageStr = cmd.usage;
                 if (!usageStr) {
                     const prefix = cmd.type === 'prefix' ? '.' : '/';
-                    const args = cmd.arguments && cmd.arguments.length ? ' ' + cmd.arguments.join(' ') : '';
-                    usageStr = `${prefix}${cmd.name}${args}`;
+                    const argsArr = cmd.arguments && cmd.arguments.length ? ' ' + cmd.arguments.join(' ') : '';
+                    usageStr = `${prefix}${cmd.name}${argsArr}`;
                 }
 
                 const aliases = (cmd.aliases && cmd.aliases.length) 
@@ -351,6 +362,10 @@
 
                 const args = (cmd.arguments && cmd.arguments.length)
                     ? `<div class="meta-line"><span class="meta-label">Arguments</span>${cmd.arguments.map(a => `<span class="meta-arg">${a}</span>`).join('')}</div>`
+                    : '';
+
+                const perms = (cmd.permissions && cmd.permissions.length)
+                    ? `<div class="meta-line"><span class="meta-label">Permissions</span>${cmd.permissions.map(p => `<span class="meta-perm">${p}</span>`).join('')}</div>`
                     : '';
 
                 return `
@@ -364,6 +379,7 @@
                     <div class="cmd-meta">
                         ${aliases}
                         ${args}
+                        ${perms}
                     </div>
 
                     <div class="usage-container" onclick="copyText('${usageStr.replace(/'/g, "\\'")}')">
