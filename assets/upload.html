@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PERCS | Asset Manager</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />
+    <style>
+        :root { --p-blue: #2563eb; --p-bg: #ffffff; --p-border: #e2e8f0; --p-text: #0f172a; }
+        body { font-family: 'Inter', sans-serif; background: var(--p-bg); color: var(--p-text); display: flex; justify-content: center; padding-top: 100px; }
+        .upload-card { width: 100%; max-width: 500px; border: 1px solid var(--p-border); padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        h1 { font-size: 20px; margin-bottom: 24px; font-weight: 700; }
+        .group { margin-bottom: 16px; }
+        label { display: block; font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 6px; text-transform: uppercase; }
+        input { width: 100%; padding: 12px; border: 1px solid var(--p-border); border-radius: 8px; outline: none; font-family: inherit; }
+        input:focus { border-color: var(--p-blue); }
+        button { width: 100%; background: var(--p-blue); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        #result-box { margin-top: 20px; padding: 15px; background: #f8fafc; border-radius: 8px; font-size: 13px; display: none; word-break: break-all; border: 1px dashed var(--p-blue); }
+    </style>
+</head>
+<body>
+
+<div class="upload-card">
+    <h1>Asset Linker</h1>
+    <div class="group">
+        <label>Original Image/GIF URL</label>
+        <input type="text" id="rawUrl" placeholder="https://cdn.discordapp.com/...">
+    </div>
+    <div class="group">
+        <label>Custom Filename</label>
+        <input type="text" id="slug" placeholder="cool-gif">
+    </div>
+    <button onclick="createLink()">Generate Percs Link</button>
+    <div id="result-box"></div>
+</div>
+
+<script>
+    async function createLink() {
+        const url = document.getElementById('rawUrl').value;
+        const filename = document.getElementById('slug').value;
+        const resBox = document.getElementById('result-box');
+
+        if (!url || !filename) return alert("Fill all fields.");
+
+        const response = await fetch('/api/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url, filename })
+        });
+
+        const data = await response.json();
+        if (data.success) {
+            resBox.style.display = 'block';
+            resBox.innerHTML = `<strong>Success!</strong><br><a href="${data.link}" target="_blank">${data.link}</a>`;
+        } else {
+            alert("Error: " + data.error);
+        }
+    }
+</script>
+</body>
+</html>
