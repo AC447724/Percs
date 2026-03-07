@@ -92,8 +92,8 @@
 <body>
 
 <nav>
-    <div style="font-weight: 600;">PERCS // CORE</div>
-    <div id="last-sync" style="font-family: var(--font-mono); font-size: 11px; color: var(--text-mute);">SYNC: --:--:--</div>
+    <div style="font-weight: 600;">PERCS</div>
+    <div id="last-sync" style="font-family: var(--font-mono); font-size: 11px; color: var(--text-mute);">Last Check: --:--:--</div>
 </nav>
 
 <div class="container">
@@ -110,7 +110,7 @@
             <div class="panel-label"><span class="pulse"></span> Network Shard</div>
             <div class="big-stat" id="bot-guilds">--</div>
             <div class="data-row"><span class="data-label">Latency</span><span class="data-value" id="bot-ping">--ms</span></div>
-            <div class="data-row"><span class="data-label">Users</span><span class="data-value" id="bot-users">--</span></div>
+            <div class="data-row"><span class="data-label">Cache</span><span class="data-value" id="bot-users">--</span></div>
             <div class="data-row"><span class="data-label">Channels</span><span class="data-value" id="bot-channels">--</span></div>
             <div class="data-row"><span class="data-label">Uptime</span><span class="data-value" id="bot-uptime">--</span></div>
         </div>
@@ -194,7 +194,7 @@
     }
 
     update();
-    setInterval(update, 15000);
+    setInterval(update, 300000);
 </script>
 </body>
 </html>
