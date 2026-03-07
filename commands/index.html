@@ -35,7 +35,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- NAVIGATION --- */
         nav {
             padding: 25px 5%;
             display: flex;
@@ -71,7 +70,6 @@
         }
         .nav-links a:hover { color: var(--text-primary); }
 
-        /* --- HERO --- */
         .hero { 
             padding: 160px 20px 60px 20px;
             text-align: center;
@@ -102,7 +100,6 @@
         }
         .search-bar:focus { border-color: rgba(255,255,255,0.3); }
 
-        /* --- CATEGORIES --- */
         .categories-container {
             max-width: 1000px;
             margin: 0 auto 60px auto;
@@ -130,7 +127,6 @@
         .cat-pill:hover { border-color: var(--text-dim); color: #fff; }
         .cat-pill.active { background: #fff; color: #000; border-color: #fff; }
 
-        /* --- GRID --- */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -156,7 +152,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .cmd-name { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: #fff; }
@@ -171,7 +167,41 @@
             color: var(--text-dim);
         }
 
-        .cmd-desc { color: var(--text-dim); font-size: 14px; line-height: 1.6; margin-bottom: 25px; flex-grow: 1; }
+        .cmd-desc { color: var(--text-dim); font-size: 14px; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
+
+        .meta-section {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .meta-item {
+            font-size: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .meta-label { color: var(--text-dim); font-weight: 600; text-transform: uppercase; font-size: 10px; }
+        
+        .tag {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #eee;
+        }
+
+        .arg-tag {
+            background: rgba(255,255,255,0.08);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 11px;
+            color: #fff;
+        }
 
         .usage-container {
             margin-top: auto;
@@ -232,7 +262,6 @@
 
         async function init() {
             try {
-                // Now fetching from the local relative path "commands.json"
                 const res = await fetch('commands.json');
                 if (!res.ok) throw new Error('File not found');
                 cmdData = await res.json();
@@ -268,7 +297,9 @@
         function processFilter() {
             const term = document.getElementById('searchInput').value.toLowerCase();
             const filtered = cmdData.filter(c => {
-                const matchesSearch = c.name.toLowerCase().includes(term) || c.description.toLowerCase().includes(term);
+                const matchesSearch = c.name.toLowerCase().includes(term) || 
+                                    c.description.toLowerCase().includes(term) ||
+                                    (c.aliases && c.aliases.some(a => a.toLowerCase().includes(term)));
                 const matchesCat = currentCat === 'All' || c.category === currentCat;
                 return matchesSearch && matchesCat;
             });
@@ -285,6 +316,18 @@
                     usageStr = `${prefix}${cmd.name}${args}`;
                 }
 
+                const aliasHtml = cmd.aliases && cmd.aliases.length > 0 
+                    ? `<div class="meta-item"><span class="meta-label">Aliases:</span> ${cmd.aliases.map(a => `<span class="tag">${a}</span>`).join('')}</div>` 
+                    : '';
+
+                const argsHtml = cmd.arguments && cmd.arguments.length > 0 
+                    ? `<div class="meta-item"><span class="meta-label">Arguments:</span> ${cmd.arguments.map(a => `<span class="arg-tag">${a}</span>`).join('')}</div>` 
+                    : '';
+
+                const permsHtml = cmd.permissions && cmd.permissions.length > 0 
+                    ? `<div class="meta-item"><span class="meta-label">Permissions:</span> ${cmd.permissions.map(p => `<span class="tag" style="border-color:rgba(255,0,0,0.2)">${p}</span>`).join('')}</div>` 
+                    : '';
+
                 return `
                 <div class="card">
                     <div class="cmd-header">
@@ -292,7 +335,14 @@
                         <span class="type-badge">${cmd.type}</span>
                     </div>
                     <p class="cmd-desc">${cmd.description}</p>
-                    <div class="usage-container" onclick="copyText('${usageStr}')">
+                    
+                    <div class="meta-section">
+                        ${aliasHtml}
+                        ${argsHtml}
+                        ${permsHtml}
+                    </div>
+
+                    <div class="usage-container" onclick="copyText('${usageStr.replace(/'/g, "\\'")}')">
                         <span class="usage-text">${usageStr}</span>
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     </div>
