@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/assets/u/:slug",
+      "destination": "/api/assets/:slug"
+    }
+  ]
+}
