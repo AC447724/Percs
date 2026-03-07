@@ -71,7 +71,7 @@
         .nav-links a:hover { color: var(--text-primary); }
 
         .hero { 
-            padding: 160px 20px 60px 20px;
+            padding: 160px 20px 40px 20px;
             text-align: center;
             background: radial-gradient(circle at center, #111 0%, #050505 100%);
         }
@@ -85,7 +85,7 @@
             margin-bottom: 20px;
         }
 
-        .search-wrapper { max-width: 600px; margin: 0 auto 40px auto; position: relative; }
+        .search-wrapper { max-width: 600px; margin: 0 auto 30px auto; position: relative; }
         .search-bar {
             width: 100%;
             background: var(--surface);
@@ -100,16 +100,22 @@
         }
         .search-bar:focus { border-color: rgba(255,255,255,0.3); }
 
-        .categories-container {
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
             max-width: 1000px;
             margin: 0 auto 60px auto;
+        }
+
+        .categories-container, .toggle-container {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 10px;
         }
 
-        .cat-pill {
+        .cat-pill, .toggle-pill {
             background: transparent;
             border: 1px solid var(--border);
             padding: 8px 20px;
@@ -124,8 +130,8 @@
         }
 
         .cat-pill span { opacity: 0.5; font-size: 11px; }
-        .cat-pill:hover { border-color: var(--text-dim); color: #fff; }
-        .cat-pill.active { background: #fff; color: #000; border-color: #fff; }
+        .cat-pill:hover, .toggle-pill:hover { border-color: var(--text-dim); color: #fff; }
+        .cat-pill.active, .toggle-pill.active { background: #fff; color: #000; border-color: #fff; }
 
         .grid {
             display: grid;
@@ -152,7 +158,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .cmd-name { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: #fff; }
@@ -169,37 +175,41 @@
 
         .cmd-desc { color: var(--text-dim); font-size: 14px; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
 
-        .meta-section {
-            margin-bottom: 20px;
+        .cmd-meta {
+            margin-bottom: 25px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .meta-item {
-            font-size: 12px;
+        .meta-line {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
             align-items: center;
+            font-size: 12px;
         }
 
-        .meta-label { color: var(--text-dim); font-weight: 600; text-transform: uppercase; font-size: 10px; }
-        
-        .tag {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid var(--border);
+        .meta-label {
+            text-transform: uppercase;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-dim);
+            width: 70px;
+        }
+
+        .meta-tag {
+            background: rgba(255,255,255,0.05);
             padding: 2px 8px;
             border-radius: 4px;
-            color: #eee;
+            color: #ccc;
         }
 
-        .arg-tag {
-            background: rgba(255,255,255,0.08);
+        .meta-arg {
+            background: rgba(255,255,255,0.1);
             padding: 2px 8px;
             border-radius: 4px;
             font-family: monospace;
-            font-size: 11px;
             color: #fff;
         }
 
@@ -247,9 +257,17 @@
     <div class="hero" id="commands">
         <h1>Command Library</h1>
         <div class="search-wrapper">
-            <input type="text" id="searchInput" class="search-bar" placeholder="Find a command..." onkeyup="processFilter()">
+            <input type="text" id="searchInput" class="search-bar" placeholder="Find a command or alias..." onkeyup="processFilter()">
         </div>
-        <div class="categories-container" id="catBox"></div>
+        
+        <div class="filter-group">
+            <div class="toggle-container" id="typeBox">
+                <div class="toggle-pill active" onclick="setType('all', this)">All Types</div>
+                <div class="toggle-pill" onclick="setType('prefix', this)">Prefix Only</div>
+                <div class="toggle-pill" onclick="setType('slash', this)">Slash Only</div>
+            </div>
+            <div class="categories-container" id="catBox"></div>
+        </div>
     </div>
 
     <div class="grid" id="cmdGrid"></div>
@@ -259,6 +277,7 @@
     <script>
         let cmdData = [];
         let currentCat = 'All';
+        let currentType = 'all';
 
         async function init() {
             try {
@@ -269,7 +288,7 @@
                 renderCards(cmdData);
             } catch (e) {
                 console.error(e);
-                document.getElementById('cmdGrid').innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--text-dim);">Unable to load commands.json from the local directory.</p>`;
+                document.getElementById('cmdGrid').innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--text-dim);">Unable to load commands.json.</p>`;
             }
         }
 
@@ -294,14 +313,24 @@
             processFilter();
         }
 
+        function setType(type, el) {
+            currentType = type;
+            document.querySelectorAll('.toggle-pill').forEach(p => p.classList.remove('active'));
+            el.classList.add('active');
+            processFilter();
+        }
+
         function processFilter() {
             const term = document.getElementById('searchInput').value.toLowerCase();
             const filtered = cmdData.filter(c => {
                 const matchesSearch = c.name.toLowerCase().includes(term) || 
                                     c.description.toLowerCase().includes(term) ||
                                     (c.aliases && c.aliases.some(a => a.toLowerCase().includes(term)));
+                
                 const matchesCat = currentCat === 'All' || c.category === currentCat;
-                return matchesSearch && matchesCat;
+                const matchesType = currentType === 'all' || c.type === currentType;
+                
+                return matchesSearch && matchesCat && matchesType;
             });
             renderCards(filtered);
         }
@@ -316,16 +345,12 @@
                     usageStr = `${prefix}${cmd.name}${args}`;
                 }
 
-                const aliasHtml = cmd.aliases && cmd.aliases.length > 0 
-                    ? `<div class="meta-item"><span class="meta-label">Aliases:</span> ${cmd.aliases.map(a => `<span class="tag">${a}</span>`).join('')}</div>` 
+                const aliases = (cmd.aliases && cmd.aliases.length) 
+                    ? `<div class="meta-line"><span class="meta-label">Aliases</span>${cmd.aliases.map(a => `<span class="meta-tag">${a}</span>`).join('')}</div>` 
                     : '';
 
-                const argsHtml = cmd.arguments && cmd.arguments.length > 0 
-                    ? `<div class="meta-item"><span class="meta-label">Arguments:</span> ${cmd.arguments.map(a => `<span class="arg-tag">${a}</span>`).join('')}</div>` 
-                    : '';
-
-                const permsHtml = cmd.permissions && cmd.permissions.length > 0 
-                    ? `<div class="meta-item"><span class="meta-label">Permissions:</span> ${cmd.permissions.map(p => `<span class="tag" style="border-color:rgba(255,0,0,0.2)">${p}</span>`).join('')}</div>` 
+                const args = (cmd.arguments && cmd.arguments.length)
+                    ? `<div class="meta-line"><span class="meta-label">Arguments</span>${cmd.arguments.map(a => `<span class="meta-arg">${a}</span>`).join('')}</div>`
                     : '';
 
                 return `
@@ -336,10 +361,9 @@
                     </div>
                     <p class="cmd-desc">${cmd.description}</p>
                     
-                    <div class="meta-section">
-                        ${aliasHtml}
-                        ${argsHtml}
-                        ${permsHtml}
+                    <div class="cmd-meta">
+                        ${aliases}
+                        ${args}
                     </div>
 
                     <div class="usage-container" onclick="copyText('${usageStr.replace(/'/g, "\\'")}')">
