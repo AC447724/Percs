@@ -154,7 +154,7 @@
                     document.getElementById('val-cpu').innerHTML = `${data.cpu}<span class="unit">%</span>`;
                     document.getElementById('fill-cpu').style.width = data.cpu;
                     document.getElementById('val-uptime').innerText = data.uptime;
-                    document.getElementById('last-update').innerText = `Last: ${new Date().toLocaleTimeString()}`;
+                    document.getElementById('last-update').innerText = `Last Ping: ${new Date().toLocaleTimeString()}`;
                 } else {
                     document.getElementById('main-status').innerText = "○ DISCONNECTED";
                     document.getElementById('main-status').style.color = "#f23f43";
