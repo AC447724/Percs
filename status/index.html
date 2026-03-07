@@ -2,8 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <title>Status | PERCS</title>
+    <meta name="description" content="Live hardware and process metrics for the PERCS network.">
+    <meta property="og:title" content="PERCS System Health">
+    <meta property="og:image" content="https://www.percs.fun/assets/percs.webp">
+    <meta name="theme-color" content="#050505">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Instrument+Sans:wght@400;600&display=swap');
         
@@ -16,6 +22,7 @@
             --accent: #2ecc71;
             --accent-dim: rgba(46, 204, 113, 0.1);
             --font-mono: 'JetBrains Mono', monospace;
+            color-scheme: dark;
         }
 
         body { 
@@ -24,7 +31,7 @@
             overflow-x: hidden;
         }
 
-        /* Scanline effect to break the "clean" AI look */
+        /* Scanline effect for the "real hardware" look */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
@@ -33,21 +40,19 @@
         }
 
         nav {
-            padding: 20px 5%; display: flex; justify-content: space-between;
+            padding: 20px 5%; display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid var(--border); background: #050505;
         }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 60px 5%; }
 
-        /* Terminal Header */
         .status-header {
             display: flex; align-items: flex-end; justify-content: space-between;
             margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 20px;
         }
 
-        .sys-info { font-family: var(--font-mono); font-size: 12px; color: var(--text-mute); text-transform: uppercase; }
+        .sys-info { font-family: var(--font-mono); font-size: 11px; color: var(--text-mute); text-transform: uppercase; }
 
-        /* Grid - Asymmetric Layout */
         .dashboard {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr;
@@ -73,7 +78,6 @@
         .big-value { font-family: var(--font-mono); font-size: 32px; font-weight: 500; letter-spacing: -1px; }
         .unit { font-size: 14px; color: var(--text-mute); margin-left: 4px; }
 
-        /* Custom Progress Bar */
         .meter {
             height: 4px; background: #1a1a1a; width: 100%; margin-top: 15px; border-radius: 2px; overflow: hidden;
         }
@@ -81,9 +85,9 @@
 
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        /* Responsive */
         @media (max-width: 900px) {
             .dashboard { grid-template-columns: 1fr; }
+            .status-header { flex-direction: column; align-items: flex-start; gap: 20px; }
         }
     </style>
 </head>
@@ -97,8 +101,8 @@
     <div class="container">
         <header class="status-header">
             <div>
-                <h1 style="font-size: 24px; margin-bottom: 5px;">Instances</h1>
-                <p style="color: var(--text-mute); font-size: 14px;">Monitoring core shards and hardware allocation.</p>
+                <h1 style="font-size: 24px; margin-bottom: 5px;">Instance: <span id="val-tag">Loading...</span></h1>
+                <p style="color: var(--text-mute); font-size: 14px;">Monitoring <span id="val-platform">--</span> shards and hardware allocation.</p>
             </div>
             <div id="main-status" style="font-family: var(--font-mono); font-size: 14px; color: var(--accent);">
                 ● OPERATIONAL
@@ -107,34 +111,41 @@
 
         <div class="dashboard">
             <div class="panel" style="grid-row: span 2;">
-                <div class="panel-label"><span class="pulse"></span> Network & Throughput</div>
+                <div class="panel-label"><span class="pulse"></span> Network & Shard Info</div>
                 <div style="margin-top: 40px;">
                     <div class="big-value" id="val-servers">--</div>
-                    <div style="color: var(--text-mute); font-size: 13px; margin-top: 5px;">Active Discord Guilds Connected</div>
+                    <div style="color: var(--text-mute); font-size: 13px; margin-top: 5px;">Guilds across <span id="val-shards">--</span> shard(s)</div>
                 </div>
                 <div style="margin-top: 40px; border-top: 1px solid var(--border); padding-top: 20px;">
-                    <div style="display: flex; justify-content: space-between;">
-                        <span style="font-size: 13px; color: var(--text-mute);">Server Latency</span>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="font-size: 13px; color: var(--text-mute);">Heartbeat Latency</span>
                         <span id="val-ping" style="font-family: var(--font-mono); color: var(--accent);">--ms</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="font-size: 13px; color: var(--text-mute);">Cached Users</span>
+                        <span id="val-users" style="font-family: var(--font-mono); color: var(--text-main);">--</span>
                     </div>
                 </div>
             </div>
 
             <div class="panel">
-                <div class="panel-label">Memory Usage</div>
-                <div class="big-value" id="val-ram">--<span class="unit">%</span></div>
+                <div class="panel-label">RAM Usage (<span id="val-ram-mb">--</span> MB)</div>
+                <div class="big-value" id="val-ram-pct">--<span class="unit">%</span></div>
                 <div class="meter"><div id="fill-ram" class="meter-fill"></div></div>
             </div>
 
             <div class="panel">
-                <div class="panel-label">CPU Load</div>
-                <div class="big-value" id="val-cpu">--<span class="unit">%</span></div>
+                <div class="panel-label" id="val-cpu-name" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">Processor Load</div>
+                <div class="big-value" id="val-cpu-load">--<span class="unit">%</span></div>
                 <div class="meter"><div id="fill-cpu" class="meter-fill"></div></div>
             </div>
 
             <div class="panel" style="grid-column: span 2;">
-                <div class="panel-label">Total Uptime</div>
+                <div class="panel-label">System Uptime: <span id="sys-uptime">--</span></div>
                 <div class="big-value" id="val-uptime" style="font-size: 24px;">--:--:--</div>
+                <div style="margin-top: 10px; font-size: 12px; color: var(--text-mute); font-family: var(--font-mono);">
+                    Node <span id="val-node">--</span> &bull; PID <span id="val-pid">--</span>
+                </div>
             </div>
         </div>
     </div>
@@ -144,26 +155,57 @@
             try {
                 const res = await fetch('/api/status');
                 const data = await res.json();
-                const isOnline = data && (Date.now() - data.lastSeen < 300000);
+                
+                // Validate if data exists and is fresh (within last 3 minutes)
+                const isOnline = data && (Date.now() - (data.last_sync || 0) < 180000);
 
                 if (isOnline) {
-                    document.getElementById('val-servers').innerText = data.guilds.toLocaleString();
-                    document.getElementById('val-ping').innerText = data.ping;
-                    document.getElementById('val-ram').innerHTML = `${data.ram}<span class="unit">%</span>`;
-                    document.getElementById('fill-ram').style.width = data.ram;
-                    document.getElementById('val-cpu').innerHTML = `${data.cpu}<span class="unit">%</span>`;
-                    document.getElementById('fill-cpu').style.width = data.cpu;
-                    document.getElementById('val-uptime').innerText = data.uptime;
-                    document.getElementById('last-update').innerText = `Last Ping: ${new Date().toLocaleTimeString()}`;
+                    // Header info
+                    document.getElementById('val-tag').innerText = data.bot.tag;
+                    document.getElementById('val-platform').innerText = data.system.platform.toUpperCase();
+                    
+                    // Main Activity
+                    document.getElementById('val-servers').innerText = data.bot.cached_guilds.toLocaleString();
+                    document.getElementById('val-shards').innerText = data.bot.shard_count;
+                    document.getElementById('val-ping').innerText = data.bot.ping === -1 ? "0" : data.bot.ping;
+                    document.getElementById('val-users').innerText = data.bot.cached_users.toLocaleString();
+
+                    // Hardware
+                    const cpuLoad = parseFloat(data.system.cpu_load);
+                    const ramPct = parseFloat(data.system.ram_usage_percent);
+                    
+                    document.getElementById('val-cpu-name').innerText = data.system.cpu;
+                    document.getElementById('val-cpu-load').innerHTML = `${cpuLoad}<span class="unit">%</span>`;
+                    document.getElementById('fill-cpu').style.width = `${cpuLoad}%`;
+
+                    document.getElementById('val-ram-mb').innerText = Math.round(data.system.ram_used_mb).toLocaleString();
+                    document.getElementById('val-ram-pct').innerHTML = `${ramPct}<span class="unit">%</span>`;
+                    document.getElementById('fill-ram').style.width = `${ramPct}%`;
+
+                    // Process & Time
+                    document.getElementById('val-uptime').innerText = `Process: ${data.bot.uptime_formatted}`;
+                    document.getElementById('sys-uptime').innerText = data.system.uptime_formatted;
+                    document.getElementById('val-node').innerText = data.process.node_version;
+                    document.getElementById('val-pid').innerText = data.process.pid;
+                    
+                    document.getElementById('last-update').innerText = `Last Sync: ${new Date(data.last_sync).toLocaleTimeString()}`;
+                    
+                    // UI Reset
+                    document.getElementById('main-status').innerText = "● OPERATIONAL";
+                    document.getElementById('main-status').style.color = "var(--accent)";
                 } else {
                     document.getElementById('main-status').innerText = "○ DISCONNECTED";
                     document.getElementById('main-status').style.color = "#f23f43";
                 }
-            } catch (e) { console.error("Sync error."); }
+            } catch (e) { 
+                console.error("Sync error:", e); 
+                document.getElementById('main-status').innerText = "○ DATA ERROR";
+                document.getElementById('main-status').style.color = "#f23f43";
+            }
         }
 
         updateMetrics();
-        setInterval(updateMetrics, 15000); // Shorter interval for "live" feel
+        setInterval(updateMetrics, 15000); // Check every 15 seconds
     </script>
 </body>
 </html>
