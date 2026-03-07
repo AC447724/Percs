@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Minecraft Server Checker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; image-rendering: pixelated; }
+        
+        body { 
+            /* Classic Dirt Background */
+            background: url('https://minecraft.wiki/images/Dirt_JE2_BE2.png');
+            background-size: 64px;
+            color: #AAAAAA;
+            font-family: 'Press Start 2P', cursive;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-shadow: 2px 2px 0px #3F3F3F;
+        }
+
+        .menu-container {
+            width: 600px;
+            text-align: center;
+        }
+
+        h1 { color: #FFFFFF; font-size: 18px; margin-bottom: 40px; }
+
+        .input-box {
+            background: #000000;
+            border: 2px solid #A0A0A0;
+            padding: 12px;
+            width: 100%;
+            color: #FFFFFF;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            margin-bottom: 20px;
+        }
+
+        /* Minecraft Button Style */
+        .mc-button {
+            background: #6D6D6D;
+            border: 2px solid #000000;
+            border-top-color: #AFAFAF;
+            border-left-color: #AFAFAF;
+            color: #E0E0E0;
+            padding: 15px;
+            width: 100%;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            transition: none;
+        }
+
+        .mc-button:hover {
+            background: #7D7D7D;
+            border-top-color: #BDBDBD;
+            border-left-color: #BDBDBD;
+            color: #FFFFA0;
+        }
+
+        .mc-button:active {
+            border: 2px solid #AFAFAF;
+            border-top-color: #000000;
+            border-left-color: #000000;
+            padding-top: 17px;
+            padding-bottom: 13px;
+        }
+
+        .server-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #555555;
+            margin-top: 30px;
+            padding: 20px;
+            text-align: left;
+            display: none;
+        }
+
+        .server-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        #server-icon { width: 64px; height: 64px; border: 2px solid #FFF; display: none; }
+        
+        .stat-line { font-size: 10px; margin-bottom: 10px; line-height: 1.6; }
+        .green { color: #55FF55; }
+        .yellow { color: #FFFF55; }
+        .gray { color: #AAAAAA; }
+
+        .motd-text { color: #FFFFFF; font-size: 10px; background: #111; padding: 10px; border: 1px solid #333; }
+    </style>
+</head>
+<body>
+
+<div class="menu-container">
+    <h1>Server Info</h1>
+    
+    <div style="text-align: left; font-size: 10px; margin-bottom: 10px;">Server Address</div>
+    <input type="text" id="serverIp" class="input-box" placeholder="e.g. hypixel.net" spellcheck="false">
+    
+    <button class="mc-button" onclick="checkServer()">Done</button>
+
+    <div id="result" class="server-card">
+        <div class="server-header">
+            <img id="server-icon" src="">
+            <div>
+                <div id="status-title" style="color: #FFF; font-size: 12px;">Pinging...</div>
+                <div id="player-count" class="gray" style="font-size: 10px;">0/0 Players</div>
+            </div>
+        </div>
+        
+        <div class="motd-text" id="motd">...</div>
+        
+        <div style="margin-top: 15px;">
+            <div class="stat-line">Version: <span id="version" class="yellow">N/A</span></div>
+            <div class="stat-line">Software: <span id="software" class="gray">Unknown</span></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function checkServer() {
+        const ip = document.getElementById('serverIp').value;
+        const resultCard = document.getElementById('result');
+        const motdBox = document.getElementById('motd');
+        
+        if (!ip) return;
+
+        resultCard.style.display = 'block';
+        document.getElementById('status-title').innerText = "Pinging...";
+        
+        try {
+            const res = await fetch('/api/scan', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ target: ip })
+            });
+            const data = await res.json();
+
+            if (data.online) {
+                document.getElementById('status-title').innerText = "Online";
+                document.getElementById('status-title').className = "green";
+                document.getElementById('player-count').innerText = `${data.players.online}/${data.players.max} Players`;
+                document.getElementById('version').innerText = data.version;
+                document.getElementById('software').innerText = data.software;
+                motdBox.innerText = data.motd;
+
+                if (data.icon) {
+                    const icon = document.getElementById('server-icon');
+                    icon.src = data.icon;
+                    icon.style.display = 'block';
+                }
+            } else {
+                document.getElementById('status-title').innerText = "Can't connect to server";
+                document.getElementById('status-title').style.color = "#FF5555";
+                motdBox.innerText = "Check the address and try again.";
+            }
+        } catch (err) {
+            motdBox.innerText = "Error connecting to the checker service.";
+        }
+    }
+</script>
+
+</body>
+</html>
