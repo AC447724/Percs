@@ -5,211 +5,260 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PERCS | Simple, Powerful Management</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=Inter:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=Inter:wght@300;400;500&family=JetBrains+Mono&display=swap');
         
         :root {
             --bg: #050505;
-            --surface: #0f0f0f;
+            --surface: #0a0a0a;
             --text: #ffffff;
-            --text-dim: #888888;
-            --border: rgba(255, 255, 255, 0.08);
+            --text-dim: #88888b;
+            --border: rgba(255, 255, 255, 0.06);
+            --accent: #0070f3;
+            --success: #2ecc71;
+            --error: #ff4757;
             --font-display: 'Instrument Sans', sans-serif;
             --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         
         body { 
-            background: var(--bg); 
-            color: var(--text); 
-            font-family: var(--font-body); 
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
+            background: var(--bg); color: var(--text); 
+            font-family: var(--font-body); line-height: 1.6;
+            -webkit-font-smoothing: antialiased; overflow-x: hidden;
         }
 
+        /* Navigation */
         nav {
-            padding: 25px 5%;
-            display: flex; justify-content: space-between; align-items: center;
+            padding: 18px 6%; display: flex; justify-content: space-between; align-items: center;
             position: fixed; top: 0; width: 100%;
-            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(10px);
-            z-index: 1000; border-bottom: 1px solid var(--border);
+            background: rgba(5, 5, 5, 0.8); backdrop-filter: saturate(180%) blur(20px);
+            z-index: 3000; border-bottom: 1px solid var(--border);
         }
 
         .brand { 
             display: flex; align-items: center; gap: 12px;
-            font-family: var(--font-display); font-weight: 600; font-size: 18px;
-            text-decoration: none; color: #fff;
+            font-family: var(--font-display); font-weight: 600; font-size: 19px;
+            text-decoration: none; color: #fff; letter-spacing: -0.02em;
         }
-        .brand img { width: 32px; height: 32px; border-radius: 50%; }
+        .brand img { width: 32px; height: 32px; border-radius: 6px; }
 
-        .nav-links a {
-            color: var(--text-dim); text-decoration: none;
-            margin-left: 25px; font-size: 14px; font-weight: 500; transition: 0.2s;
+        /* Animated Hamburger */
+        .menu-trigger {
+            cursor: pointer; width: 30px; height: 30px;
+            display: flex; flex-direction: column; justify-content: center; align-items: flex-end;
+            gap: 6px; z-index: 4000;
         }
-        .nav-links a:hover { color: var(--text); }
+        .menu-trigger span {
+            display: block; height: 1.5px; background: #fff;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .line-1 { width: 24px; }
+        .line-2 { width: 16px; }
+        .line-3 { width: 20px; }
 
-        .hero {
-            height: 85vh;
+        .menu-trigger.active .line-1 { transform: translateY(7.5px) rotate(45deg); width: 24px; }
+        .menu-trigger.active .line-2 { opacity: 0; }
+        .menu-trigger.active .line-3 { transform: translateY(-7.5px) rotate(-45deg); width: 24px; }
+
+        /* Fullscreen Overlay */
+        .nav-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: var(--bg); z-index: 3500;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 0 20px;
-            background: radial-gradient(circle at center, #111 0%, #050505 100%);
+            opacity: 0; visibility: hidden; transition: 0.4s ease;
         }
+        .nav-overlay.active { opacity: 1; visibility: visible; }
 
+        .nav-overlay a {
+            font-family: var(--font-display); font-size: 42px; font-weight: 600;
+            color: var(--text); text-decoration: none; margin: 15px 0;
+            transition: 0.3s; transform: translateY(20px); opacity: 0;
+        }
+        .nav-overlay.active a { transform: translateY(0); opacity: 1; }
+        .nav-overlay a:hover { color: var(--text-dim); }
+
+        /* Hero Section */
+        .hero {
+            height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 0 24px;
+            background: radial-gradient(circle at 50% 40%, #111 0%, #050505 100%);
+        }
         .hero h1 {
-            font-family: var(--font-display); font-size: clamp(40px, 8vw, 90px);
-            font-weight: 600; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 20px;
+            font-family: var(--font-display); font-size: clamp(52px, 12vw, 110px);
+            font-weight: 600; letter-spacing: -0.06em; line-height: 0.9; margin-bottom: 24px;
         }
-
         .hero p {
-            font-size: clamp(16px, 1.2vw, 19px); color: var(--text-dim);
-            max-width: 550px; margin-bottom: 35px; font-weight: 300;
+            font-size: clamp(17px, 1.6vw, 20px); color: var(--text-dim);
+            max-width: 580px; margin-bottom: 44px; font-weight: 300;
         }
 
+        .btn-group { display: flex; gap: 14px; }
         .btn {
-            padding: 14px 30px; border-radius: 100px;
-            text-decoration: none; font-size: 14px; font-weight: 500; transition: 0.3s;
+            padding: 16px 34px; border-radius: 10px;
+            text-decoration: none; font-size: 15px; font-weight: 500; transition: 0.2s;
         }
-        .btn-main { background: var(--text); color: var(--bg); }
-        .btn-sub { border: 1px solid var(--border); color: var(--text); }
+        .btn-main { background: #fff; color: #000; }
+        .btn-sub { border: 1px solid var(--border); color: #fff; background: rgba(255,255,255,0.03); }
         .btn-sub:hover { background: var(--border); }
 
-        section { max-width: 1100px; margin: 0 auto; padding: 100px 5%; }
-
-        .section-header { margin-bottom: 50px; text-align: center; }
-        .section-header h2 { font-family: var(--font-display); font-size: 36px; letter-spacing: -0.02em; }
-        .section-header p { color: var(--text-dim); margin-top: 10px; }
-
+        /* Features Grid */
+        section { max-width: 1200px; margin: 0 auto; padding: 120px 6%; }
         .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1px; background: var(--border); border: 1px solid var(--border);
+            border-radius: 16px; overflow: hidden;
         }
-
         .card {
-            background: var(--surface); border: 1px solid var(--border);
-            padding: 28px; border-radius: 20px; transition: 0.3s;
-            display: flex; flex-direction: column;
+            background: var(--bg); padding: 48px; transition: 0.3s;
+            display: flex; flex-direction: column; height: 100%;
         }
-        .card:hover { border-color: #444; transform: translateY(-5px); }
+        .card:hover { background: var(--surface); }
 
         .card-tag {
-            font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em;
-            background: rgba(255,255,255,0.05); padding: 4px 10px;
-            border-radius: 6px; color: var(--text-dim); width: fit-content; margin-bottom: 12px;
+            font-family: var(--font-mono); font-size: 10px; color: var(--text-mute);
+            text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 24px;
         }
+        .card-title { font-family: var(--font-display); font-size: 24px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .card-desc { font-size: 15px; color: var(--text-dim); }
 
-        .card-title { font-family: var(--font-display); font-weight: 600; font-size: 18px; margin-bottom: 8px; }
-        .card-desc { font-size: 14px; color: var(--text-dim); flex-grow: 1; }
-
-        .divider { height: 1px; background: var(--border); margin: 60px 0; }
+        /* Live Status Indicator */
+        .status-pill {
+            display: flex; align-items: center; gap: 10px;
+            padding: 8px 16px; background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border); border-radius: 100px;
+            font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);
+        }
+        .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-dim); transition: 0.3s; }
+        .dot.online { background: var(--success); box-shadow: 0 0 10px var(--success); }
+        .dot.offline { background: var(--error); box-shadow: 0 0 10px var(--error); }
 
         footer {
-            padding: 50px 5%; border-top: 1px solid var(--border);
-            display: flex; justify-content: space-between;
-            color: var(--text-dim); font-size: 13px;
+            padding: 60px 6%; border-top: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
         }
 
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero h1 { font-size: 45px; }
+            .btn-group { flex-direction: column; width: 100%; }
+            .btn { text-align: center; }
+            footer { flex-direction: column; gap: 30px; text-align: center; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#" class="brand">
-            <img src="https://www.percs.fun/assets/percs.webp" alt="Logo">
+        <a href="/" class="brand">
+            <img src="https://www.percs.fun/assets/brand/logo.png" alt="Logo">
             PERCS
         </a>
-        <div class="nav-links">
-            <a href="#features">Features</a>
-            <a href="https://percs.fun/commands">Commands</a>
-            <a href="https://percs.fun/faq">Support</a>
-            <a href="https://percs.fun/legal">Legal</a>
+        <div class="menu-trigger" id="menuBtn">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
         </div>
     </nav>
 
+    <div class="nav-overlay" id="navOverlay">
+        <a href="#features" style="transition-delay: 0.1s;">Features</a>
+        <a href="https://percs.fun/commands" style="transition-delay: 0.2s;">Commands</a>
+        <a href="https://percs.fun/faq" style="transition-delay: 0.3s;">Support</a>
+        <a href="https://percs.fun/legal" style="transition-delay: 0.4s;">Legal</a>
+    </div>
+
     <header class="hero">
-        <h1>Management made simple.</h1>
-        <p>Enhance your community with safety, utility, and fun—all integrated into one seamless experience.</p>
-        <div style="display: flex; gap: 15px;">
+        <h1>Management<br>made simple.</h1>
+        <p>A refined toolkit for the modern community leader. Safety, utility, and fun—integrated into one seamless experience.</p>
+        <div class="btn-group">
             <a href="https://percs.fun/invite/" class="btn btn-main">Add to Server</a>
             <a href="#features" class="btn btn-sub">Explore Features</a>
         </div>
     </header>
 
     <section id="features">
-        <div class="section-header">
-            <h2>Core Features</h2>
-            <p>A refined toolkit for the modern community leader.</p>
-        </div>
-        
         <div class="grid">
             <div class="card">
                 <div class="card-tag">Security</div>
                 <div class="card-title">antinuke</div>
-                <p class="card-desc">Robust protection against unauthorized administrative actions and server destruction.</p>
+                <p class="card-desc">Military-grade protection against unauthorized administrative actions and server destruction.</p>
             </div>
             <div class="card">
-                <div class="card-tag">Level</div>
+                <div class="card-tag">Progression</div>
                 <div class="card-title">add-level-role</div>
-                <p class="card-desc">Assign a role reward to a specific level milestone.</p>
+                <p class="card-desc">Incentivize activity by assigning custom roles at specific level milestones automatically.</p>
             </div>
             <div class="card">
-                <div class="card-tag">Utils</div>
+                <div class="card-tag">Utilities</div>
                 <div class="card-title">afk</div>
-                <p class="card-desc">Set your AFK status with an optional reason for automated replies.</p>
-            </div>
-            <div class="card">
-                <div class="card-tag">Fun</div>
-                <div class="card-title">anime</div>
-                <p class="card-desc">Search MyAnimeList for anime details, ratings, and media.</p>
-            </div>
-            <div class="card">
-                <div class="card-tag">AutoMod</div>
-                <div class="card-title">antidelete</div>
-                <p class="card-desc">Configure advanced message deletion tracking and logging.</p>
-            </div>
-            <div class="card">
-                <div class="card-tag">AutoMod</div>
-                <div class="card-title">antirraid</div>
-                <p class="card-desc">Protect your server from raid attempts and mass-joins automatically.</p>
+                <p class="card-desc">Maintain presence while away with smart automated replies and status tracking.</p>
             </div>
         </div>
 
-        <div class="divider"></div>
-
-        <div class="section-header">
-            <h2>Discover More</h2>
-            <p>A live look into our extensive library of utilities.</p>
-        </div>
-
-        <div class="grid" id="randomGrid">
-            </div>
-
-        <div style="text-align: center; margin-top: 50px;">
-            <a href="https://percs.fun/commands" class="btn btn-main">View Full Library</a>
-        </div>
+        <div style="margin-top: 80px;" class="grid" id="randomGrid"></div>
     </section>
 
     <footer>
-        <span>&copy; 2026 PERCS</span>
-        <div style="display:flex; gap: 20px;">
-            <a href="https://percs.fun/faq">FAQ</a>
-            <a href="https://percs.fun/legal">Legal</a>
+        <div class="status-pill">
+            <div class="dot" id="statusDot"></div>
+            <span id="statusText">SYSTEM CHECKING...</span>
+        </div>
+        <div style="display:flex; gap: 30px; font-size: 13px;">
+            <a href="https://percs.fun/faq" style="color: var(--text-dim); text-decoration: none;">Support</a>
+            <a href="https://percs.fun/legal" style="color: var(--text-dim); text-decoration: none;">Legal</a>
         </div>
     </footer>
 
     <script>
-        async function loadRandomCommands() {
+        // Menu Toggle Logic
+        const menuBtn = document.getElementById('menuBtn');
+        const navOverlay = document.getElementById('navOverlay');
+
+        menuBtn.onclick = () => {
+            const isActive = menuBtn.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            document.body.style.overflow = isActive ? 'hidden' : 'auto';
+        };
+
+        // Close menu on link click
+        navOverlay.onclick = (e) => {
+            if(e.target.tagName === 'A') {
+                menuBtn.classList.remove('active');
+                navOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        };
+
+        // Live Status Indicator (Connects to your existing API)
+        async function checkStatus() {
+            try {
+                const res = await fetch('/api/status');
+                const d = await res.json();
+                const isOnline = d && (Date.now() - (d.last_sync || 0) < 300000);
+                
+                const dot = document.getElementById('statusDot');
+                const text = document.getElementById('statusText');
+
+                if (isOnline) {
+                    dot.className = 'dot online';
+                    text.innerText = 'SYSTEMS OPERATIONAL';
+                } else {
+                    dot.className = 'dot offline';
+                    text.innerText = 'CONNECTION LOST';
+                }
+            } catch (e) {
+                document.getElementById('statusDot').className = 'dot offline';
+                document.getElementById('statusText').innerText = 'STATUS OFFLINE';
+            }
+        }
+
+        // Random Command Loader
+        async function loadCommands() {
             try {
                 const res = await fetch('https://raw.githubusercontent.com/AC447724/Percs-Commands/refs/heads/main/commands/commands.json');
                 const data = await res.json();
                 const grid = document.getElementById('randomGrid');
-                
-                const shuffled = data.sort(() => 0.5 - Math.random());
-                const selected = shuffled.slice(0, 3);
+                const selected = data.sort(() => 0.5 - Math.random()).slice(0, 3);
                 
                 grid.innerHTML = selected.map(cmd => `
                     <div class="card">
@@ -218,11 +267,12 @@
                         <p class="card-desc">${cmd.description}</p>
                     </div>
                 `).join('');
-            } catch(e) {
-                console.error("Error loading commands.");
-            }
+            } catch(e) {}
         }
-        loadRandomCommands();
+
+        checkStatus();
+        loadCommands();
+        setInterval(checkStatus, 240000); // Check every 4 mins
     </script>
 </body>
 </html>
