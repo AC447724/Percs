@@ -1,23 +1,12 @@
 export default async function handler(req, res) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
-    }
+    if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
 
-    // --- NEW PARSING LOGIC ---
     let body = req.body;
     if (typeof body === 'string') {
-        try {
-            body = JSON.parse(body);
-        } catch (e) {
-            return res.status(400).json({ error: 'Invalid JSON body' });
-        }
+        try { body = JSON.parse(body); } catch (e) { return res.status(400).json({ error: 'Invalid JSON' }); }
     }
 
-    const { gameId, botName } = body; // No longer undefined!
-
-    if (!gameId || !botName) {
-        return res.status(400).json({ success: false, error: 'Missing ID or Name' });
-    }
+    const { gameId, botName } = body;
 
     try {
         const response = await fetch(`https://api.blooket.com/api/v1/join`, {
@@ -31,9 +20,22 @@ export default async function handler(req, res) {
             body: JSON.stringify({ id: gameId, name: botName })
         });
 
-        const data = await response.json();
-        return res.status(200).json({ success: response.ok, data });
+        // --- SAFE PARSE CHECK ---
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+            const data = await response.json();
+            return res.status(200).json({ success: response.ok, data });
+        } else {
+            // It sent back HTML (likely a Cloudflare block)
+            const textOutput = await response.text();
+            console.error("Blooket blocked us with an HTML page.");
+            return res.status(403).json({ 
+                success: false, 
+                error: 'Blooket Security Block', 
+                details: 'The server sent HTML instead of JSON (Cloudflare challenge).' 
+            });
+        }
     } catch (error) {
-        return res.status(500).json({ success: false, error: 'Blooket API Unreachable' });
+        return res.status(500).json({ success: false, error: 'Server Crash' });
     }
 }
