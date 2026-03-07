@@ -1,22 +1,31 @@
-import { Redis } from '@upstash/redis'
+const { Redis } = require('@upstash/redis');
 
 const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN,
-})
+  url: process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN,
+});
 
-export default async function handler(req, res) {
-    const { slug } = req.query
+module.exports = async (req, res) => {
+    // Get the slug from the URL
+    const { slug } = req.query;
+
+    if (!slug) {
+        return res.status(400).send("No filename provided.");
+    }
 
     try {
-        const originalUrl = await redis.get(`asset:${slug}`)
-        
+        // Look up the URL in Redis
+        const originalUrl = await redis.get(`asset:${slug}`);
+
         if (originalUrl) {
-            return res.redirect(301, originalUrl)
+            // Found it! Redirect to the GIF/Image
+            return res.redirect(301, originalUrl);
         } else {
-            return res.status(404).send('Asset not found')
+            // Not found in database
+            return res.status(404).send(`Asset "${slug}" not found in Percs database.`);
         }
-    } catch (e) {
-        return res.status(500).send('Server error')
+    } catch (err) {
+        console.error("Redirect Error:", err);
+        return res.status(500).send("Database connection failed. Check Vercel Env Vars.");
     }
-}
+};
