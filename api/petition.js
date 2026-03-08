@@ -6,63 +6,51 @@ const redis = new Redis({
 });
 
 module.exports = async (req, res) => {
-    if (!process.env.KV_REST_API_URL && !process.env.UPSTASH_REDIS_REST_URL) {
-        return res.status(500).json({ error: "Environment variables missing" });
-    }
-
-    // Vercel uses 'x-forwarded-for'. It can be a comma-separated list, so we take the first one.
     const forwarded = req.headers['x-forwarded-for'];
-    const ip = forwarded ? forwarded.split(',')[0] : req.socket.remoteAddress;
+    const ip = forwarded ? forwarded.split(',')[0].trim() : req.socket.remoteAddress;
 
     if (req.method === 'GET') {
         try {
             const total = await redis.llen('petition:signatures');
-            const recent = await redis.lrange('petition:signatures', 0, 9);
-            
-            // Check if THIS specific user has already signed so the frontend can hide the button
+            const recent = await redis.lrange('petition:signatures', 0, 14);
             const hasSigned = await redis.get(`has_signed:${ip}`);
             
             return res.status(200).json({ 
                 total, 
                 recent, 
-                hasSigned: !!hasSigned // Returns true or false
+                hasSigned: !!hasSigned 
             });
         } catch (err) {
-            return res.status(500).json({ error: "Failed to fetch" });
+            return res.status(500).json({ error: "Fetch failed" });
         }
     }
 
     if (req.method === 'POST') {
         const { name } = req.body;
-        
-        if (!name || name.trim().length < 2) {
-            return res.status(400).json({ error: "Name is too short" });
-        }
+        if (!name || name.trim().length < 2) return res.status(400).json({ error: "Name too short" });
 
         try {
-            const hasSigned = await redis.get(`has_signed:${ip}`);
-            if (hasSigned) {
+            const alreadySigned = await redis.get(`has_signed:${ip}`);
+            if (alreadySigned) {
                 return res.status(403).json({ error: "You have already signed this petition." });
             }
 
+            const city = req.headers['x-vercel-ip-city'] || 'Unknown';
+            const country = req.headers['x-vercel-ip-country'] || 'Global';
+            const location = `${city}, ${country}`;
+
             const signature = {
-                name: name.trim().substring(0, 25), // Limit length for safety
+                name: name.trim().substring(0, 25),
+                location: location,
                 date: new Date().toISOString()
             };
 
-            // Atomic operation: Save signature and mark IP as signed
             await redis.lpush('petition:signatures', JSON.stringify(signature));
-            
-            // Setting 'ex: 86400' makes this expire in 24 hours. 
-            // If you want it to be permanent, remove the { ex: 86400 } part.
-            await redis.set(`has_signed:${ip}`, "true", { ex: 86400 });
+            await redis.set(`has_signed:${ip}`, "true");
 
-            const newTotal = await redis.llen('petition:signatures');
-            return res.status(200).json({ success: true, total: newTotal });
+            return res.status(200).json({ success: true });
         } catch (err) {
-            return res.status(500).json({ error: "Failed to save" });
+            return res.status(500).json({ error: "Database error" });
         }
     }
-
-    return res.status(405).json({ error: "Method not allowed" });
 };
