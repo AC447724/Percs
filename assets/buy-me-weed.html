@@ -3,7 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Petition: Free the Weed</title>
+    <meta name="title" content="Petition: Free the Weed">
+    <meta name="description" content="A petition to make weed free. It’s a plant and shouldn’t be treated like a drug.">
+    <meta name="theme-color" content="#2e7d32">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.vercel.app/">
+    <meta property="og:title" content="Petition: Free the Weed">
+    <meta property="og:description" content="A petition to make weed free. It’s a plant and shouldn’t be treated like a drug.">
+    <meta property="og:image" content="https://percs.fun/assets/weed-preview.png"> <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Petition: Free the Weed">
+    <meta property="twitter:description" content="A petition to make weed free. It’s a plant and shouldn’t be treated like a drug.">
+    <meta property="twitter:image" content="https://percs.fun/assets/weed-preview.png">
+
     <style>
         :root { --primary: #2e7d32; --bg: #f0f4f0; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: #2d3436; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
@@ -50,14 +64,18 @@
     const btn = document.getElementById('signBtn');
 
     async function fetchData() {
-        const res = await fetch('/api/petition');
-        const data = await res.json();
-        totalEl.innerText = `${data.total.toLocaleString()} Signatures`;
-        
-        sigContainer.innerHTML = data.recent.map(item => {
-            const s = typeof item === 'string' ? JSON.parse(item) : item;
-            return `<div class="sig"><strong>${s.name}</strong> <span>${new Date(s.date).toLocaleDateString()}</span></div>`;
-        }).join('');
+        try {
+            const res = await fetch('/api/petition');
+            const data = await res.json();
+            totalEl.innerText = `${(data.total || 0).toLocaleString()} Signatures`;
+            
+            sigContainer.innerHTML = data.recent.map(item => {
+                const s = typeof item === 'string' ? JSON.parse(item) : item;
+                return `<div class="sig"><strong>${s.name}</strong> <span>${new Date(s.date).toLocaleDateString()}</span></div>`;
+            }).join('');
+        } catch (e) {
+            totalEl.innerText = "0 Signatures";
+        }
     }
 
     async function handleSign() {
