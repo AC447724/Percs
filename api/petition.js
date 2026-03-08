@@ -35,13 +35,11 @@ module.exports = async (req, res) => {
                 return res.status(403).json({ error: "You have already signed this petition." });
             }
 
-            const city = req.headers['x-vercel-ip-city'] || 'Unknown';
             const country = req.headers['x-vercel-ip-country'] || 'Global';
-            const location = `${city}, ${country}`;
 
             const signature = {
                 name: name.trim().substring(0, 25),
-                location: location,
+                location: country,
                 date: new Date().toISOString()
             };
 
