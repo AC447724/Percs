@@ -10,13 +10,23 @@ module.exports = async (req, res) => {
         return res.status(500).json({ error: "Environment variables missing" });
     }
 
-    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    // Vercel uses 'x-forwarded-for'. It can be a comma-separated list, so we take the first one.
+    const forwarded = req.headers['x-forwarded-for'];
+    const ip = forwarded ? forwarded.split(',')[0] : req.socket.remoteAddress;
 
     if (req.method === 'GET') {
         try {
             const total = await redis.llen('petition:signatures');
             const recent = await redis.lrange('petition:signatures', 0, 9);
-            return res.status(200).json({ total, recent });
+            
+            // Check if THIS specific user has already signed so the frontend can hide the button
+            const hasSigned = await redis.get(`has_signed:${ip}`);
+            
+            return res.status(200).json({ 
+                total, 
+                recent, 
+                hasSigned: !!hasSigned // Returns true or false
+            });
         } catch (err) {
             return res.status(500).json({ error: "Failed to fetch" });
         }
@@ -26,21 +36,25 @@ module.exports = async (req, res) => {
         const { name } = req.body;
         
         if (!name || name.trim().length < 2) {
-            return res.status(400).json({ error: "Name is required" });
+            return res.status(400).json({ error: "Name is too short" });
         }
 
         try {
             const hasSigned = await redis.get(`has_signed:${ip}`);
             if (hasSigned) {
-                return res.status(429).json({ error: "You have already signed today!" });
+                return res.status(403).json({ error: "You have already signed this petition." });
             }
 
             const signature = {
-                name: name.trim(),
+                name: name.trim().substring(0, 25), // Limit length for safety
                 date: new Date().toISOString()
             };
 
+            // Atomic operation: Save signature and mark IP as signed
             await redis.lpush('petition:signatures', JSON.stringify(signature));
+            
+            // Setting 'ex: 86400' makes this expire in 24 hours. 
+            // If you want it to be permanent, remove the { ex: 86400 } part.
             await redis.set(`has_signed:${ip}`, "true", { ex: 86400 });
 
             const newTotal = await redis.llen('petition:signatures');
