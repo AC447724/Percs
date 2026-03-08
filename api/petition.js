@@ -10,6 +10,8 @@ module.exports = async (req, res) => {
         return res.status(500).json({ error: "Environment variables missing" });
     }
 
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
     if (req.method === 'GET') {
         try {
             const total = await redis.llen('petition:signatures');
@@ -22,17 +24,25 @@ module.exports = async (req, res) => {
 
     if (req.method === 'POST') {
         const { name } = req.body;
+        
         if (!name || name.trim().length < 2) {
             return res.status(400).json({ error: "Name is required" });
         }
 
-        const signature = {
-            name: name.trim(),
-            date: new Date().toISOString()
-        };
-
         try {
+            const hasSigned = await redis.get(`has_signed:${ip}`);
+            if (hasSigned) {
+                return res.status(429).json({ error: "You have already signed today!" });
+            }
+
+            const signature = {
+                name: name.trim(),
+                date: new Date().toISOString()
+            };
+
             await redis.lpush('petition:signatures', JSON.stringify(signature));
+            await redis.set(`has_signed:${ip}`, "true", { ex: 86400 });
+
             const newTotal = await redis.llen('petition:signatures');
             return res.status(200).json({ success: true, total: newTotal });
         } catch (err) {
