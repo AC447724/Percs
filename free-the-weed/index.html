@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Petition: Free the Weed</title>
     <meta name="title" content="Petition: Free the Weed">
     <meta name="description" content="A petition to make weed free. It’s a plant and shouldn’t be treated like a drug.">
@@ -13,15 +12,17 @@
     <meta property="og:url" content="https://your-domain.vercel.app/">
     <meta property="og:title" content="Petition: Free the Weed">
     <meta property="og:description" content="A petition to make weed free. It’s a plant and shouldn’t be treated like a drug.">
-    <meta property="og:image" content="https://percs.fun/assets/weed-preview.png"> <meta property="twitter:card" content="summary_large_image">
+    <meta property="og:image" content="https://percs.fun/assets/weed-preview.png">
+    
+    <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="Petition: Free the Weed">
     <meta property="twitter:description" content="A petition to make weed free. It’s a plant and shouldn’t be treated like a drug.">
     <meta property="twitter:image" content="https://percs.fun/assets/weed-preview.png">
 
     <style>
         :root { --primary: #2e7d32; --bg: #f0f4f0; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: #2d3436; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .card { width: 100%; max-width: 450px; background: white; padding: 40px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: #2d3436; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .card { width: 100%; max-width: 450px; background: white; padding: 40px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; }
         h1 { font-size: 2.5rem; margin: 0 0 10px 0; letter-spacing: -1px; }
         .desc { color: #636e72; line-height: 1.6; margin-bottom: 25px; font-size: 1.05rem; }
         .stats { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 30px; display: block; }
@@ -35,9 +36,18 @@
         button:disabled { background: #b2bec3; cursor: not-allowed; }
 
         .recent-box { margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px; text-align: left; }
-        .recent-title { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #b2bec3; margin-bottom: 15px; display: block; }
-        .sig { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f9f9f9; font-size: 15px; }
-        .sig span { color: #b2bec3; font-size: 13px; }
+        .recent-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .recent-title { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #b2bec3; }
+        
+        .sig-list { max-height: 300px; overflow-y: auto; padding-right: 5px; }
+        .sig-list::-webkit-scrollbar { width: 4px; }
+        .sig-list::-webkit-scrollbar-thumb { background: #eee; border-radius: 10px; }
+
+        .sig { padding: 12px 0; border-bottom: 1px solid #f9f9f9; display: flex; flex-direction: column; gap: 2px; }
+        .sig-top { display: flex; justify-content: space-between; align-items: center; }
+        .sig-name { font-weight: 600; font-size: 15px; }
+        .sig-meta { color: #b2bec3; font-size: 12px; }
+        .sig-location { font-size: 13px; color: #636e72; }
     </style>
 </head>
 <body>
@@ -48,12 +58,16 @@
     
     <span id="totalSignatures" class="stats">... Signatures</span>
 
-    <input type="text" id="username" placeholder="Enter your name or alias" maxlength="25">
-    <button id="signBtn" onclick="handleSign()">Sign the Petition</button>
+    <div id="sign-area">
+        <input type="text" id="username" placeholder="Enter your name or alias" maxlength="25">
+        <button id="signBtn" onclick="handleSign()">Sign the Petition</button>
+    </div>
 
     <div class="recent-box">
-        <span class="recent-title">Latest Signatures</span>
-        <div id="sigContainer"></div>
+        <div class="recent-header">
+            <span class="recent-title">Latest Signatures</span>
+        </div>
+        <div id="sigContainer" class="sig-list"></div>
     </div>
 </div>
 
@@ -62,16 +76,33 @@
     const totalEl = document.getElementById('totalSignatures');
     const inputEl = document.getElementById('username');
     const btn = document.getElementById('signBtn');
+    const signArea = document.getElementById('sign-area');
 
     async function fetchData() {
         try {
             const res = await fetch('/api/petition');
             const data = await res.json();
-            totalEl.innerText = `${(data.total || 0).toLocaleString()} Signatures`;
             
+            totalEl.innerText = `${(data.total || 0).toLocaleString()} Signatures`;
+
+            if (data.hasSigned) {
+                signArea.innerHTML = `<p style="color: var(--primary); font-weight: 600;">✅ You have signed this petition.</p>`;
+            }
+
             sigContainer.innerHTML = data.recent.map(item => {
                 const s = typeof item === 'string' ? JSON.parse(item) : item;
-                return `<div class="sig"><strong>${s.name}</strong> <span>${new Date(s.date).toLocaleDateString()}</span></div>`;
+                const date = new Date(s.date).toLocaleDateString();
+                const location = s.location ? `📍 ${s.location}` : "📍 Unknown";
+                
+                return `
+                    <div class="sig">
+                        <div class="sig-top">
+                            <span class="sig-name">${s.name}</span>
+                            <span class="sig-meta">${date}</span>
+                        </div>
+                        <div class="sig-location">${location}</div>
+                    </div>
+                `;
             }).join('');
         } catch (e) {
             totalEl.innerText = "0 Signatures";
@@ -85,20 +116,25 @@
         btn.disabled = true;
         btn.innerText = "Processing...";
 
-        const res = await fetch('/api/petition', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name })
-        });
+        try {
+            const res = await fetch('/api/petition', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name })
+            });
 
-        const data = await res.json();
+            const data = await res.json();
 
-        if (res.ok) {
-            inputEl.value = '';
-            btn.innerText = "Signed!";
-            fetchData();
-        } else {
-            alert(data.error || "Something went wrong");
+            if (res.ok) {
+                btn.innerText = "Signed!";
+                fetchData();
+            } else {
+                alert(data.error || "Something went wrong");
+                btn.disabled = false;
+                btn.innerText = "Sign the Petition";
+            }
+        } catch (err) {
+            alert("Network error. Try again.");
             btn.disabled = false;
             btn.innerText = "Sign the Petition";
         }
