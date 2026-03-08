@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Free the Weed</title>
+    <link rel="icon" type="image/png" href="https://percs.fun/assets/brand/weed.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --primary: #2e7d32; --bg: #f0f4f0; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg); 
+            color: #2d3436; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 20px; 
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes checkmark {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        .card { 
+            width: 100%; 
+            max-width: 450px; 
+            background: white; 
+            padding: 50px; 
+            border-radius: 32px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.06); 
+            text-align: center; 
+            animation: fadeIn 0.4s ease-out; 
+            box-sizing: border-box; 
+        }
+        
+        .image-container { 
+            width: 90px; 
+            height: 90px; 
+            margin: 0 auto 30px auto; 
+            background: #e8f5e9; 
+            border-radius: 50%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            position: relative; 
+            animation: checkmark 0.6s 0.2s ease-out both; 
+        }
+        
+        .weed-logo { 
+            width: 50px; 
+            height: 50px; 
+            display: block; 
+        }
+
+        .check-badge { 
+            position: absolute; 
+            bottom: -5px; 
+            right: -5px; 
+            background: var(--primary); 
+            color: white; 
+            width: 30px; 
+            height: 30px; 
+            border-radius: 50%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-size: 16px; 
+            border: 4px solid white; 
+            font-weight: bold; 
+        }
+        
+        h1 { 
+            font-size: 2.6rem; 
+            margin: 0 0 15px 0; 
+            letter-spacing: -1.5px; 
+            font-weight: 800; 
+            color: #1a1a1a; 
+        }
+        
+        p { 
+            color: #636e72; 
+            line-height: 1.7; 
+            margin-bottom: 40px; 
+            font-size: 1.15rem; 
+            font-weight: 400; 
+        }
+        
+        .action-box { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+        }
+        
+        .btn { 
+            width: 100%; 
+            text-decoration: none; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 18px; 
+            font-size: 17px; 
+            font-weight: 700; 
+            border-radius: 14px; 
+            transition: all 0.1s; 
+            box-sizing: border-box; 
+            gap: 8px; 
+        }
+        
+        .btn-twitter { 
+            background: #0f1419; /* X/Twitter Black */ 
+            color: white; 
+        }
+        
+        .btn-twitter:hover { 
+            background: #272c30; 
+            transform: translateY(-1px); 
+        }
+        
+        .btn-back { 
+            background: #edf2f7; 
+            color: #2d3436; 
+            margin-top: 10px; 
+        }
+        
+        .btn-back:hover { 
+            background: #e2e8f0; 
+        }
+        
+        .btn:active { 
+            transform: scale(0.98); 
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="image-container">
+        <img src="https://percs.fun/assets/brand/weed.png" alt="Weed Logo" class="weed-logo">
+        <div class="check-badge">✓</div>
+    </div>
+    
+    <h1>Signature Confirmed</h1>
+    <p>Your support for the plant has been added to the movement. Every signature helps us make weed free.</p>
+    
+    <div class="action-box">
+        <a href="https://twitter.com/intent/tweet?text=I%20just%20signed%20the%20petition%20to%20Free%20The%20Weed!%20Join%20the%20movement%20here%3A&url=https%3A%2F%2Fpercs.fun%2Ffree-the-weed" 
+           target="_blank" 
+           class="btn btn-twitter">
+            <svg viewBox="0 0 24 24" aria-hidden="true" width="18" fill="white"><g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></g></svg>
+            Share to X
+        </a>
+        
+        <a href="/free-the-weed" class="btn btn-back">Back to Petition</a>
+    </div>
+</div>
+
+</body>
+</html>
