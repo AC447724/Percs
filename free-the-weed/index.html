@@ -10,15 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <meta name="title" content="Petition: Free the Weed">
-    <meta name="description" content="A petition to make weed free. It’s a plant and shouldn’t be treated like a drug.">
-    <meta name="theme-color" content="#2e7d32">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Petition: Free the Weed">
-    <meta property="og:description" content="A petition to make weed free. It’s a plant and shouldn’t be treated like a drug.">
-    <meta property="og:image" content="https://percs.fun/assets/brand/weed.png">
-    <meta property="twitter:card" content="summary_large_image">
-
     <style>
         :root { --primary: #2e7d32; --bg: #f0f4f0; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: #2d3436; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
@@ -35,7 +26,7 @@
         input { width: 100%; padding: 16px; border: 2px solid #edf2f7; border-radius: 14px; font-size: 16px; margin-bottom: 15px; box-sizing: border-box; transition: border-color 0.2s; font-family: inherit; }
         input:focus { border-color: var(--primary); outline: none; }
         
-        button { width: 100%; background: var(--primary); color: white; border: none; padding: 18px; font-size: 18px; font-weight: 700; border-radius: 14px; cursor: pointer; transition: transform 0.1s, opacity 0.2s; font-family: inherit; }
+        button { width: 100%; background: var(--primary); color: white; border: none; padding: 18px; font-size: 18px; font-weight: 600; border-radius: 14px; cursor: pointer; transition: transform 0.1s, opacity 0.2s; font-family: inherit; }
         button:hover { opacity: 0.9; }
         button:active { transform: scale(0.98); }
         button:disabled { background: #b2bec3; cursor: not-allowed; }
@@ -53,7 +44,8 @@
         .sig-meta { color: #b2bec3; font-size: 12px; }
         .sig-location { font-size: 13px; color: #636e72; display: flex; align-items: center; gap: 4px; }
         
-        .success-msg { background: #e8f5e9; color: #2e7d32; padding: 20px; border-radius: 14px; font-weight: 700; border: 1px solid #c8e6c9; }
+        .success-msg { display: flex; align-items: center; justify-content: center; gap: 10px; background: #e8f5e9; color: #2e7d32; padding: 20px; border-radius: 14px; font-weight: 700; border: 1px solid #c8e6c9; }
+        .mini-logo { width: 20px; height: 20px; }
     </style>
 </head>
 <body>
@@ -94,7 +86,11 @@
             totalEl.innerText = `${(data.total || 0).toLocaleString()} Signatures`;
 
             if (data.hasSigned) {
-                signArea.innerHTML = `<div class="success-msg">🌿 You have signed this petition.</div>`;
+                signArea.innerHTML = `
+                    <div class="success-msg">
+                        <img src="https://percs.fun/assets/brand/weed.png" class="mini-logo">
+                        You have signed this petition.
+                    </div>`;
             }
 
             sigContainer.innerHTML = data.recent.map(item => {
