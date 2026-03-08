@@ -5,74 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Petition: Free the Weed</title>
     <style>
-        body { font-family: -apple-system, sans-serif; text-align: center; padding: 40px 20px; background: #f9f9f9; color: #1a1a1a; }
-        .container { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-        h1 { font-size: 32px; margin-bottom: 8px; }
-        .count-badge { font-weight: bold; color: #28a745; font-size: 20px; margin-bottom: 20px; display: block; }
-        input { width: 80%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 10px; font-size: 16px; outline: none; }
-        button { background: #000; color: #fff; border: none; padding: 14px 30px; font-size: 16px; font-weight: 600; border-radius: 12px; cursor: pointer; width: 85%; }
-        button:disabled { background: #ccc; }
-        .recent-list { margin-top: 30px; text-align: left; border-top: 1px solid #eee; padding-top: 20px; }
-        .sig-item { padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
-        .sig-item span { color: #888; float: right; font-size: 12px; }
+        :root { --primary: #2e7d32; --bg: #f0f4f0; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: #2d3436; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .card { width: 100%; max-width: 450px; background: white; padding: 40px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        h1 { font-size: 2.5rem; margin: 0 0 10px 0; letter-spacing: -1px; }
+        .desc { color: #636e72; line-height: 1.6; margin-bottom: 25px; font-size: 1.05rem; }
+        .stats { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 30px; display: block; }
+        
+        input { width: 100%; padding: 15px; border: 2px solid #edf2f7; border-radius: 12px; font-size: 16px; margin-bottom: 15px; box-sizing: border-box; transition: border-color 0.2s; }
+        input:focus { border-color: var(--primary); outline: none; }
+        
+        button { width: 100%; background: var(--primary); color: white; border: none; padding: 16px; font-size: 18px; font-weight: 600; border-radius: 12px; cursor: pointer; transition: transform 0.1s, opacity 0.2s; }
+        button:hover { opacity: 0.9; }
+        button:active { transform: scale(0.98); }
+        button:disabled { background: #b2bec3; cursor: not-allowed; }
+
+        .recent-box { margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px; text-align: left; }
+        .recent-title { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #b2bec3; margin-bottom: 15px; display: block; }
+        .sig { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f9f9f9; font-size: 15px; }
+        .sig span { color: #b2bec3; font-size: 13px; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Free the Weed</h1>
-        <span id="totalCount" class="count-badge">Loading...</span>
-        
-        <input type="text" id="nameInput" placeholder="Enter your name or alias" maxlength="30">
-        <button id="submitBtn" onclick="submit()">Sign Petition</button>
+<div class="card">
+    <h1>🌿 Free the Weed</h1>
+    <p class="desc">A petition to make weed free. It’s a plant and shouldn’t be treated like a drug.</p>
+    
+    <span id="totalSignatures" class="stats">... Signatures</span>
 
-        <div class="recent-list">
-            <h3>Recent Signatures</h3>
-            <div id="signatures"></div>
-        </div>
+    <input type="text" id="username" placeholder="Enter your name or alias" maxlength="25">
+    <button id="signBtn" onclick="handleSign()">Sign the Petition</button>
+
+    <div class="recent-box">
+        <span class="recent-title">Latest Signatures</span>
+        <div id="sigContainer"></div>
     </div>
+</div>
 
-    <script>
-        const nameInput = document.getElementById('nameInput');
-        const totalCount = document.getElementById('totalCount');
-        const sigList = document.getElementById('signatures');
-        const btn = document.getElementById('submitBtn');
+<script>
+    const sigContainer = document.getElementById('sigContainer');
+    const totalEl = document.getElementById('totalSignatures');
+    const inputEl = document.getElementById('username');
+    const btn = document.getElementById('signBtn');
 
-        async function loadData() {
-            const res = await fetch('/api/petition');
-            const data = await res.json();
-            
-            totalCount.innerText = `${data.total.toLocaleString()} Signatures`;
-            
-            sigList.innerHTML = data.recent.map(item => {
-                const sig = typeof item === 'string' ? JSON.parse(item) : item;
-                const date = new Date(sig.date).toLocaleDateString();
-                return `<div class="sig-item"><b>${sig.name}</b> <span>${date}</span></div>`;
-            }).join('');
+    async function fetchData() {
+        const res = await fetch('/api/petition');
+        const data = await res.json();
+        totalEl.innerText = `${data.total.toLocaleString()} Signatures`;
+        
+        sigContainer.innerHTML = data.recent.map(item => {
+            const s = typeof item === 'string' ? JSON.parse(item) : item;
+            return `<div class="sig"><strong>${s.name}</strong> <span>${new Date(s.date).toLocaleDateString()}</span></div>`;
+        }).join('');
+    }
+
+    async function handleSign() {
+        const name = inputEl.value.trim();
+        if (!name) return alert("Please enter a name");
+
+        btn.disabled = true;
+        btn.innerText = "Processing...";
+
+        const res = await fetch('/api/petition', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            inputEl.value = '';
+            btn.innerText = "Signed!";
+            fetchData();
+        } else {
+            alert(data.error || "Something went wrong");
+            btn.disabled = false;
+            btn.innerText = "Sign the Petition";
         }
+    }
 
-        async function submit() {
-            const name = nameInput.value;
-            if (!name) return alert("Please enter a name");
+    fetchData();
+</script>
 
-            btn.disabled = true;
-            const res = await fetch('/api/petition', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name })
-            });
-
-            if (res.ok) {
-                nameInput.value = '';
-                btn.innerText = "Signed!";
-                loadData();
-            } else {
-                btn.disabled = false;
-                alert("Error saving signature");
-            }
-        }
-
-        loadData();
-    </script>
 </body>
 </html>
