@@ -78,6 +78,36 @@
     const btn = document.getElementById('signBtn');
     const signArea = document.getElementById('sign-area');
 
+    const BANNED_WORDS = [
+        'fuck', 'fuk', 'fck', 'phuck', 'faggot', 'fag', 'nigger', 'nigga', 
+        'chink', 'kike', 'retard', 'cunt', 'pussy', 'dick', 'cock', 'penis', 
+        'vagina', 'clit', 'tit', 'boob', 'ass', 'arse', 'asshole', 'bastard', 
+        'bitch', 'slut', 'whore', 'hoe', 'skank', 'cum', 'semen', 'jizz', 
+        'ejaculate', 'orgasm', 'porn', 'sex', 'shat', 'shit', 'piss', 'twat', 
+        'wanker', 'dyke', 'tranny', 'pedophel', 'pedophile', 'rape', 'rapist'
+    ];
+
+    function isProfane(text) {
+        if (!text) return false;
+        
+        const charMap = {
+            '0': 'o', '1': 'i', '3': 'e', '4': 'a', '5': 's', '7': 't', '8': 'b',
+            '@': 'a', '$': 's', '!': 'i', 'l': 'i', 'v': 'u'
+        };
+
+        const normalized = text.toLowerCase()
+            .split('')
+            .map(char => charMap[char] || char)
+            .join('');
+
+        const strictlyAlpha = normalized.replace(/[^a-z]/g, '');
+        const noSpaces = normalized.replace(/\s+/g, '');
+
+        return BANNED_WORDS.some(word => 
+            strictlyAlpha.includes(word) || noSpaces.includes(word)
+        );
+    }
+
     async function fetchData() {
         try {
             const res = await fetch('/api/petition');
@@ -93,7 +123,12 @@
                     </div>`;
             }
 
-            sigContainer.innerHTML = data.recent.map(item => {
+            const filteredRecent = data.recent.filter(item => {
+                const s = typeof item === 'string' ? JSON.parse(item) : item;
+                return !isProfane(s.name);
+            });
+
+            sigContainer.innerHTML = filteredRecent.map(item => {
                 const s = typeof item === 'string' ? JSON.parse(item) : item;
                 return `
                     <div class="sig">
@@ -113,6 +148,12 @@
     async function handleSign() {
         const name = inputEl.value.trim();
         if (!name) return alert("Please enter a name");
+
+        if (isProfane(name)) {
+            alert("Please use a more appropriate name.");
+            inputEl.value = "";
+            return;
+        }
 
         btn.disabled = true;
         btn.innerText = "Processing...";
