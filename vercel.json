@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "outputDirectory": ".",
   "rewrites": [
     {
       "source": "/assets/u/:slug",
@@ -13,6 +12,19 @@
     { 
       "source": "/api/callback", 
       "destination": "/api/auth/callback" 
+    },
+    {
+      "source": "/api/petition",
+      "destination": "/api/petition.js"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*).js",
+      "headers": [
+        { "key": "Content-Type", "value": "application/json" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" }
+      ]
     }
   ]
 }
