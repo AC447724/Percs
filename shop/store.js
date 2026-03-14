@@ -67,8 +67,8 @@ var STORE_DATA = {
       "description": "The industry standard for script execution. Unmatched stability and speed.",
       "image": "https://bloxproducts.com/assets/images/synz.png",
       "options": [
-        { "label": "7 Days", "price": 6.49, "url": "https://stealthpay.io/cat/synapse-z-week-key?r=sativa" },
-        { "label": "30 Days", "price": 19.99, "url": "https://stealthpay.io/cat/synapse-z-month-key?r=sativa" }
+        { "label": "7 Days", "price": 3.99, "url": "https://stealthpay.io/cat/synapse-z-week-key?r=sativa" },
+        { "label": "30 Days", "price": 11.99, "url": "https://stealthpay.io/cat/synapse-z-month-key?r=sativa" }
       ]
     },
     {
