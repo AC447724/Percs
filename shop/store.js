@@ -40,7 +40,7 @@ var STORE_DATA = {
       "description": "Premium Level 7 executor for Windows. Longest running, undetected, and professionally supported.",
       "image": "https://bloxproducts.com/assets/images/wave.png",
       "options": [
-        { "label": "7 Days", "price": 5.99, "url": "https://stealthpay.io/cat/wave-week-key?r=sativa", "tag": "Cheapest" },
+        { "label": "7 Days", "price": 5.95, "url": "https://stealthpay.io/cat/wave-week-key?r=sativa", "tag": "Cheapest" },
         { "label": "30 Days", "price": 18.99, "url": "https://stealthpay.io/cat/wave-month-key?r=sativa", "tag": "Most popular" }
       ]
     },
@@ -54,7 +54,7 @@ var STORE_DATA = {
       "image": "https://bloxproducts.com/assets/images/volt.png",
       "options": [
         { "label": "7 Days", "price": 5.99, "url": "https://stealthpay.io/cat/volt-week-key?r=sativa" },
-        { "label": "30 Days", "price": 19.99, "url": "https://stealthpay.io/cat/volt-month-key?r=sativa" },
+        { "label": "30 Days", "price": 19.96, "url": "https://stealthpay.io/cat/volt-month-key?r=sativa" },
         { "label": "90 Days", "price": 49.99, "url": "https://stealthpay.io/cat/volt-quarterly-key?r=sativa" }
       ]
     },
@@ -117,8 +117,8 @@ var STORE_DATA = {
       "description": "Reliable and affordable external tool for Windows. Free support and easy configuration.",
       "image": "https://bloxproducts.com/assets/images/rbxcli.png",
       "options": [
-        { "label": "7 Days", "price": 7.99, "url": "https://stealthpay.io/cat/rbxcli-weekly?r=sativa" },
-        { "label": "30 Days", "price": 9.59, "url": "https://stealthpay.io/cat/rbxcli-monthly?r=sativa" }
+        { "label": "7 Days", "price": 3.99, "url": "https://stealthpay.io/cat/rbxcli-weekly?r=sativa" },
+        { "label": "30 Days", "price": 7.99, "url": "https://stealthpay.io/cat/rbxcli-monthly?r=sativa" }
       ]
     },
     {
@@ -166,9 +166,9 @@ var STORE_DATA = {
       "description": "Versatile script hub for popular titles like Steal a Brainrot, Garden Horizons, and more. Optimized for performance.",
       "image": "https://bloxproducts.com/assets/images/luminhub.png",
       "options": [
-        { "label": "Weekly", "price": 6.19, "url": "https://stealthpay.io/cat/lumin-hub-weekly?r=sativa" },
-        { "label": "Monthly", "price": 10.59, "url": "https://stealthpay.io/cat/lumin-hub-monthly?r=sativa" },
-        { "label": "Lifetime", "price": 24.99, "url": "https://stealthpay.io/cat/lumin-hub-lifetime?r=sativa" }
+        { "label": "Weekly", "price": 1.99, "url": "https://stealthpay.io/cat/lumin-hub-weekly?r=sativa" },
+        { "label": "Monthly", "price": 6.19, "url": "https://stealthpay.io/cat/lumin-hub-monthly?r=sativa" },
+        { "label": "Lifetime", "price": 10.59, "url": "https://stealthpay.io/cat/lumin-hub-lifetime?r=sativa" }
       ]
     }
   ]
