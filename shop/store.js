@@ -8,7 +8,7 @@ var STORE_DATA = {
     "heroBtn1": "Browse the Store",
     "heroBtn2": "Join Discord",
     "badgeSystems": "All Systems Online",
-    "badgeTrusted": "Trusted by 10,000+",
+    "badgeTrusted": "Cheapest Prices",
     "badgeDelivery": "Instant Delivery",
     "storeTitle": "Premium Gaming Tools",
     "storeSub": "Our most popular scripts and tools, trusted by thousands."
