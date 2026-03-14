@@ -92,8 +92,8 @@ var STORE_DATA = {
       "description": "High-performance external tool for Windows. Undetectable, stable, and easy to set up.",
       "image": "https://bloxproducts.com/assets/images/serotonin.png",
       "options": [
-        { "label": "30 Days", "price": 22.99, "url": "https://stealthpay.io/cat/serotonin-month?r=sativa" },
-        { "label": "90 Days", "price": 49.99, "url": "https://stealthpay.io/cat/serotonin-90d?r=sativa" }
+        { "label": "30 Days", "price": 9.49, "url": "https://stealthpay.io/cat/serotonin-month?r=sativa" },
+        { "label": "90 Days", "price": 22.99, "url": "https://stealthpay.io/cat/serotonin-90d?r=sativa" }
       ]
     },
     {
