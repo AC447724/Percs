@@ -2,7 +2,7 @@ var STORE_DATA = {
   "site": {
     "name": "PERCS",
     "heroTitle": "Built for better\ncommunities.",
-    "heroSub": "The premium store for scripts &amp; tools — instant delivery, real support, always undetected.",
+    "heroSub": "The premium store for scripts & tools — instant delivery, real support, always undetected.",
     "buyUrl": "https://percs.fun/checkout",
     "discordUrl": "https://discord.gg/percsfun",
     "heroBtn1": "Browse the Store",
@@ -14,21 +14,21 @@ var STORE_DATA = {
     "storeSub": "Our most popular scripts and tools, trusted by thousands."
   },
   "features": [
-    { "icon": "zap",     "title": "Instant Delivery",   "desc": "Get your products immediately. Our automated system delivers your digital keys in under 60 seconds." },
-    { "icon": "lock",    "title": "Secure Payments",    "desc": "Shop with confidence. We use industry-standard encryption and support all major payment providers." },
-    { "icon": "star",    "title": "Great Pricing",      "desc": "Premium gaming tools shouldn't break the bank. We offer the most competitive rates on the market." }
+    { "icon": "zap", "title": "Instant Delivery", "desc": "Get your products immediately. Our automated system delivers your digital keys in under 60 seconds." },
+    { "icon": "lock", "title": "Secure Payments", "desc": "Shop with confidence. We use industry-standard encryption and support all major payment providers." },
+    { "icon": "star", "title": "Great Pricing", "desc": "Premium gaming tools shouldn't break the bank. We offer the most competitive rates on the market." }
   ],
   "faqs": [
-    { "q": "How does delivery work?",                "a": "After payment is confirmed, your product is delivered automatically to the email you provide at checkout. This usually takes under 60 seconds." },
-    { "q": "Are the scripts safe to use?",           "a": "Yes. Our team monitors anti-cheat updates daily and pushes patches within hours of any detection risk. We have an undetected track record since launch." },
-    { "q": "What payment methods do you accept?",    "a": "We accept all major credit and debit cards, Crypto, and more." },
-    { "q": "How do I get support after buying?",     "a": "Join our Discord server and open a ticket in the #support channel. Include your order ID for faster service." }
+    { "q": "How does delivery work?", "a": "After payment is confirmed, your product is delivered automatically to the email you provide at checkout. This usually takes under 60 seconds." },
+    { "q": "Are the scripts safe to use?", "a": "Yes. Our team monitors anti-cheat updates daily and pushes patches within hours of any detection risk. We have an undetected track record since launch." },
+    { "q": "What payment methods do you accept?", "a": "We accept all major credit and debit cards, Crypto, and more." },
+    { "q": "How do I get support after buying?", "a": "Join our Discord server and open a ticket in the #support channel. Include your order ID for faster service." }
   ],
   "categories": [
-    { "id": "scripts",    "label": "Scripts"    },
-    { "id": "executors",  "label": "Executors"  },
-    { "id": "externals",  "label": "Externals"  },
-    { "id": "misc",       "label": "Misc"       }
+    { "id": "scripts", "label": "Scripts" },
+    { "id": "executors", "label": "Executors" },
+    { "id": "externals", "label": "Externals" },
+    { "id": "misc", "label": "Misc" }
   ],
   "products": [
     {
