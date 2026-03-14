@@ -1,7 +1,7 @@
 var STORE_DATA = {
   "site": {
     "name": "PERCS",
-    "heroTitle": "Built for better\ncommunities.",
+    "heroTitle": "Get The Unfair Advantage",
     "heroSub": "The premium store for scripts & tools — instant delivery, real support, always undetected.",
     "buyUrl": "https://percs.fun/checkout",
     "discordUrl": "https://discord.gg/percsfun",
