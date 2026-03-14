@@ -51,7 +51,7 @@ var STORE_DATA = {
       "badge": "UNDETECTED",
       "tag": "NEW",
       "description": "High-performance Volt executor for Windows. Easy setup and maximum compatibility.",
-      "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=380&fit=crop",
+      "image": "https://bloxproducts.com/assets/images/volt.png",
       "options": [
         { "label": "7 Days", "price": 5.99, "url": "https://stealthpay.io/cat/volt-week-key?r=sativa" },
         { "label": "30 Days", "price": 19.99, "url": "https://stealthpay.io/cat/volt-month-key?r=sativa" },
@@ -65,7 +65,7 @@ var STORE_DATA = {
       "badge": "POWERFUL",
       "tag": "ELITE",
       "description": "The industry standard for script execution. Unmatched stability and speed.",
-      "image": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=600&h=380&fit=crop",
+      "image": "https://bloxproducts.com/assets/images/synz.png",
       "options": [
         { "label": "7 Days", "price": 6.49, "url": "https://stealthpay.io/cat/synapse-z-week-key?r=sativa" },
         { "label": "30 Days", "price": 19.99, "url": "https://stealthpay.io/cat/synapse-z-month-key?r=sativa" }
@@ -78,7 +78,7 @@ var STORE_DATA = {
       "badge": "LIFETIME",
       "tag": "BEST VALUE",
       "description": "Lifetime access to the Potassium executor. Buy once, stay current forever.",
-      "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=380&fit=crop",
+      "image": "https://bloxproducts.com/assets/images/potassium.png",
       "options": [
         { "label": "Lifetime", "price": 22.99, "url": "https://stealthpay.io/cat/potassium?r=sativa" }
       ]
@@ -90,7 +90,7 @@ var STORE_DATA = {
       "badge": "UNDETECTED",
       "tag": "NEW",
       "description": "High-performance external tool for Windows. Undetectable, stable, and easy to set up.",
-      "image": "https://images.unsplash.com/photo-1614812513172-567d2fe96a75?w=600&h=380&fit=crop",
+      "image": "https://bloxproducts.com/assets/images/serotonin.png",
       "options": [
         { "label": "30 Days", "price": 22.99, "url": "https://stealthpay.io/cat/serotonin-month?r=sativa" },
         { "label": "90 Days", "price": 49.99, "url": "https://stealthpay.io/cat/serotonin-90d?r=sativa" }
@@ -103,7 +103,7 @@ var STORE_DATA = {
       "badge": "TOP-RATED",
       "tag": "LIFETIME",
       "description": "Premium lifetime external license. Easy setup and maximum safety for all users.",
-      "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?w=600&h=380&fit=crop",
+      "image": "https://bloxproducts.com/assets/images/severe.png",
       "options": [
         { "label": "Lifetime", "price": 19.99, "url": "https://stealthpay.io/cat/severe-lifetime-key?r=sativa" }
       ]
@@ -115,7 +115,7 @@ var STORE_DATA = {
       "badge": "UNDETECTED",
       "tag": "BUDGET",
       "description": "Reliable and affordable external tool for Windows. Free support and easy configuration.",
-      "image": "https://images.unsplash.com/photo-1551218808-9189156ceda2?w=600&h=380&fit=crop",
+      "image": "https://bloxproducts.com/assets/images/rbxcli.png",
       "options": [
         { "label": "7 Days", "price": 7.99, "url": "https://stealthpay.io/cat/rbxcli-weekly?r=sativa" },
         { "label": "30 Days", "price": 9.59, "url": "https://stealthpay.io/cat/rbxcli-monthly?r=sativa" }
@@ -128,7 +128,7 @@ var STORE_DATA = {
       "badge": "OP AIMBOT",
       "tag": "LIFETIME",
       "description": "Powerful aimbot utility with lifetime access. Undetectable and easy to install.",
-      "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=380&fit=crop",
+      "image": "https://bloxproducts.com/assets/images/ronin.png",
       "options": [
         { "label": "Lifetime", "price": 9.99, "url": "https://stealthpay.io/cat/ronin?r=sativa" }
       ]
@@ -140,7 +140,7 @@ var STORE_DATA = {
       "badge": "OP AIMBOT",
       "tag": "LIFETIME",
       "description": "Elite aimbot software with lifetime license. Maximum accuracy and undetectable performance.",
-      "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=380&fit=crop",
+      "image": "https://bloxproducts.com/assets/images/matcha.png",
       "options": [
         { "label": "Lifetime", "price": 9.99, "url": "https://stealthpay.io/cat/matcha?r=sativa" }
       ]
@@ -152,7 +152,7 @@ var STORE_DATA = {
       "badge": "TONS OF GAMES",
       "tag": "NEW",
       "description": "Premium multi-game script hub. Supports BloxFruit, The Strongest Battlegrounds, and tons of other main-page titles.",
-      "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=380&fit=crop",
+      "image": "https://bloxproducts.com/assets/images/speedhubx.png",
       "options": [
         { "label": "Lifetime", "price": 9.99, "url": "https://stealthpay.io/cat/speed-hub-x?r=sativa" }
       ]
@@ -164,7 +164,7 @@ var STORE_DATA = {
       "badge": "POPULAR GAMES",
       "tag": "ELITE",
       "description": "Versatile script hub for popular titles like Steal a Brainrot, Garden Horizons, and more. Optimized for performance.",
-      "image": "https://images.unsplash.com/photo-1614812513172-567d2fe96a75?w=600&h=380&fit=crop",
+      "image": "https://bloxproducts.com/assets/images/luminhub.png",
       "options": [
         { "label": "Weekly", "price": 6.19, "url": "https://stealthpay.io/cat/lumin-hub-weekly?r=sativa" },
         { "label": "Monthly", "price": 10.59, "url": "https://stealthpay.io/cat/lumin-hub-monthly?r=sativa" },
