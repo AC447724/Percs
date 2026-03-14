@@ -38,7 +38,7 @@ var STORE_DATA = {
       "badge": "WINDOWS",
       "tag": "POPULAR",
       "description": "Premium Level 7 executor for Windows. Longest running, undetected, and professionally supported.",
-      "image": "https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=600&h=380&fit=crop",
+      "image": "https://bloxproducts.com/assets/images/wave.png",
       "options": [
         { "label": "7 Days", "price": 5.99, "url": "https://stealthpay.io/cat/wave-week-key?r=sativa", "tag": "Cheapest" },
         { "label": "30 Days", "price": 18.99, "url": "https://stealthpay.io/cat/wave-month-key?r=sativa", "tag": "Most popular" }
