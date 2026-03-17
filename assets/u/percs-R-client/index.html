@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percs | Download</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if (typeof tailwind !== 'undefined') {
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            percs: {
+                                blue: "#92C8D2",
+                                dark: "#0A0B0B",
+                                border: "rgba(146, 200, 210, 0.15)",
+                                textDim: "rgba(255, 255, 255, 0.6)",
+                            }
+                        },
+                        fontFamily: {
+                            sans: ["Space Grotesk", "sans-serif"],
+                            outfit: ["Outfit", "sans-serif"],
+                        }
+                    }
+                },
+            };
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0A0B0B;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .bg-dot-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(146, 200, 210, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -1;
+        }
+
+        .download-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(146, 200, 210, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .download-card:hover {
+            border-color: rgba(146, 200, 210, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .glow-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(146, 200, 210, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .btn-primary {
+            background: #92C8D2;
+            color: #0A0B0B;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 20px rgba(146, 200, 210, 0.2);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 35px rgba(146, 200, 210, 0.4);
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-6 font-sans">
+    <div class="bg-dot-grid"></div>
+    <div class="glow-effect"></div>
+
+    <div class="max-w-xl w-full text-center">
+        <header class="mb-12">
+            <h1 style="font-size: 64px; font-weight: 800; letter-spacing: -4px;">
+                PERCS<span style="color:#92C8D2">.</span>
+            </h1>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-percs-border border border-percs-blue/20 text-[10px] uppercase tracking-widest font-bold text-percs-blue mt-2">
+                Release v2.1
+            </div>
+        </header>
+
+        <div class="download-card p-10 relative overflow-hidden">
+            <div class="flex flex-col items-center">
+                <div class="mb-8 p-6 bg-percs-blue/5 rounded-3xl border border-percs-blue/10">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#92C8D2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                </div>
+
+                <h2 class="text-2xl font-bold mb-3">Ready to upgrade?</h2>
+                <p class="text-percs-textDim font-outfit mb-8 leading-relaxed">
+                    Download the desktop client version of our software here.
+                </p>
+
+                <a href="http://percs.fun/assets/u/percsv2.1.exe" class="btn-primary flex items-center gap-3 px-10 py-5 rounded-2xl w-full justify-center text-lg">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                        <path d="M3 15v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download for Windows
+                </a>
+
+                <div class="mt-8 flex flex-wrap justify-center gap-6 opacity-40">
+                    <div class="flex items-center gap-2 text-xs font-medium">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        SHA-256 Verified
+                    </div>
+                    <div class="flex items-center gap-2 text-xs font-medium">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        Secure Install
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-12">
+            <a href="https://percs.fun/home" class="text-percs-blue text-sm font-medium hover:opacity-80 transition-opacity flex items-center justify-center gap-2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Back to Dashboard
+            </a>
+        </footer>
+    </div>
+</body>
+</html>
