@@ -1,250 +1,378 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PERCS | Community Management Simplified</title>
-    <script defer src="/_vercel/insights/script.js"></script>
-    <link rel="icon" type="image/png" href="https://percs.fun/assets/brand/logo-no-bg.png">
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=Inter:wght@300;400;500&display=swap');
-        
-        :root {
-            --bg: #050505;
-            --surface: #0a0a0a;
-            --text: #ffffff;
-            --text-dim: #88888b;
-            --border: rgba(255, 255, 255, 0.08);
-            --accent: #0070f3;
-            --font-display: 'Instrument Sans', sans-serif;
-            --font-body: 'Inter', sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>This Domain Has Been Seized</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&family=Courier+Prime&display=swap');
 
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        
-        body { 
-            background: var(--bg); color: var(--text); 
-            font-family: var(--font-body); line-height: 1.6;
-            -webkit-font-smoothing: antialiased; overflow-x: hidden;
-        }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        nav {
-            padding: 18px 6%; display: flex; justify-content: space-between; align-items: center;
-            position: fixed; top: 0; width: 100%;
-            background: rgba(5, 5, 5, 0.8); backdrop-filter: saturate(180%) blur(20px);
-            z-index: 3000; border-bottom: 1px solid var(--border);
-        }
+:root {
+  --seal-blue: #003087;
+  --seal-red: #BF0A30;
+  --gold: #C9A84C;
+  --light: #ffffff;
+  --dark: #000000;
+  --mono: 'Courier Prime', Courier, monospace;
+  --sans: 'Arimo', Arial, sans-serif;
+}
 
-        .brand { 
-            display: flex; align-items: center; gap: 12px;
-            font-family: var(--font-display); font-weight: 600; font-size: 19px;
-            text-decoration: none; color: #fff; letter-spacing: -0.02em;
-        }
-        .brand img { width: 32px; height: 32px; object-fit: contain; }
+body {
+  background: var(--dark);
+  color: var(--light);
+  font-family: var(--sans);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  overflow-x: hidden;
+}
 
-        .nav-right { display: flex; gap: 32px; align-items: center; }
-        
-        .dropdown { position: relative; display: inline-block; }
-        .dropbtn { 
-            color: var(--text-dim); text-decoration: none; font-size: 14px; 
-            font-weight: 500; cursor: pointer; transition: 0.2s;
-            display: flex; align-items: center; gap: 4px;
-        }
-        .dropbtn:hover { color: #fff; }
-        
-        .dropdown-content {
-            display: none; position: absolute; right: 0; top: 100%;
-            background-color: #0d0d0d; min-width: 180px;
-            border: 1px solid var(--border); border-radius: 8px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.5); padding: 8px 0; z-index: 1;
-        }
-        .dropdown-content a {
-            color: var(--text-dim); padding: 10px 16px; text-decoration: none;
-            display: block; font-size: 13px; transition: 0.2s;
-        }
-        .dropdown-content a:hover { background: #161616; color: #fff; }
-        .dropdown:hover .dropdown-content { display: block; }
+.topbar {
+  width: 100%;
+  background: var(--seal-blue);
+  border-bottom: 3px solid var(--gold);
+  padding: 8px 40px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 
-        .hero {
-            height: 85vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 0 24px;
-            background: radial-gradient(circle at 50% 40%, #111 0%, #050505 100%);
-        }
-        .hero h1 {
-            font-family: var(--font-display); font-size: clamp(48px, 10vw, 90px);
-            font-weight: 600; letter-spacing: -0.04em; line-height: 1; margin-bottom: 24px;
-        }
-        .hero p {
-            font-size: clamp(16px, 1.5vw, 19px); color: var(--text-dim);
-            max-width: 540px; margin-bottom: 40px; font-weight: 400;
-        }
+.topbar-flag {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.flag-stripe {
+  width: 7px;
+  height: 24px;
+}
+.flag-stripe:nth-child(odd) { background: var(--seal-red); }
+.flag-stripe:nth-child(even) { background: var(--light); }
 
-        .btn-group { display: flex; gap: 14px; }
-        .btn {
-            padding: 14px 30px; border-radius: 8px;
-            text-decoration: none; font-size: 15px; font-weight: 500; transition: 0.2s;
-            display: inline-flex; align-items: center; gap: 8px;
-        }
-        .btn-main { background: #fff; color: #000; }
-        .btn-sub { border: 1px solid var(--border); color: #fff; background: rgba(255,255,255,0.03); }
+.topbar-text {
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--light);
+}
 
-        .trust-ticker {
-            border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-            padding: 24px 0; overflow: hidden; background: var(--surface);
-        }
-        .ticker-track { display: flex; gap: 80px; width: max-content; animation: ticker-roll 40s linear infinite; }
-        .ticker-item { display: flex; align-items: center; gap: 10px; color: var(--text-dim); font-size: 14px; font-weight: 500; flex-shrink: 0; }
-        @keyframes ticker-roll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.topbar-dot {
+  width: 4px; height: 4px;
+  background: var(--gold);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
 
-        section { max-width: 1200px; margin: 0 auto; padding: 100px 6%; }
-        .section-header { margin-bottom: 60px; display: flex; justify-content: space-between; align-items: flex-end; }
-        .section-header h2 { font-family: var(--font-display); font-size: 36px; font-weight: 600; }
-        .section-header p { color: var(--text-dim); font-size: 17px; margin-top: 10px; }
-        
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
-        .card { background: var(--surface); border: 1px solid var(--border); padding: 40px; border-radius: 12px; }
-        .card-title { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
-        .card-desc { font-size: 15px; color: var(--text-dim); }
+main {
+  width: 100%;
+  max-width: 900px;
+  padding: 50px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
 
-        .command-browser {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 12px; overflow: hidden; margin-top: 40px;
-        }
-        .browser-header {
-            padding: 24px 32px; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--border); background: #0d0d0d;
-        }
-        .browser-title { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; color: var(--text-dim); }
-        .browser-search {
-            background: #161616; border: 1px solid var(--border); padding: 10px 16px;
-            border-radius: 6px; color: #fff; font-size: 14px; width: 240px;
-        }
-        .cmd-item { padding: 16px 32px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text-dim); }
-        .cmd-item:last-child { border-bottom: none; }
-        .cmd-name { color: #fff; font-weight: 500; }
+.main-seals {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 40px;
+  width: 100%;
+}
 
-        .terminal-btn {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            padding: 8px 16px; border-radius: 6px; color: #fff; text-decoration: none;
-            font-size: 13px; font-weight: 500; transition: 0.2s;
-        }
-        .terminal-btn:hover { background: #fff; color: #000; }
+.main-seals img {
+  height: clamp(80px, 10vw, 130px);
+  width: auto;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
 
-        footer { padding: 60px 6%; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-dim); }
-        footer a { color: inherit; text-decoration: none; margin-left: 24px; }
+.banner {
+  width: 100%;
+  background: var(--seal-red);
+  padding: 24px 32px;
+  text-align: center;
+  position: relative;
+  margin-bottom: 40px;
+}
 
-        @media (max-width: 800px) {
-            .nav-right { display: none; }
-            .section-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .browser-header { flex-direction: column; gap: 16px; align-items: stretch; }
-            .browser-search { width: 100%; }
-        }
-    </style>
+.banner h1 {
+  font-weight: 700;
+  font-size: clamp(26px, 6vw, 48px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.banner-sub {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: #fff;
+  margin-top: 8px;
+  text-transform: uppercase;
+  background: rgba(0,0,0,0.3);
+  padding: 4px 10px;
+  display: inline-block;
+}
+
+.card {
+  width: 100%;
+  background: transparent;
+  border-top: 2px solid var(--gold);
+  padding: 30px 0;
+  margin-bottom: 10px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.badge {
+  color: var(--gold);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 2px;
+}
+
+.case-num {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.05em;
+}
+
+.card p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--light);
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+.card p:last-child { margin-bottom: 0; }
+
+strong {
+  color: var(--light);
+  font-weight: 700;
+}
+
+.domain {
+  color: #fff;
+  background: rgba(201,168,76,0.15);
+  font-family: var(--mono);
+  font-size: 1.1em;
+  padding: 0 4px;
+  border: 1px solid rgba(201,168,76,0.3);
+}
+
+.agencies {
+  width: 100%;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding: 30px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+  justify-items: center;
+  text-align: center;
+}
+
+.agency img {
+  height: 60px;
+  width: auto;
+  margin-bottom: 10px;
+}
+
+.agency-name {
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.agency-dept {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.meta-table {
+  width: 100%;
+  max-width: 700px;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 12px;
+  margin-bottom: 50px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.meta-table tr {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.meta-table td {
+  padding: 12px 16px;
+  vertical-align: top;
+}
+
+.meta-table td:first-child {
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 11px;
+  width: 200px;
+  font-weight: 700;
+}
+
+.meta-table td:last-child {
+  color: var(--light);
+}
+
+footer {
+  width: 100%;
+  border-top: 3px solid var(--seal-red);
+  padding: 30px 40px;
+  text-align: center;
+}
+
+.footer-text {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+}
+</style>
 </head>
 <body>
 
-    <nav>
-        <a href="/" class="brand">
-            <img src="https://percs.fun/assets/brand/logo.png" alt="PERCS">
-            PERCS
-        </a>
-        <div class="nav-right">
-            <a href="#features" class="dropbtn">Features</a>
-            <div class="dropdown">
-                <span class="dropbtn">Resources <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
-                <div class="dropdown-content">
-                    <a href="https://percs.fun/commands">Command Library</a>
-                    <a href="https://percs.fun/faq">Support FAQ</a>
-                    <a href="https://percs.fun/legal">Legal</a>
-                </div>
-            </div>
-            <a href="https://percs.fun/commands" class="dropbtn">Directory</a>
-        </div>
-    </nav>
+<div class="topbar">
+  <div class="topbar-flag">
+    <div class="flag-stripe"></div>
+    <div class="flag-stripe"></div>
+    <div class="flag-stripe"></div>
+    <div class="flag-stripe"></div>
+    <div class="flag-stripe"></div>
+    <div class="flag-stripe"></div>
+    <div class="flag-stripe"></div>
+  </div>
+  <div class="topbar-dot"></div>
+  <div class="topbar-text">United States Department of Justice &nbsp;·&nbsp; Federal Bureau of Investigation</div>
+  <div class="topbar-dot"></div>
+  <div class="topbar-text">Official Government Action</div>
+</div>
 
-    <header class="hero">
-        <h1>Built for better<br>communities.</h1>
-        <p>A professional suite of tools designed to protect your space and reward your most active members.</p>
-        <div class="btn-group">
-            <a href="#" class="btn btn-main">Add to Discord</a>
-            <a href="https://percs.fun/commands" class="btn btn-sub">View Library</a>
-        </div>
-    </header>
+<main>
 
-    <div class="trust-ticker">
-        <div class="ticker-track">
-            <div class="ticker-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Official Discord Verified Partner</div>
-            <div class="ticker-item">● Serving over <b>5,000 active members</b></div>
-            <div class="ticker-item">● Secure <b>AES-256 GCM Standards</b></div>
-            <div class="ticker-item">● Global <b>99.9% Uptime</b></div>
-            <div class="ticker-item">● Real-time <b>Moderation Feedback</b></div>
-            <div class="ticker-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Official Discord Verified Partner</div>
-            <div class="ticker-item">● Serving over <b>5,000 active members</b></div>
-            <div class="ticker-item">● Secure <b>AES-256 GCM Standards</b></div>
-            <div class="ticker-item">● Global <b>99.9% Uptime</b></div>
-            <div class="ticker-item">● Real-time <b>Moderation Feedback</b></div>
-        </div>
+  <div class="main-seals">
+    <img src="[attachment_3](attachment)" alt="U.S. Department of Justice Seal">
+    <img src="[attachment_0](attachment)" alt="Federal Bureau of Investigation Seal">
+  </div>
+
+  <div class="banner">
+    <h1>This Domain Has Been Seized</h1>
+    <div class="banner-sub">In accordance with federal law &nbsp;·&nbsp; 18 U.S.C. § 981</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="badge">Notice of Seizure</div>
+      <div class="case-num">CASE NO. &nbsp;1:24-CV-00000-DOJ &nbsp;·&nbsp; U.S. DISTRICT COURT</div>
     </div>
+    <p>
+      The domain <span class="domain">percs.fun</span> and all associated infrastructure has been seized by the
+      <strong>Federal Bureau of Investigation (FBI)</strong> and the <strong>United States Department of Justice</strong>
+      pursuant to a court order issued by the United States District Court for the District of Columbia.
+    </p>
+    <p>
+      This seizure is part of an ongoing joint law enforcement operation targeting federal crimes including
+      <strong>wire fraud, money laundering, and conspiracy</strong>. Evidence obtained from this domain 
+      is being analyzed by federal authorities.
+    </p>
+    <p>
+      Individuals with information related to this investigation are encouraged to contact the
+      FBI's Internet Crime Complaint Center (IC3) at <strong>ic3.gov</strong> or call
+      <strong>1-800-CALL-FBI</strong>.
+    </p>
+  </div>
 
-    <section id="features">
-        <div class="section-header">
-            <div>
-                <h2>The PERCS Standard.</h2>
-                <p>Reliable infrastructure that scales with your growth.</p>
-            </div>
-        </div>
-        <div class="grid">
-            <div class="card">
-                <div class="card-title">AES-256 Protection</div>
-                <p class="card-desc">Your community configuration is protected by industry-leading encryption, ensuring data integrity at every level.</p>
-            </div>
-            <div class="card">
-                <div class="card-title">Activity Rewards</div>
-                <p class="card-desc">Automatically recognize and reward members as they engage with your community.</p>
-            </div>
-            <div class="card">
-                <div class="card-title">Member Insights</div>
-                <p class="card-desc">Understand your growth with clear statistics and community health metrics.</p>
-            </div>
-        </div>
-    </section>
+  <div class="agencies">
+    <div class="agency">
+      <img src="[attachment_3](attachment)" alt="DOJ">
+      <div class="agency-name">Dept. of Justice</div>
+      <div class="agency-dept">U.S. DOJ</div>
+    </div>
+    <div class="agency">
+      <img src="[attachment_0](attachment)" alt="FBI">
+      <div class="agency-name">FBI</div>
+      <div class="agency-dept">Federal Bureau of Investigation</div>
+    </div>
+    <div class="agency">
+      <img src="[attachment_1](attachment)" alt="FinCEN">
+      <div class="agency-name">FinCEN</div>
+      <div class="agency-dept">Financial Crimes Enforcement</div>
+    </div>
+    <div class="agency">
+      <img src="[attachment_2](attachment)" alt="CISA">
+      <div class="agency-name">CISA</div>
+      <div class="agency-dept">Cybersecurity & Infrastructure</div>
+    </div>
+  </div>
 
+  <table class="meta-table">
+    <tr>
+      <td>Domain Name</td>
+      <td>percs.fun</td>
+    </tr>
+    <tr>
+      <td>Action Date</td>
+      <td>March 26, 2026 &nbsp;·&nbsp; 00:00:01 EST</td>
+    </tr>
+    <tr>
+      <td>Legal Authority</td>
+      <td>18 U.S.C. § 981, 28 U.S.C. § 1355</td>
+    </tr>
+    <tr>
+      <td>Issuing Jurisdiction</td>
+      <td>U.S. District Court, District of Columbia</td>
+    </tr>
+    <tr>
+      <td>Lead Investigative Agency</td>
+      <td>Federal Bureau of Investigation</td>
+    </tr>
+    <tr>
+      <td>Official Reference Nos.</td>
+      <td>FBI-CY-2026-00000 &nbsp;·&nbsp; IC3 #20260000000000</td>
+    </tr>
+  </table>
 
-    <footer>
-        <div>© 2026 PERCS. All rights reserved.</div>
-        <div>
-            <a href="https://percs.fun/legal">Terms of Service</a>
-            <a href="https://percs.fun/legal">Privacy Policy</a>
-        </div>
-    </footer>
+  <footer>
+    <div class="footer-text">
+      <strong>OFFICIAL NOTICE</strong><br>
+      United States Department of Justice &nbsp;·&nbsp; Federal Bureau of Investigation<br>
+      justice.gov &nbsp;·&nbsp; fbi.gov &nbsp;·&nbsp; ic3.gov
+    </div>
+  </footer>
 
-    <script>
-        async function loadCommands() {
-            try {
-                const res = await fetch('https://raw.githubusercontent.com/AC447724/Percs-Commands/refs/heads/main/commands/commands.json');
-                const data = await res.json();
-                const grid = document.getElementById('cmdGrid');
-                const searchInput = document.getElementById('cmdSearch');
+</main>
 
-                function render(list) {
-                    grid.innerHTML = list.slice(0, 8).map(cmd => `
-                        <div class="cmd-item">
-                            <span class="cmd-name">${cmd.name.replace(/_/g, ' ')}</span>
-                            <span>${cmd.category.replace(/_/g, ' ')}</span>
-                        </div>
-                    `).join('');
-                }
-
-                render(data.sort(() => 0.5 - Math.random()));
-                searchInput.addEventListener('input', (e) => {
-                    const val = e.target.value.toLowerCase();
-                    const filtered = data.filter(c => c.name.toLowerCase().includes(val));
-                    render(val === '' ? data.sort(() => 0.5 - Math.random()) : filtered);
-                });
-            } catch(e) {}
-        }
-        loadCommands();
-    </script>
 </body>
 </html>
