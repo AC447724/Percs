@@ -40,7 +40,7 @@ end
 local function corner(p, r) return New("UICorner", { CornerRadius = UDim.new(0, r or 5) }, p) end
 local function stroke(p, c, t) return New("UIStroke", { Color = c or T.Border, Thickness = t or 1, ApplyStrokeMode = Enum.ApplyStrokeMode.Border }, p) end
 local function pad(p, t, b, l, r) return New("UIPadding", { PaddingTop = UDim.new(0, t or 0), PaddingBottom = UDim.new(0, b or 0), PaddingLeft = UDim.new(0, l or 0), PaddingRight = UDim.new(0, r or 0) }, p) end
-local function list(p, g, so) return New("UIListOrder", { Padding = UDim.new(0, g or 0), SortOrder = so or Enum.SortOrder.LayoutOrder }, p) end
+local function list(p, g, so) return New("UIListLayout", { Padding = UDim.new(0, g or 0), SortOrder = so or Enum.SortOrder.LayoutOrder }, p) end
 
 local function regAcc(obj, prop)
 	table.insert(PercsUI.__accents, { obj = obj, prop = prop })
