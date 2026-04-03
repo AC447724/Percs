@@ -1,6 +1,7 @@
 local PercsUI = {}
 PercsUI.__index = PercsUI
 PercsUI.Flags = {}
+PercsUI.__accents = {}
 
 local TS = game:GetService("TweenService")
 local UIS = game:GetService("UserInputService")
@@ -39,7 +40,12 @@ end
 local function corner(p, r) return New("UICorner", { CornerRadius = UDim.new(0, r or 5) }, p) end
 local function stroke(p, c, t) return New("UIStroke", { Color = c or T.Border, Thickness = t or 1, ApplyStrokeMode = Enum.ApplyStrokeMode.Border }, p) end
 local function pad(p, t, b, l, r) return New("UIPadding", { PaddingTop = UDim.new(0, t or 0), PaddingBottom = UDim.new(0, b or 0), PaddingLeft = UDim.new(0, l or 0), PaddingRight = UDim.new(0, r or 0) }, p) end
-local function list(p, g, so) return New("UIListLayout", { Padding = UDim.new(0, g or 0), SortOrder = so or Enum.SortOrder.LayoutOrder }, p) end
+local function list(p, g, so) return New("UIListOrder", { Padding = UDim.new(0, g or 0), SortOrder = so or Enum.SortOrder.LayoutOrder }, p) end
+
+local function regAcc(obj, prop)
+	table.insert(PercsUI.__accents, { obj = obj, prop = prop })
+	obj[prop] = T.Accent
+end
 
 local function F(parent, bg, sz, pos, zindex)
 	return New("Frame", { BackgroundColor3 = bg, Size = sz or UDim2.new(1, 0, 0, 32), Position = pos or UDim2.new(0, 0, 0, 0), BorderSizePixel = 0, ZIndex = zindex or 1 }, parent)
@@ -69,10 +75,13 @@ local function Divider(parent)
 	return F(parent, T.BorderFaint, UDim2.new(1, 0, 0, 1))
 end
 
-local function makeDraggable(root, handle)
+local function makeDraggable(root, handle, callback)
 	local drag, start, origin
 	handle.InputBegan:Connect(function(i)
-		if i.UserInputType == Enum.UserInputType.MouseButton1 then drag, start, origin = true, i.Position, root.Position end
+		if i.UserInputType == Enum.UserInputType.MouseButton1 then
+			drag, start, origin = true, i.Position, root.Position
+			if callback then callback() end
+		end
 	end)
 	UIS.InputChanged:Connect(function(i)
 		if drag and i.UserInputType == Enum.UserInputType.MouseMovement then
@@ -180,6 +189,7 @@ function PercsUI:MakeWindow(opts)
 	F(topbar, T.Surface, UDim2.new(1, 0, 0, 8), UDim2.new(0, 0, 1, -8))
 	local tpip = F(topbar, T.Accent, UDim2.new(0, 2, 0.4, 0), UDim2.new(0, 12, 0.3, 0))
 	corner(tpip, 1)
+	regAcc(tpip, "BackgroundColor3")
 	if opts.Icon and opts.Icon ~= "" then
 		New("ImageLabel", { Image = opts.Icon, BackgroundTransparency = 1, Size = UDim2.new(0, 18, 0, 18), Position = UDim2.new(0, 20, 0.5, -9) }, topbar)
 	end
@@ -204,7 +214,9 @@ function PercsUI:MakeWindow(opts)
 		minimized = not minimized
 		tw(root, { Size = minimized and UDim2.new(0, W, 0, 40) or UDim2.new(0, W, 0, H) }, 0.18)
 	end)
-	makeDraggable(root, topbar)
+	makeDraggable(root, topbar, function()
+		self:ClosePopups()
+	end)
 	local SIDEBAR_W = 112
 	local sidebar = F(root, T.Surface, UDim2.new(0, SIDEBAR_W, 1, -41), UDim2.new(0, 0, 0, 41))
 	sidebar.ClipsDescendants = true
@@ -229,11 +241,13 @@ function PercsUI:MakeWindow(opts)
 		local pill = F(btn, T.Accent, UDim2.new(0, 2, 0.5, 0), UDim2.new(0, 0, 0.25, 0))
 		pill.Visible = false
 		corner(pill, 1)
+		regAcc(pill, "BackgroundColor3")
 		if opts.Icon and opts.Icon ~= "" then
 			New("ImageLabel", { Image = opts.Icon, BackgroundTransparency = 1, ImageColor3 = T.Muted, Size = UDim2.new(0, 12, 0, 12), Position = UDim2.new(0, 6, 0.5, -6) }, btn)
 		end
 		local page = New("ScrollingFrame", { BackgroundTransparency = 1, Size = UDim2.new(1, 0, 1, -20), BorderSizePixel = 0, ScrollBarThickness = 2, ScrollBarImageColor3 = T.Accent, CanvasSize = UDim2.new(0, 0, 0, 0), AutomaticCanvasSize = Enum.AutomaticSize.Y, Visible = false }, self._content)
 		list(page, 4)
+		regAcc(page, "ScrollBarImageColor3")
 		pad(page, 10, 10, 10, 10)
 		local tab = { _btn = btn, _page = page, _pill = pill, _win = self, _lib = self._lib }
 		local function activate()
@@ -263,6 +277,7 @@ function PercsUI:MakeWindow(opts)
 			header.BackgroundTransparency = 1
 			local pip = F(header, T.Accent, UDim2.new(0, 2, 0.6, 0), UDim2.new(0, 0, 0.2, 0))
 			corner(pip, 1)
+			regAcc(pip, "BackgroundColor3")
 			Lbl(header, { Text = sName, TextSize = 10, TextColor3 = T.TextDim, Font = Enum.Font.GothamBold, Size = UDim2.new(1, 0, 1, 0), Position = UDim2.new(0, 8, 0, 0) })
 			local inner = New("Frame", { BackgroundTransparency = 1, Size = UDim2.new(1, 0, 0, 0), AutomaticSize = Enum.AutomaticSize.Y, BorderSizePixel = 0 }, self._page)
 			list(inner, 4)
@@ -302,6 +317,13 @@ function PercsUI:MakeWindow(opts)
 				task.delay(0.1, function() tw(row, { BackgroundColor3 = T.Element }) end)
 				if opts.Callback then opts.Callback() end
 			end)
+			if opts.Description and opts.Description ~= "" then
+				row.Size = UDim2.new(1, 0, 0, 42)
+				local nameLbl = row:FindFirstChildOfClass("TextLabel")
+				nameLbl.Size = UDim2.new(1, 0, 0, 18)
+				nameLbl.Position = UDim2.new(0, 0, 0, 8)
+				Lbl(row, { Text = opts.Description, TextSize = 10, TextColor3 = T.TextDim, Transparency = 0.2, TextXAlignment = Enum.TextXAlignment.Center, Size = UDim2.new(1, 0, 0, 14), Position = UDim2.new(0, 0, 0, 22) })
+			end
 			return hit
 		end
 		function tab:AddToggle(opts)
@@ -315,6 +337,7 @@ function PercsUI:MakeWindow(opts)
 			corner(track, 9)
 			local knob = F(track, T.White, UDim2.new(0, 11, 0, 11), state and UDim2.new(1, -13, 0.5, -5.5) or UDim2.new(0, 2, 0.5, -5.5))
 			corner(knob, 6)
+			local knobScale = New("UIScale", { Scale = 1 }, knob)
 			local trackStroke = stroke(track, state and T.AccentDim or T.Border, 1)
 			local obj = { Value = state, _save = opts.Save }
 			local function set(v)
@@ -322,9 +345,13 @@ function PercsUI:MakeWindow(opts)
 				tw(track, { BackgroundColor3 = v and T.Accent or T.Muted })
 				tw(knob, { Position = v and UDim2.new(1, -13, 0.5, -5.5) or UDim2.new(0, 2, 0.5, -5.5) })
 				tw(trackStroke, { Color = v and T.AccentDim or T.Border })
+				knobScale.Scale = 0.8
+				tw(knobScale, { Scale = 1 }, 0.15, Enum.EasingStyle.Back)
 				if opts.Callback then opts.Callback(v) end
 				if opts.Flag and self._lib._saveEnabled then saveConfig(self._lib._saveFolder, self._lib.Flags) end
 			end
+			table.insert(PercsUI.__accents, { obj = track, prop = "BackgroundColor3", cond = function() return obj.Value end })
+			table.insert(PercsUI.__accents, { obj = trackStroke, prop = "Color", cond = function() return obj.Value end })
 			function obj:Set(v) set(v) end
 			local hit = Btn(row, { Text = "", BackgroundTransparency = 1, Size = UDim2.new(1, 0, 1, 0) })
 			hit.MouseButton1Click:Connect(function() set(not obj.Value) end)
@@ -344,14 +371,21 @@ function PercsUI:MakeWindow(opts)
 			stroke(row, T.Border)
 			Lbl(row, { Text = opts.Name or "Slider", TextSize = 12, TextColor3 = T.TextDim, Size = UDim2.new(1, -70, 0, 18), Position = UDim2.new(0, 10, 0, 6) })
 			local valLbl = Lbl(row, { Text = tostring(val) .. (vname ~= "" and " " .. vname or ""), TextSize = 11, TextColor3 = T.Accent, Font = Enum.Font.GothamMedium, TextXAlignment = Enum.TextXAlignment.Right, Size = UDim2.new(0, 62, 0, 18), Position = UDim2.new(1, -70, 0, 6) })
+			regAcc(valLbl, "TextColor3")
 			local trackBg = F(row, T.Raised, UDim2.new(1, -20, 0, 5), UDim2.new(0, 10, 0, 32))
 			corner(trackBg, 3)
 			local pct0 = (val - mn) / (mx - mn)
 			local fill = F(trackBg, T.Accent, UDim2.new(pct0, 0, 1, 0))
 			corner(fill, 3)
+			regAcc(fill, "BackgroundColor3")
 			local thumb = F(trackBg, T.White, UDim2.new(0, 9, 0, 9), UDim2.new(pct0, -4.5, 0.5, -4.5))
 			corner(thumb, 5)
 			thumb.ZIndex = 5
+			local tooltip = F(thumb, T.Raised, UDim2.new(0, 32, 0, 18), UDim2.new(0.5, -16, 0, -22))
+			tooltip.Visible = false
+			corner(tooltip, 4)
+			stroke(tooltip, T.Border)
+			local tooltipLbl = Lbl(tooltip, { Text = tostring(val), TextSize = 10, TextColor3 = T.Accent, Font = Enum.Font.GothamBold, TextXAlignment = Enum.TextXAlignment.Center, Size = UDim2.new(1, 0, 1, 0) })
 			local obj = { Value = val, _save = opts.Save }
 			local dragging = false
 			local function update(mx_)
@@ -360,14 +394,21 @@ function PercsUI:MakeWindow(opts)
 				v = math.clamp(v, mn, mx)
 				obj.Value = v
 				valLbl.Text = tostring(v) .. (vname ~= "" and " " .. vname or "")
+				tooltipLbl.Text = tostring(v)
 				local pp = (v - mn) / (mx - mn)
 				tw(fill, { Size = UDim2.new(pp, 0, 1, 0) }, 0.04)
 				tw(thumb, { Position = UDim2.new(pp, -4.5, 0.5, -4.5) }, 0.04)
 				if opts.Callback then opts.Callback(v) end
 			end
-			trackBg.InputBegan:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 then dragging = true update(i.Position.X) end end)
+			trackBg.InputBegan:Connect(function(i)
+				if i.UserInputType == Enum.UserInputType.MouseButton1 then
+					dragging = true
+					tooltip.Visible = true
+					update(i.Position.X)
+				end
+			end)
 			UIS.InputChanged:Connect(function(i) if dragging and i.UserInputType == Enum.UserInputType.MouseMovement then update(i.Position.X) end end)
-			UIS.InputEnded:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 then dragging = false end end)
+			UIS.InputEnded:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 then dragging = false tooltip.Visible = false end end)
 			row.MouseEnter:Connect(function() tw(row, { BackgroundColor3 = T.Hover }) end)
 			row.MouseLeave:Connect(function() tw(row, { BackgroundColor3 = T.Element }) end)
 			function obj:Set(v)
@@ -392,6 +433,7 @@ function PercsUI:MakeWindow(opts)
 			stroke(row, T.Border)
 			Lbl(row, { Text = opts.Name or "Dropdown", TextSize = 12, TextColor3 = T.TextDim, Size = UDim2.new(0.5, 0, 1, 0), Position = UDim2.new(0, 10, 0, 0) })
 			local selLbl = Lbl(row, { Text = sel, TextSize = 11, TextColor3 = T.Accent, Font = Enum.Font.GothamMedium, TextXAlignment = Enum.TextXAlignment.Right, Size = UDim2.new(0.44, -20, 1, 0), Position = UDim2.new(0.5, 0, 0, 0) })
+			regAcc(selLbl, "TextColor3")
 			local chevron = Lbl(row, { Text = "⌄", TextSize = 12, TextColor3 = T.Muted, TextXAlignment = Enum.TextXAlignment.Center, Size = UDim2.new(0, 20, 1, 0), Position = UDim2.new(1, -22, 0, 0) })
 			local obj = { Value = sel, _save = opts.Save }
 			local sg_ = sg
@@ -426,9 +468,19 @@ function PercsUI:MakeWindow(opts)
 			end
 			rebuildItems(options, false)
 			local totalH = #options * itemH + 4
+			local function close()
+				open = false
+				tw(dropF, { Size = UDim2.new(0, dropF.Size.X.Offset, 0, 0) }, 0.1)
+				task.delay(0.11, function() dropF.Visible = false end)
+				chevron.Text = "⌄"
+				if self._lib._openDropdown == obj then self._lib._openDropdown = nil end
+			end
+			obj.Close = close
 			row.MouseButton1Click:Connect(function()
 				open = not open
 				if open then
+					if self._lib._openDropdown and self._lib._openDropdown.Close then self._lib._openDropdown:Close() end
+					self._lib._openDropdown = obj
 					local ab = row.AbsolutePosition
 					local sz = row.AbsoluteSize
 					dropF.Position = UDim2.new(0, ab.X, 0, ab.Y + sz.Y + 3)
@@ -437,9 +489,7 @@ function PercsUI:MakeWindow(opts)
 					tw(dropF, { Size = UDim2.new(0, sz.X, 0, totalH) }, 0.14, Enum.EasingStyle.Back)
 					chevron.Text = "⌃"
 				else
-					tw(dropF, { Size = UDim2.new(0, dropF.Size.X.Offset, 0, 0) }, 0.1)
-					task.delay(0.11, function() dropF.Visible = false end)
-					chevron.Text = "⌄"
+					close()
 				end
 			end)
 			row.MouseEnter:Connect(function() tw(row, { BackgroundColor3 = T.Hover }) end)
@@ -586,15 +636,24 @@ function PercsUI:MakeWindow(opts)
 			stroke(prev, T.Border)
 			prev.Name = "__preview"
 			local hexLbl = New("TextBox", { BackgroundTransparency = 1, Text = string.format("%02X%02X%02X", math.floor(color.R * 255), math.floor(color.G * 255), math.floor(color.B * 255)), TextColor3 = T.Text, TextSize = 10, Font = Enum.Font.GothamMedium, TextXAlignment = Enum.TextXAlignment.Center, Size = UDim2.new(1, 0, 0, 16), Position = UDim2.new(0, 0, 0, 92), Name = "__hex" }, pickerF)
+			local function close()
+				open = false
+				pickerF.Visible = false
+				if self._lib._openPicker == obj then self._lib._openPicker = nil end
+			end
+			obj.Close = close
 			swatch.MouseButton1Click:Connect(function()
 				open = not open
 				if open then
+					if self._lib._openPicker and self._lib._openPicker.Close then self._lib._openPicker:Close() end
+					self._lib._openPicker = obj
 					local ab = swatch.AbsolutePosition
 					local sz = swatch.AbsoluteSize
-					pickerF.Position = UDim2.new(0, math.max(4, ab.X - 170), 0, ab.Y + sz.Y + 4)
+					local xPos = math.clamp(ab.X - 170, 4, sg.AbsoluteSize.X - 214)
+					pickerF.Position = UDim2.new(0, xPos, 0, ab.Y + sz.Y + 4)
 					pickerF.Visible = true
 				else
-					pickerF.Visible = false
+					close()
 				end
 			end)
 			row.MouseEnter:Connect(function() tw(row, { BackgroundColor3 = T.Hover }) end)
@@ -630,12 +689,84 @@ function PercsUI:MakeWindow(opts)
 			return obj
 		end
 		function tab:AddSeparator() Divider(self._page) end
+		function tab:AddKeybindToggle(opts)
+			opts = opts or {}
+			local state = opts.Default or false
+			local bound = opts.DefaultKey or Enum.KeyCode.Unknown
+			local listening = false
+			local row = F(self._page, T.Element, UDim2.new(1, 0, 0, 32))
+			corner(row, 5)
+			stroke(row, T.Border)
+			Lbl(row, { Text = opts.Name or "Toggle Bind", TextSize = 12, TextColor3 = T.TextDim, Size = UDim2.new(1, -120, 1, 0), Position = UDim2.new(0, 10, 0, 0) })
+			local track = F(row, state and T.Accent or T.Muted, UDim2.new(0, 32, 0, 17), UDim2.new(1, -42, 0.5, -8.5))
+			corner(track, 9)
+			local knob = F(track, T.White, UDim2.new(0, 11, 0, 11), state and UDim2.new(1, -13, 0.5, -5.5) or UDim2.new(0, 2, 0.5, -5.5))
+			corner(knob, 6)
+			local knobScale = New("UIScale", { Scale = 1 }, knob)
+			local keyBtn = Btn(row, { Text = bound == Enum.KeyCode.Unknown and "NONE" or bound.Name, TextSize = 10, Font = Enum.Font.GothamBold, TextColor3 = T.Accent, BackgroundColor3 = T.Raised, BackgroundTransparency = 0, Size = UDim2.new(0, 60, 0, 18), Position = UDim2.new(1, -108, 0.5, -9) })
+			corner(keyBtn, 4)
+			stroke(keyBtn, T.Border)
+			local obj = { Value = state, Key = bound, _save = opts.Save }
+			local function set(v)
+				obj.Value = v
+				tw(track, { BackgroundColor3 = v and T.Accent or T.Muted })
+				tw(knob, { Position = v and UDim2.new(1, -13, 0.5, -5.5) or UDim2.new(0, 2, 0.5, -5.5) })
+				knobScale.Scale = 0.8
+				tw(knobScale, { Scale = 1 }, 0.15, Enum.EasingStyle.Back)
+				if opts.Callback then opts.Callback(v, obj.Key) end
+				if opts.Flag and self._lib._saveEnabled then saveConfig(self._lib._saveFolder, self._lib.Flags) end
+			end
+			table.insert(PercsUI.__accents, { obj = track, prop = "BackgroundColor3", cond = function() return obj.Value end })
+			regAcc(keyBtn, "TextColor3")
+			local function setKey(k)
+				bound = k
+				obj.Key = k
+				keyBtn.Text = k == Enum.KeyCode.Unknown and "NONE" or k.Name
+				listening = false
+				if opts.Callback then opts.Callback(obj.Value, k) end
+			end
+			keyBtn.MouseButton1Click:Connect(function()
+				listening = not listening
+				keyBtn.Text = listening and "..." or (bound == Enum.KeyCode.Unknown and "NONE" or bound.Name)
+			end)
+			local hit = Btn(row, { Text = "", BackgroundTransparency = 1, Size = UDim2.new(1, -110, 1, 0) })
+			hit.MouseButton1Click:Connect(function() set(not obj.Value) end)
+			UIS.InputBegan:Connect(function(i, gp)
+				if gp then return end
+				if listening and i.UserInputType == Enum.UserInputType.Keyboard then
+					setKey(i.KeyCode)
+				elseif not listening and i.KeyCode == bound and bound ~= Enum.KeyCode.Unknown then
+					set(not obj.Value)
+				end
+			end)
+			row.MouseEnter:Connect(function() tw(row, { BackgroundColor3 = T.Hover }) end)
+			row.MouseLeave:Connect(function() tw(row, { BackgroundColor3 = T.Element }) end)
+			function obj:Set(v) set(v) end
+			if opts.Flag then self._lib.Flags[opts.Flag] = obj end
+			return obj
+		end
 		return tab
 	end
 	return win
 end
 
 function PercsUI:Init() end
+
+function PercsUI:ClosePopups()
+	if self._openDropdown and self._openDropdown.Close then self._openDropdown:Close() end
+	if self._openPicker and self._openPicker.Close then self._openPicker:Close() end
+end
+
+function PercsUI:SetAccentColor(col)
+	T.Accent = col
+	for _, a in ipairs(self.__accents) do
+		if a.obj and a.obj.Parent then
+			if not a.cond or a.cond() then
+				a.obj[a.prop] = col
+			end
+		end
+	end
+end
 
 function PercsUI:Destroy()
 	for _, v in ipairs(game:GetService("CoreGui"):GetChildren()) do if v.Name:sub(1, 5) == "Percs" then v:Destroy() end end
