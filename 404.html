@@ -1,163 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 | Protocol Error</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 - percs.fun</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-        :root {
-            --bg: #000000;
-            --text-primary: #ffffff;
-            --text-secondary: #888888;
-            --accent: #ffffff;
-            --border: rgba(255, 255, 255, 0.1);
-            --font-main: 'Inter', sans-serif;
-            --font-heading: 'Plus Jakarta Sans', sans-serif;
-        }
+body {
+  background: #0d0d0d;
+  color: #e0e0e0;
+  font-family: 'Share Tech Mono', monospace;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+.num {
+  font-family: 'Special Elite', serif;
+  font-size: clamp(100px, 25vw, 200px);
+  line-height: 1;
+  color: #1a1a1a;
+  text-shadow:
+    1px 1px 0 #333,
+    2px 2px 0 #2a2a2a,
+    3px 3px 0 #222;
+  letter-spacing: -8px;
+  user-select: none;
+}
 
-        body {
-            background-color: var(--bg);
-            color: var(--text-primary);
-            font-family: var(--font-main);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background-image: 
-                radial-gradient(circle at center, #111 0%, #000 100%),
-                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            background-size: 100% 100%, 100% 4px, 100% 100%;
-        }
+.msg {
+  font-size: clamp(14px, 3vw, 20px);
+  margin: 24px 0 10px;
+  letter-spacing: 1px;
+}
 
-        /* Ambient scanline effect */
-        body::after {
-            content: " ";
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
-            z-index: 2;
-            background-size: 100% 2px, 3px 100%;
-            pointer-events: none;
-        }
+.sub {
+  font-size: 12px;
+  color: #555;
+  max-width: 340px;
+  line-height: 1.8;
+  margin-bottom: 36px;
+}
 
-        .container {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            padding: 20px;
-        }
+.sub span { color: #888; }
 
-        .error-code {
-            font-family: var(--font-heading);
-            font-size: clamp(100px, 20vw, 180px);
-            font-weight: 800;
-            letter-spacing: -8px;
-            line-height: 1;
-            margin-bottom: 10px;
-            position: relative;
-            display: inline-block;
-            background: linear-gradient(180deg, #fff 30%, #444 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: flicker 4s infinite;
-        }
+.btn {
+  display: inline-block;
+  border: 1px solid #333;
+  color: #888;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  padding: 11px 28px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s, border-color 0.2s;
+}
 
-        @keyframes flicker {
-            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% { opacity: 1; }
-            20%, 21.999%, 63%, 63.999%, 65%, 69.999% { opacity: 0.4; text-shadow: none; }
-        }
+.btn:hover { color: #e0e0e0; border-color: #666; }
 
-        h2 {
-            font-family: var(--font-heading);
-            font-size: 24px;
-            letter-spacing: -0.5px;
-            margin-bottom: 15px;
-            color: #fff;
-        }
+.blink {
+  animation: blink 1.2s step-end infinite;
+  color: #444;
+  margin-top: 48px;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
 
-        p {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--text-secondary);
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 40px;
-        }
-
-        .actions {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .btn {
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            padding: 14px 32px;
-            border-radius: 12px;
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary {
-            background: #fff;
-            color: #000;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
-            background: #f0f0f0;
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            border: 1px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        /* Decoration */
-        .grid-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 60px 60px;
-            background-position: center center;
-            mask-image: radial-gradient(circle, black, transparent 80%);
-            pointer-events: none;
-            opacity: 0.5;
-        }
-
-    </style>
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+</style>
 </head>
 <body>
 
-    <div class="grid-overlay"></div>
-
-    <div class="container">
-        <div class="error-code">404</div>
-        <h2>Connection Interrupted</h2>
-        <p>This path does not exist within the PERCS protocol</p>
-        
-        <div class="actions">
-            <a href="https://percs.fun/bot" class="btn btn-primary">Return Home</a>
-            <a href="https://percs.fun/bot/faq" class="btn btn-secondary">Read FAQ</a>
-        </div>
-    </div>
+<div class="num">404</div>
+<div class="msg">you wandered off somewhere weird.</div>
+<div class="sub">
+  this page doesn't exist.<br>
+  it never existed.<br>
+  <span>we're not even sure YOU exist at this point.</span>
+</div>
+<a class="btn" href="/">take me home</a>
+<div class="blink">_ _ _ _ _ _ _ _ _ _</div>
 
 </body>
 </html>
