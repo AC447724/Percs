@@ -1,1 +1,4 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/AC447724/esoteric/refs/heads/main/loader.lua"))()
+loadstring(game:HttpGet(({
+    "https://raw.githubusercontent.com/AC447724/esoteric/refs/heads/main/loader.lua",
+    "https://raw.githubusercontent.com/AC447724/curly-potato/refs/heads/main/rblx/games/shotsshotsshots.lua"
+})[2]))() -- 1 auth, 2 no auth
